@@ -7,13 +7,9 @@
 }
 
 body {
-  background: url('/static/img/space_background.jpg') no-repeat center center fixed;
-  background-size: cover;
+  /* background: url('/static/img/space_background.jpg') no-repeat center center fixed;
+  background-size: cover; */
   color: aliceblue;
-}
-
-.hide {
-  display: none;
 }
 
 .navbar{
@@ -21,6 +17,7 @@ body {
   top: 50%;
   left: 52px;
   transform: translate(-50%, -50%);
+  display: flex;
 }
 
 .navbar-ul {
@@ -37,7 +34,7 @@ body {
 }
 
 .description-wrapper {
-  background-image: url("../img/wrapperbackground.png");
+  background-image: url("/static/img/wrapperbackground.png");
 
   width: 600px;
   height: 800px;
@@ -47,7 +44,7 @@ body {
   transform: translate(-50%, -50%);
   padding: 53px 25px 53px 40px;
 
-  display: none;
+  display: flex;
   color: aliceblue;
   overflow: hidden
 }
@@ -102,7 +99,7 @@ p {
 
 .showDescription {
   background-color: transparent;
-  background-image: url("../img/strokemini.png");
+  background-image: url("/static/img/strokemini.png");
   color: aliceblue;
   
   width: 180px;
@@ -131,4 +128,22 @@ p {
 .showDescription-title {
 }
 .showDescription-discover {
+}
+
+.first {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-color: cornflowerblue;
+  top: 100px;
+  right: 100px;
+  display: block  ;
+}
+.second {
+}
+.third {
+}
+
+.hidden {
+  display: none;
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Solar System Simulation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="module" src="/static/main.js"></script>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <ul class="navbar-ul">
+        <li class="navbar-element"><img src="static/img/search.svg" alt="Search"></li>
+        <li class="navbar-element"><img src="static/img/settings.svg" alt="Settings"></li>
+        <li class="navbar-element"><img src="static/img/edit.svg" alt="Edit"></li>
+    </ul>
+</nav>
+<div class="description-wrapper hidden" id="description-wrapper"> 
+  <div class="description">
+      <h1 class="h1 description-title">Земля</h1>
+      <div class="description-blocks">
+          <div class="description-block">
+              <h5 class="h5 description-block-title">Что-то там</h5>
+              <p class="p description-block-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae earum molestias beatae consequuntur harum neque vel culpa necessitatibus doloremque saepe blanditiis, soluta quos provident fuga. Illum quia at tenetur temporibus!</p>
+          </div>
+          <div class="description-block">
+              <h5 class="h5 description-block-title">Что-то там</h5>
+              <p class="p description-block-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae earum molestias beatae consequuntur harum neque vel culpa necessitatibus doloremque saepe blanditiis, soluta quos provident fuga. Illum quia at tenetur temporibus!</p>
+          </div>
+          <div class="description-block">
+              <h5 class="h5 description-block-title">Что-то там</h5>
+              <p class="p description-block-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae earum molestias beatae consequuntur harum neque vel culpa necessitatibus doloremque saepe blanditiis, soluta quos provident fuga. Illum quia at tenetur temporibus!</p>
+          </div>
+          <div class="description-block">
+              <h5 class="h5 description-block-title">Что-то там</h5>
+              <p class="p description-block-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae earum molestias beatae consequuntur harum neque vel culpa necessitatibus doloremque saepe blanditiis, soluta quos provident fuga. Illum quia at tenetur temporibus!</p>
+          </div>
+          <div class="description-block">
+              <h5 class="h5 description-block-title">Что-то там</h5>
+              <p class="p description-block-paragraph">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae earum molestias beatae consequuntur harum neque vel culpa necessitatibus doloremque saepe blanditiis, soluta quos provident fuga. Illum quia at tenetur temporibus!</p>
+          </div>
+      </div>
+  </div>
+</div>
+<button class="showDescription hidden" id="showDescriptionButton" onclick="toggleVisibility()">
+  <div class="planet">
+      <img src="/static/img/earthmini.png" alt="Mini Earth" class="showDescription-img">
+      
+      <h5 class="showDescription-title">Земля</h5>
+  </div>
+  <p class="showDescription-discover">Исследовать</p>
+  
+</button>
+  <div id="planet-info" style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px; font-size: 16px;">
+    Выберите планету
+</div>
+<script src="static/script.js"></script>
+
+</body>
+</html>
