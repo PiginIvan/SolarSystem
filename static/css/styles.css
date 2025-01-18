@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Tektur&display=swap');
+@import url(table.css);
+@import url(navbar.css);
+@import url(description.css);
+@import url(typography.css);
+@import url(discoverButton.css);
 
 * {
   box-sizing: border-box;
@@ -7,141 +12,8 @@
 }
 
 body {
-  /* background: url('/static/img/space_background.jpg') no-repeat center center fixed;
-  background-size: cover; */
+
   color: aliceblue;
-}
-
-.navbar{
-  position: absolute;
-  top: 50%;
-  left: 52px;
-  transform: translate(-50%, -50%);
-  display: flex;
-}
-
-.navbar-ul {
-  height: 276px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.navbar-element {
-  list-style-type: none;
-  cursor: pointer;
-}
-
-.description-wrapper {
-  background-image: url("/static/img/wrapperbackground.png");
-
-  width: 600px;
-  height: 800px;
-  position: absolute;
-  top: 50%;
-  left: 320px;
-  transform: translate(-50%, -50%);
-  padding: 53px 25px 53px 40px;
-
-  display: flex;
-  color: aliceblue;
-  overflow: hidden
-}
-
-.description {
-  overflow-y:scroll;
-}
-
-.description::-webkit-scrollbar {
-  width: 15px;
-}
-
-.description::-webkit-scrollbar-track {
-  background-color: #111E2B;
-}
-
-.description::-webkit-scrollbar-thumb {
-  background-color: #034D72;
-}
-
-h1 {
-  font-family: "Tektur", serif;
-  font-size: 96px;
-  font-weight: 400;
-  text-align: center;
-}
-
-.description-title {
-}
-.description-blocks {
-}
-.description-block {
-}
-
-h5 {
-  font-family: "Tektur", serif;
-  font-weight: 400;
-  font-size: 36px;
-}
-
-.description-block-title {
-}
-
-p {
-  font-family: "Play", serif;
-  font-weight: 400;
-  font-size: 20px;
-}
-
-.description-block-paragraph {
-}
-
-.showDescription {
-  background-color: transparent;
-  background-image: url("/static/img/strokemini.png");
-  color: aliceblue;
-  
-  width: 180px;
-  height: 276px; 
-  position: absolute;
-  top: 50%;
-  right: -70px;
-  transform: translate(-50%, -50%);
-  padding: 50px 20px;
-  
-  border: none;
-  cursor: pointer; 
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.planet {
-}
-.showDescription-img {
-}
-.showDescription-text {
-}
-.showDescription-title {
-}
-.showDescription-discover {
-}
-
-.first {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  background-color: cornflowerblue;
-  top: 100px;
-  right: 100px;
-  display: block  ;
-}
-.second {
-}
-.third {
 }
 
 .hidden {
