@@ -1,0 +1,21 @@
+.discoverButton {
+    background-color: transparent;
+    background-image: url("/static/img/interface/strokemini.png");
+    color: aliceblue;
+    
+    width: 180px;
+    height: 276px; 
+    position: absolute;
+    top: 50%;
+    right: -70px;
+    transform: translate(-50%, -50%);
+    padding: 50px 20px;
+    
+    border: none;
+    cursor: pointer; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
