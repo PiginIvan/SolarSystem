@@ -50,6 +50,7 @@ scene.add(starsMesh);
 
 const sunGeometry = new THREE.SphereGeometry(10, 32, 16); // РАДИУС СОЛНЦА
 const textureLoader = new TextureLoader();
+
 const sunTexture = textureLoader.load('/static/img/planetMaps/sun-map.jpg'); 
 const sunMaterial = new THREE.MeshStandardMaterial({
     map: sunTexture,
@@ -64,6 +65,7 @@ scene.add(sun);
 camera.position.y = 100;
 
 const earthGeometry = new THREE.SphereGeometry(2, 32, 16); // РАДИУС ЗЕМЛИ
+
 const earthTexture = textureLoader.load('/static/img/planetMaps/earth-map.jpg'); 
 const earthMaterial = new THREE.MeshStandardMaterial({
     map: earthTexture
@@ -79,6 +81,7 @@ let earthVelocity = new THREE.Vector3(0, 1.25, 0); // СКОРОСТЬ ЗЕМЛ�
 // Юпитер
 const jupiterGeometry = new THREE.SphereGeometry(5, 32, 16); // РАДИУС ЮПИТЕРА
 const jupiterTexture = textureLoader.load('/static/img/planetMaps/jupiter-map.jpg');
+
 const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
 const jupiter = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
 jupiter.name = 'Jupiter';
@@ -102,6 +105,7 @@ function onMouseClick(event) {
 
     if (intersects.length > 0) {
         const selectedObject = intersects[0].object;
+
 
         showButton();
         loadHtml(selectedObject.name);
@@ -142,6 +146,7 @@ function updatePositions() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update(); 
+
     // updatePositions();
     renderer.render(scene, camera);
 }
