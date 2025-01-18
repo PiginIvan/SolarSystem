@@ -1,35 +1,43 @@
 function toggleVisibility() {
-  var element = document.getElementById("description-wrapper");
-  var element1 = document.getElementById("navbar");
+    var descriptionWrapper = document.getElementById("description-wrapper");
+    var navbar = document.getElementById("navbar");
+    var discover = document.getElementById("showDescriptionButton");
 
-  if (element.style.display === "none" || element.style.display === "") {
-      element.style.display = "flex";
-  } else {
-      element.style.display = "none";
-  }
+    descriptionWrapper.classList.toggle("hidden");
+    navbar.classList.toggle("hidden");
+    discover.classList.toggle("hidden");
 
-  if (element1.style.display === "flex" || element1.style.display === "") {
-        element1.style.display = "none";
-    } else {
-        element1.style.display = "flex";
-    }
-
-  var element2 = document.getElementById("showDescriptionButton");
-
-  if (element2.style.display === "none") {
-      element2.style.display = "block"; 
-  } else {
-      element2.style.display = "none";
-  }
     stopPropagation();
 }
 
+function showButton() {
+    var discover = document.getElementById("showDescriptionButton");
+    discover.classList.toggle("hidden");
+    
+    stopPropagation();
+  }
 
-document.addEventListener('click', function(event) {
+  document.addEventListener('click', function(event) {
     var descriptionBox = document.getElementById("description-wrapper");
-    var button = document.getElementById("showDescriptionButton");
+    var discover = document.getElementById("showDescriptionButton");
+    var navbar = document.getElementById("navbar");
 
-    if (!descriptionBox.contains(event.target) && !button.contains(event.target)) {
-        descriptionBox.style.display = "none";
+    // Закрытие descriptionWrapper и скрытие discover при клике вне их области
+    if (!descriptionBox.contains(event.target) && !discover.contains(event.target)) {
+        descriptionBox.classList.add("hidden");
+        if (!discover.classList.contains("hidden")) {
+            discover.classList.add("hidden"); // Скрываем discover, если он открыт
+        }
+    }
+
+    // Скрытие navbar, если descriptionBox открыт
+    if (!descriptionBox.classList.contains("hidden")) {
+        navbar.classList.add("hidden");
+    } else {
+        navbar.classList.remove("hidden");
     }
 });
+
+function stopPropagation() {
+    event.stopPropagation();
+}
