@@ -1,18 +1,18 @@
 h1 {
-    font-family: "Tektur", serif;
-    font-size: 96px;
-    font-weight: 400;
+    font-family: var(--font-family-secondary);
+    font-size: 92px;
+    font-weight: var(--font-weight-primary);
     text-align: center;
 }
 
 h5 {
-    font-family: "Tektur", serif;
-    font-weight: 400;
-    font-size: 36px;
+    font-family: var(--font-family-secondary);
+    font-weight: var(--font-weight-primary);
+    font-size: 28px;
 }
 
 p {
-    font-family: "Play", serif;
-    font-weight: 400;
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-primary);
     font-size: 20px;
 }

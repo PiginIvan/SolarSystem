@@ -3,8 +3,8 @@ table {
     border-collapse: collapse;
     margin-bottom: 20px;
   
-    font-family: "Play", serif;
-    font-weight: 400;
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-primary);
     font-size: 20px;
 }
   
