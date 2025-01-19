@@ -146,8 +146,7 @@ function updatePositions() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update(); 
-
-    // updatePositions();
+    updatePositions();
     renderer.render(scene, camera);
 }
 

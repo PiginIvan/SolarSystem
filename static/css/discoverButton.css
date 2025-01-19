@@ -1,7 +1,9 @@
 .discoverButton {
     background-color: transparent;
     background-image: url("/static/img/interface/strokemini.png");
-    color: aliceblue;
+    background-size: cover;
+    background-position: center;
+    color: var(--primary-color);
     
     width: 180px;
     height: 276px; 

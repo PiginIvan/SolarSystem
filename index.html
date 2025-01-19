@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Solar System Simulation</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
   <script type="module" src="/static/main.js"></script>
   <link rel="stylesheet" href="/static/css/styles.css">
 </head>
@@ -13,17 +13,20 @@
         <li class="navbar-element"><img src="/static/img/interface/settings.svg" alt="Settings"></li>
         <li class="navbar-element"><img src="/static/img/interface/edit.svg" alt="Edit"></li>
     </ul>
-</nav>
-<div class="description-wrapper hidden" id="description-wrapper"> 
-  <div class="description" id = "description"></div>
-</div>
+  </nav>
+  <div class="description-wrapper hidden" id="description-wrapper"> 
+    <div class="description" id = "description">
+      <!-- рендер из loader.js -->
+    </div>
+  </div>
 <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
-  <div class="planet" id="planet"></div>
+  <div class="planet" id="planet">
+    <!-- рендер из loader.js -->
+  </div>
   <p class="discoverButton-discover">Исследовать</p>
 </button>
 
-<script src="/static/script.js"></script>
-<script src="/static/js/loader.js"></script>
-
+<script src="/static/js/script.js" defer></script>
+<script src="/static/js/loader.js" defer></script>
 </body>
 </html>
