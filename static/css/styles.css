@@ -5,6 +5,7 @@
 @import url(description.css);
 @import url(typography.css);
 @import url(discoverButton.css);
+@import url(settings.css);
 
 * {
   box-sizing: border-box;
@@ -19,3 +20,4 @@ body {
 .hidden {
   display: none;
 }
+  

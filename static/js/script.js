@@ -1,6 +1,8 @@
 const descriptionWrapper = document.getElementById("description-wrapper");
 const navbar = document.getElementById("navbar");
 const discover = document.getElementById("showDescriptionButton");
+const settings = document.getElementById("settings-wrapper");
+const settingsIcon = document.getElementById("settings-icon");
 
 document.addEventListener('click', function(event) {
     if (!descriptionWrapper.contains(event.target) && !discover.contains(event.target)) {
@@ -23,4 +25,9 @@ function toggleVisibility() {
 
 function showButton() {
     discover.classList.toggle("hidden");
+}
+
+function toggleVisibilitySettings() {
+    settings.classList.toggle("hidden");
+    navbar.classList.toggle("hidden");
 }
