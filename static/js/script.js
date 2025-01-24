@@ -3,14 +3,16 @@ const navbar = document.getElementById("navbar");
 const discover = document.getElementById("showDescriptionButton");
 
 document.addEventListener('click', function(event) {
-    // Закрытие descriptionWrapper и скрытие discover при клике вне их области
     if (!descriptionWrapper.contains(event.target) && !discover.contains(event.target)) {
         descriptionWrapper.classList.add("hidden");
-        discover.classList.add("hidden");
+        discover.classList.add("hidden");  
+    }
+    
+    if (!settings.contains(event.target) && !settingsIcon.contains(event.target)) {
+        settings.classList.add("hidden");
     }
 
-    // Скрытие navbar, если descriptionWrapper открыт
-    navbar.classList.toggle("hidden", !descriptionWrapper.classList.contains("hidden"));
+    navbar.classList.toggle("hidden", (!descriptionWrapper.classList.contains("hidden") || !settings.classList.contains("hidden")));
 });
 
 function toggleVisibility() {
