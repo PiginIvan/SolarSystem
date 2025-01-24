@@ -10,17 +10,30 @@
 <body>
   <nav class="navbar" id="navbar">
     <ul class="navbar-ul">
-        <li class="navbar-element"><img src="/static/img/interface/search.svg" alt="Search"></li>
-        <li class="navbar-element"><img src="/static/img/interface/settings.svg" alt="Settings"></li>
-        <li class="navbar-element"><img src="/static/img/interface/edit.svg" alt="Edit"></li>
+        <li class="navbar-element search-icon" id="search-icon"><img src="/static/img/interface/search.svg" alt="Search"></li>
+        <li class="navbar-element settings-icon" id="settings-icon" onclick="toggleVisibilitySettings()"><img src="/static/img/interface/settings.svg"></li>
+        <li class="navbar-element edit-icon" id="edit-icon"><img src="/static/img/interface/edit.svg" alt="Edit"></li>
     </ul>
   </nav>
+
   <div class="description-wrapper hidden" id="description-wrapper"> 
     <div class="description" id = "description">
     </div>
   </div>
-<button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
-  <div class="planet" id="planet">
+
+  <div class="settings-wrapper hidden" id="settings-wrapper"> 
+    <div class="settings" id = "settings">
+      <h1 class="h1 settings-title">Настройки</h1>
+      <div class="settings-blocks">
+        <div class="setting-block setting-block-sound">
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
