@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <script type="module" src="/static/main.js"></script>
   <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" href="/static/img/interface/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <nav class="navbar" id="navbar">
@@ -16,17 +17,21 @@
   </nav>
   <div class="description-wrapper hidden" id="description-wrapper"> 
     <div class="description" id = "description">
-      <!-- рендер из loader.js -->
     </div>
   </div>
 <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
   <div class="planet" id="planet">
-    <!-- рендер из loader.js -->
   </div>
-  <p class="discoverButton-discover">Исследовать</p>
-</button>
+  
+  <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
+    <div class="planet" id="planet">
+    </div>
+    <p class="discoverButton-discover">Исследовать</p>
+  </button>
 
-<script src="/static/js/script.js" defer></script>
+<audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
 <script src="/static/js/loader.js" defer></script>
+<script src="/static/js/sound.js" defer></script>
+<script src="/static/js/script.js" defer></script>
 </body>
 </html>
