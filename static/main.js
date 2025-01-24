@@ -58,6 +58,7 @@ const sunMaterial = new THREE.MeshStandardMaterial({
     emissiveIntensity: 0.3,           
 });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+sun.name = 'Sun'
 sun.position.set(0, 0, 0); 
 scene.add(sun);
 
@@ -101,14 +102,19 @@ function onMouseClick(event) {
 
     raycaster.setFromCamera(mouse, camera);
 
-    const intersects = raycaster.intersectObjects([earth, jupiter]);
+    const intersects = raycaster.intersectObjects([earth, jupiter, sun]);
 
     if (intersects.length > 0) {
         const selectedObject = intersects[0].object;
-
-
+        playClickSound();
         showButton();
         loadHtml(selectedObject.name);
+
+        if (settings.classList.contains("hidden") && descriptionWrapper.classList.contains("hidden")) {
+            playClickSound();
+            showButton();
+            loadHtml(selectedObject.name);
+        }
     }
 
     
