@@ -85,6 +85,7 @@ export function onMouseClick(event) {
         showButton();
         console.log(selectedObject.name)
         loadHtml(selectedObject.name);
+        playClickSound();
     }
 }
 

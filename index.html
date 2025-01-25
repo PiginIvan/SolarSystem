@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <script type="module" src="/static/main.js"></script>
   <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" href="/static/img/interface/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <nav class="navbar" id="navbar">
@@ -25,11 +25,12 @@
     <div class="settings" id = "settings">
       <h1 class="h1 settings-title">Настройки</h1>
       <div class="settings-blocks">
-        <div class="setting-block setting-block-sound">
+        <div class="settings-block settings-block-sound">
           <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" id="checkbox-sound" checked>
             <span class="slider"></span>
           </label>
+          <div class="settings-block-text">Звук отклика</div>
         </div>
         </div>
       </div>
@@ -38,13 +39,16 @@
   
   <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
     <div class="planet" id="planet">
+      <!-- рендер из loader.js -->
     </div>
     <p class="discoverButton-discover">Исследовать</p>
   </button>
 
 <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
+
 <script src="/static/js/loader.js" defer></script>
 <script src="/static/js/sound.js" defer></script>
 <script src="/static/js/script.js" defer></script>
+<script src="/static/js/checkIntersection.js" defer></script>
 </body>
 </html>

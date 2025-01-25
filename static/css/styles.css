@@ -6,6 +6,7 @@
 @import url(typography.css);
 @import url(discoverButton.css);
 @import url(settings.css);
+@import url(toggle.css);
 
 * {
   box-sizing: border-box;
