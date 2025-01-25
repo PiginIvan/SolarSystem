@@ -26,11 +26,12 @@
     <div class="settings" id = "settings">
       <h1 class="h1 settings-title">Настройки</h1>
       <div class="settings-blocks">
-        <div class="setting-block setting-block-sound">
+        <div class="settings-block settings-block-sound">
           <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" id="checkbox-sound" checked>
             <span class="slider"></span>
           </label>
+          <div class="settings-block-text">Звук отклика</div>
         </div>
         </div>
       </div>
@@ -44,7 +45,8 @@
     <p class="discoverButton-discover">Исследовать</p>
   </button>
 
-<audio id="click-sound" src="click.mp3" preload="auto" audio.volume = 0.1></audio>
+<audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
+
 <script src="/static/js/loader.js" defer></script>
 <script src="/static/js/sound.js" defer></script>
 <script src="/static/js/script.js" defer></script>

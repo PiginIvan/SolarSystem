@@ -1,11 +1,10 @@
 function playClickSound() {
-    const clickSound = document.getElementById('click-sound');
-    const isChecked = document.getElementById('click-sound-checkbox').checked;
-    clickSound.volume = 0.1;
-    
-    if (isChecked) { // Если чекбокс отмечен, проигрываем звук
-      clickSound.play();
-    }
+  const clickSound = document.getElementById('click-sound');
+  const isChecked = document.getElementById('checkbox-sound').checked; // Проверяем, включен ли переключатель
+  
+  clickSound.volume = 0.1;
+  
+  if (isChecked) {
+      clickSound.play(); // Воспроизводим звук, если переключатель включен
+  }
 }
-
-document.querySelector('button').addEventListener('click', playClickSound);
