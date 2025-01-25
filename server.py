@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory 
 import numpy as np
 import logging
 logging.basicConfig(level=logging.DEBUG)

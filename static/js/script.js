@@ -5,7 +5,6 @@ const settings = document.getElementById("settings-wrapper");
 const settingsIcon = document.getElementById("settings-icon");
 
 document.addEventListener('click', function(event) {
-    // Закрытие descriptionWrapper и скрытие discover при клике вне их области
     if (!descriptionWrapper.contains(event.target) && !discover.contains(event.target)) {
         descriptionWrapper.classList.add("hidden");
         discover.classList.add("hidden");  
