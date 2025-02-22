@@ -9,5 +9,5 @@ export const Sun = new Star({
     position: [0, 0, 0], // Начальное положение
     velocity: [0, 0, 0], // Скорость
     emissive: new THREE.Color('#FFA500'), // Излучаемый цвет
-    emissiveIntensity: 0.3 // Интенсивность излучаемого цвета
+    emissiveIntensity: 0.8 // Интенсивность излучаемого цвета
 });
