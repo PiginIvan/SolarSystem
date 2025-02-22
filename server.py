@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request, send_from_directory 
 import numpy as np
-import logging
-logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__, static_folder='static')
 

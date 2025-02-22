@@ -52,6 +52,52 @@ export function addStars(scene) {
 const saturnRings = Saturn.createRings();
 const uranusRings = Uranus.createRings(); 
 
+// Луна - создадим её как сферу с меньшим радиусом
+export const Moon = {
+    radius: 0.5, 
+    distanceFromEarth: 4, 
+    orbitSpeed: 0.03, 
+    mesh: new THREE.Mesh(
+        new THREE.SphereGeometry(1, 32, 32),
+        new THREE.MeshStandardMaterial({ color: 0x888888 }) 
+    ),
+    updatePosition: function (earthPosition, angle) {
+        this.mesh.position.x = earthPosition.x + Math.cos(angle) * this.distanceFromEarth;
+        this.mesh.position.y = earthPosition.y + Math.sin(angle) * this.distanceFromEarth;
+        this.mesh.position.z = earthPosition.z;
+    }
+};
+
+const traces = {};  // Словарь для хранения следов
+
+function createTrace(material) {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(0);  // Начинаем с пустого массива
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const line = new THREE.Line(geometry, material);
+    return line;
+}
+
+function updateTrace(planetName, position) {
+    const trace = traces[planetName];
+    const geometry = trace.geometry;
+    const positions = geometry.attributes.position.array;
+
+    const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900};
+    const newPositions = new Float32Array(positions.length + 3);
+    newPositions.set(positions);  
+    newPositions.set([position.x, position.y, position.z], positions.length);
+
+    if (newPositions.length / 3 > maxPoints[planetName]) {
+        const newArray = new Float32Array(maxPoints[planetName] * 3);
+        newArray.set(newPositions.slice(3), 0);
+        geometry.setAttribute('position', new THREE.BufferAttribute(newArray, 3));
+    } else {
+        geometry.setAttribute('position', new THREE.BufferAttribute(newPositions, 3));
+    }
+    geometry.attributes.position.needsUpdate = true;  
+}
+
 export function addPlanets(scene) {
     scene.add(Sun.mesh);
     scene.add(Mercury.mesh);  
@@ -66,6 +112,53 @@ export function addPlanets(scene) {
     uranusRings.position.copy(Uranus.mesh.position);
     scene.add(uranusRings);
     scene.add(Neptune.mesh);  
+    scene.add(Moon.mesh);
+
+
+    const whiteMaterial = new THREE.LineBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,  
+        opacity: 0.3   
+    });
+    traces.Mercury = createTrace(whiteMaterial);
+    scene.add(traces.Mercury);
+
+    traces.Venus = createTrace(whiteMaterial);
+    scene.add(traces.Venus);
+
+    traces.Earth = createTrace(whiteMaterial);
+    scene.add(traces.Earth);
+
+    traces.Mars = createTrace(whiteMaterial);
+    scene.add(traces.Mars);
+
+    traces.Jupiter = createTrace(whiteMaterial);
+    scene.add(traces.Jupiter);
+
+    traces.Saturn = createTrace(whiteMaterial);
+    scene.add(traces.Saturn);
+
+    traces.Uranus = createTrace(whiteMaterial);
+    scene.add(traces.Uranus);
+
+    traces.Neptune = createTrace(whiteMaterial);
+    scene.add(traces.Neptune);
+}
+
+// Обновляем следы планет на каждом кадре
+export function updatePlanetTraces() {
+    updateTrace('Mercury', Mercury.mesh.position);
+    updateTrace('Venus', Venus.mesh.position);
+    updateTrace('Earth', Earth.mesh.position);
+    updateTrace('Mars', Mars.mesh.position);
+    updateTrace('Jupiter', Jupiter.mesh.position);
+    updateTrace('Saturn', Saturn.mesh.position);
+    updateTrace('Uranus', Uranus.mesh.position);
+    updateTrace('Neptune', Neptune.mesh.position);
+
+    const earthPosition = Earth.mesh.position;
+    const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001;  // Создаем угол для вращения Луны
+    Moon.updatePosition(earthPosition, moonAngle);
 }
 
 const raycaster = new THREE.Raycaster();
