@@ -16,9 +16,30 @@
     overflow: hidden;
 }
 
+.settings-title {
+    
+}
+
+
 .settings {
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.settings-block {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+}
+
+.settings-block-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-family: var(--font-family-secondary);
+    font-weight: var(--font-weight-primary);
+    font-size: 28px;
 }

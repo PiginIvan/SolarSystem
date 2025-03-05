@@ -10,13 +10,17 @@ document.addEventListener('click', function(event) {
         discover.classList.add("hidden");  
     }
     
+    // Закрытие настроек при клике вне области настроек и иконки
     if (!settings.contains(event.target) && !settingsIcon.contains(event.target)) {
         settings.classList.add("hidden");
     }
 
+    // Скрытие navbar, если descriptionWrapper открыт
     navbar.classList.toggle("hidden", (!descriptionWrapper.classList.contains("hidden") || !settings.classList.contains("hidden")));
 });
 
+
+// Функция для переключения видимости элементов
 function toggleVisibility() {
     descriptionWrapper.classList.toggle("hidden");
     navbar.classList.toggle("hidden");
