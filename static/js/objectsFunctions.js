@@ -182,6 +182,7 @@ export function onMouseClick(event) {
         const selectedObject = intersects[0].object;
         showButton();
         loadHtml(selectedObject.name);
+        playClickSound();
     }
 }
 
