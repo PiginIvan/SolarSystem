@@ -8,6 +8,8 @@
 @import url(settings.css);
 @import url(toggle.css);
 @import url(search.css);
+@import url(animations.css);
+@import url(scrollbar.css);
 
 * {
   box-sizing: border-box;
@@ -34,7 +36,6 @@ body {
 
   display: flex;
   color: var(--primary-color);
-  overflow: hidden;
 }
 
 .hidden {

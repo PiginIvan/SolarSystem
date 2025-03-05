@@ -95,6 +95,22 @@ const planets = {
 //     searchMenu.classList.add("hidden"); // Скрываем меню поиска после выбора
 // }
 
+document.getElementById('search-input').addEventListener('input', function() {
+    const searchQuery = this.value.toLowerCase();
+    const planetCards = document.querySelectorAll('.planet-card');
+
+    planetCards.forEach(card => {
+        const nameRus = card.getAttribute('data-name-rus').toLowerCase();
+        const nameEng = card.getAttribute('data-name-eng').toLowerCase();
+
+        if (nameRus.includes(searchQuery) || nameEng.includes(searchQuery)) {
+        card.style.display = 'flex';
+        } else {
+        card.style.display = 'none';
+        }
+    });
+});
+
 
 
 function animate() {
