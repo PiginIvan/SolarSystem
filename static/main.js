@@ -11,6 +11,7 @@ import { Uranus } from './js/planets/uranus.js';
 import { Neptune } from './js/planets/neptune.js';
 import { Pluto } from './js/planets/pluto.js';
 
+
 const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -26,7 +27,6 @@ addPlanets(scene);
 window.addEventListener('click', onMouseClick, false);
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 scene.add(lightAmbient);
-
 const searchIcon = document.getElementById("search-icon");
 const searchMenu = document.getElementById("search-menu");
 const searchInput = document.getElementById("search-input");
@@ -110,6 +110,7 @@ document.getElementById('search-input').addEventListener('input', function() {
         }
     });
 });
+
 
 
 function animate() {
