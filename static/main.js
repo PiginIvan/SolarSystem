@@ -46,54 +46,54 @@ const planets = {
 };
 
 // Показать/скрыть меню поиска
-searchIcon.addEventListener("click", () => {
-    console.log("1");
-    searchMenu.classList.toggle("hidden");
-    searchInput.value = "";
-    searchResults.innerHTML = "";
-});
+// searchIcon.addEventListener("click", () => {
+//     console.log("1");
+//     searchMenu.classList.toggle("hidden");
+//     searchInput.value = "";
+//     searchResults.innerHTML = "";
+// });
 
 // Поиск по названию планеты
-searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    searchResults.innerHTML = "";
+// searchInput.addEventListener("input", () => {
+//     const query = searchInput.value.toLowerCase();
+//     searchResults.innerHTML = "";
     
-    if (query === "") return;
+//     if (query === "") return;
 
-    Object.keys(planets).forEach(planetName => {
-        if (planetName.toLowerCase().includes(query)) {
-            const li = document.createElement("li");
-            li.textContent = planetName;
-            li.addEventListener("click", () => moveCameraToPlanet(planetName));
-            searchResults.appendChild(li);
-        }
-    });
-});
+//     Object.keys(planets).forEach(planetName => {
+//         if (planetName.toLowerCase().includes(query)) {
+//             const li = document.createElement("li");
+//             li.textContent = planetName;
+//             li.addEventListener("click", () => moveCameraToPlanet(planetName));
+//             searchResults.appendChild(li);
+//         }
+//     });
+// });
 
 // Функция перемещения камеры к планете
-function moveCameraToPlanet(planetName) {
-    const planetMesh = planets[planetName];
-    if (!planetMesh) return;
+// function moveCameraToPlanet(planetName) {
+//     const planetMesh = planets[planetName];
+//     if (!planetMesh) return;
 
-    const planetPosition = new THREE.Vector3();
-    planetMesh.getWorldPosition(planetPosition);
+//     const planetPosition = new THREE.Vector3();
+//     planetMesh.getWorldPosition(planetPosition);
 
-    const targetPosition = planetPosition.clone().add(new THREE.Vector3(0, 10, 30)); // Смещаем камеру вверх и назад
+//     const targetPosition = planetPosition.clone().add(new THREE.Vector3(0, 10, 30)); // Смещаем камеру вверх и назад
 
-    // Плавное движение камеры
-    new TWEEN.Tween(camera.position)
-        .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .start();
+//     // Плавное движение камеры
+//     new TWEEN.Tween(camera.position)
+//         .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
+//         .easing(TWEEN.Easing.Quadratic.Out)
+//         .start();
 
-    // Направить камеру на планету
-    new TWEEN.Tween(controls.target)
-        .to({ x: planetPosition.x, y: planetPosition.y, z: planetPosition.z }, 2000)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .start();
+//     // Направить камеру на планету
+//     new TWEEN.Tween(controls.target)
+//         .to({ x: planetPosition.x, y: planetPosition.y, z: planetPosition.z }, 2000)
+//         .easing(TWEEN.Easing.Quadratic.Out)
+//         .start();
 
-    searchMenu.classList.add("hidden"); // Скрываем меню поиска после выбора
-}
+//     searchMenu.classList.add("hidden"); // Скрываем меню поиска после выбора
+// }
 
 
 function animate() {

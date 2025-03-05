@@ -1,0 +1,67 @@
+.search {
+display: flex;
+flex-direction: column;
+gap: 30px;
+overflow-y: scroll;
+margin-bottom: 20px;
+width: 600px;
+}
+
+.search-for-margin {
+margin-right: 20px;
+}
+
+.search-form {
+margin-right: 20px;
+}
+
+.search-input {
+height: 100%;
+width: 100%;
+border: none;
+font-size: 36px;
+font-family: var(--font-family-primary);
+border-bottom: solid #034D72 2px;
+text-align: center;
+padding-bottom: 10px;
+background-color: var(--dark-10);
+color: var(--stroke-color);
+outline: none;
+}
+
+.search-input::placeholder {
+color: var(--stroke-color);
+}
+
+.planet-card {
+margin-right: 20px;
+background-color: rgba(8, 30, 51, 0.6);
+padding: 16px;
+display: flex;
+gap: 20px;
+align-items: center;
+border: var(--stroke-color) 5px solid;
+margin-bottom: 20px;
+}
+
+.planet-card-img {
+width: 62px;
+height: 62px;
+}
+
+.planet-card-text {
+font-family: var(--font-family-secondary);
+font-size: 48px;
+}
+
+.search::-webkit-scrollbar {
+width: 15px;
+}
+
+.search::-webkit-scrollbar-track {
+background-color: #111E2B;
+}
+
+.search::-webkit-scrollbar-thumb {
+background-color: #034D72;
+}
