@@ -85,6 +85,7 @@ function updateTrace(planetName, position) {
     const positions = geometry.attributes.position.array;
 
     const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900, 'Pluto': 1400};
+
     const newPositions = new Float32Array(positions.length + 3);
     newPositions.set(positions);  
     newPositions.set([position.x, position.y, position.z], positions.length);
@@ -115,6 +116,7 @@ export function addPlanets(scene) {
     scene.add(Neptune.mesh);  
     scene.add(Moon.mesh);
     scene.add(Pluto.mesh);
+
 
     const whiteMaterial = new THREE.LineBasicMaterial({ 
         color: 0xffffff,
@@ -147,6 +149,7 @@ export function addPlanets(scene) {
 
     traces.Pluto = createTrace(whiteMaterial);
     scene.add(traces.Pluto);
+
 }
 
 // Обновляем следы планет на каждом кадре
@@ -160,6 +163,7 @@ export function updatePlanetTraces() {
     updateTrace('Uranus', Uranus.mesh.position);
     updateTrace('Neptune', Neptune.mesh.position);
     updateTrace('Pluto', Pluto.mesh.position);
+
 
     const earthPosition = Earth.mesh.position;
     const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001;  // Создаем угол для вращения Луны
