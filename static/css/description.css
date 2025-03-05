@@ -1,21 +1,3 @@
-.description-wrapper {
-    background-image: url("/static/img/interface/wrapperbackground.png");
-    background-size: cover;
-    background-position: center;
-  
-    width: 600px;
-    height: 800px;
-    position: absolute;
-    top: 50%;
-    left: 320px;
-    transform: translate(-50%, -50%);
-    padding: 53px 25px 53px 40px;
-  
-    display: flex;
-    color: var(--primary-color);
-    overflow: hidden;
-}
-  
 .description {
     overflow-y:scroll;
 }
@@ -45,4 +27,4 @@
     line-height: 30px;
     font-size: 28px;
     color: var(--secondary-color);
-} 
+}

@@ -7,21 +7,22 @@
   <link rel="stylesheet" href="/static/css/styles.css">
   <link rel="icon" href="/static/img/interface/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
   <nav class="navbar" id="navbar">
     <ul class="navbar-ul">
-        <li class="navbar-element search-icon" id="search-icon"><img src="/static/img/interface/search.png" alt="Search"></li>
+        <li class="navbar-element search-icon" id="search-icon" onclick="toggleVisibilitySearch()"><img src="/static/img/interface/search.png" alt="Search"></li>
         <li class="navbar-element settings-icon" id="settings-icon" onclick="toggleVisibilitySettings()"><img src="/static/img/interface/settings.png"></li>
         <li class="navbar-element edit-icon" id="edit-icon"><img src="/static/img/interface/edit.png" alt="Edit"></li>
     </ul>
   </nav>
-
-  <div class="description-wrapper hidden" id="description-wrapper"> 
+  
+  <div class="wrapper hidden" id="description-wrapper"> 
     <div class="description" id = "description">
     </div>
   </div>
 
-  <div class="settings-wrapper hidden" id="settings-wrapper"> 
+  <div class="wrapper hidden" id="settings-wrapper"> 
     <div class="settings" id = "settings">
       <h1 class="h1 settings-title">Настройки</h1>
       <div class="settings-blocks">
@@ -36,6 +37,41 @@
       </div>
     </div>
   </div>
+
+  <div class="wrapper hidden" id="search-wrapper"> 
+    <div class="search" id="search">
+        <form class="search-form" id="search-form">
+          <input id="search-input" name="search-input" type="text" class="search-input" placeholder="Enter planet name...">
+        </form>
+        <ul id="search-results">
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+          <li class="planet-card">
+            <img src="/static/img/discoverButton-icons/earth.png" class="planet-card-img">
+            <div class="planet-card-text">Земля</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   
   <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
     <div class="planet" id="planet">
@@ -44,11 +80,12 @@
     <p class="discoverButton-discover">Исследовать</p>
   </button>
 
-<audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
+  <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
 
-<script src="/static/js/loader.js" defer></script>
-<script src="/static/js/sound.js" defer></script>
-<script src="/static/js/script.js" defer></script>
-<script src="/static/js/checkIntersection.js" defer></script>
+  <script src="/static/js/loader.js" defer></script>
+  <script src="/static/js/sound.js" defer></script>
+  <script src="/static/js/script.js" defer></script>
+  <script src="/static/js/checkIntersection.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@
 @import url(discoverButton.css);
 @import url(settings.css);
 @import url(toggle.css);
+@import url(search.css);
 
 * {
   box-sizing: border-box;
@@ -18,7 +19,24 @@ body {
   color: var(--primary-color);
 }
 
+.wrapper {
+  background-image: url("/static/img/interface/wrapperbackground.png");
+  background-size: cover;
+  background-position: center;
+
+  width: 600px;
+  height: 800px;
+  position: absolute;
+  top: 50%;
+  left: 320px;
+  transform: translate(-50%, -50%);
+  padding: 53px 25px 53px 40px;
+
+  display: flex;
+  color: var(--primary-color);
+  overflow: hidden;
+}
+
 .hidden {
   display: none;
 }
-  

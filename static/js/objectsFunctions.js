@@ -8,6 +8,7 @@ import { Jupiter } from './planets/jupiter.js';
 import { Saturn } from './planets/saturn.js';
 import { Uranus } from './planets/uranus.js';
 import { Neptune } from './planets/neptune.js';
+import { Pluto } from './planets/pluto.js';
 import { camera, renderer, controls } from '../main.js';
 
 export function configureControls(scene) {
@@ -83,7 +84,8 @@ function updateTrace(planetName, position) {
     const geometry = trace.geometry;
     const positions = geometry.attributes.position.array;
 
-    const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900};
+    const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900, 'Pluto': 1400};
+
     const newPositions = new Float32Array(positions.length + 3);
     newPositions.set(positions);  
     newPositions.set([position.x, position.y, position.z], positions.length);
@@ -113,6 +115,7 @@ export function addPlanets(scene) {
     scene.add(uranusRings);
     scene.add(Neptune.mesh);  
     scene.add(Moon.mesh);
+    scene.add(Pluto.mesh);
 
 
     const whiteMaterial = new THREE.LineBasicMaterial({ 
@@ -143,6 +146,10 @@ export function addPlanets(scene) {
 
     traces.Neptune = createTrace(whiteMaterial);
     scene.add(traces.Neptune);
+
+    traces.Pluto = createTrace(whiteMaterial);
+    scene.add(traces.Pluto);
+
 }
 
 // Обновляем следы планет на каждом кадре
@@ -155,6 +162,8 @@ export function updatePlanetTraces() {
     updateTrace('Saturn', Saturn.mesh.position);
     updateTrace('Uranus', Uranus.mesh.position);
     updateTrace('Neptune', Neptune.mesh.position);
+    updateTrace('Pluto', Pluto.mesh.position);
+
 
     const earthPosition = Earth.mesh.position;
     const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001;  // Создаем угол для вращения Луны
@@ -176,11 +185,11 @@ export function onMouseClick(event) {
     if (intersects.length > 0) {
         const selectedObject = intersects[0].object;
         showButton();
-        console.log(selectedObject.name)
         loadHtml(selectedObject.name);
         playClickSound();
     }
 }
+
 
 export function updatePositions() {
     fetch('/update', {
@@ -196,7 +205,8 @@ export function updatePositions() {
                 { mass: Jupiter.mass, position: [Jupiter.mesh.position.x, Jupiter.mesh.position.y, Jupiter.mesh.position.z], velocity: Jupiter.velocity },
                 { mass: Saturn.mass, position: [Saturn.mesh.position.x, Saturn.mesh.position.y, Saturn.mesh.position.z], velocity: Saturn.velocity },
                 { mass: Uranus.mass, position: [Uranus.mesh.position.x, Uranus.mesh.position.y, Uranus.mesh.position.z], velocity: Uranus.velocity },
-                { mass: Neptune.mass, position: [Neptune.mesh.position.x, Neptune.mesh.position.y, Neptune.mesh.position.z], velocity: Neptune.velocity }
+                { mass: Neptune.mass, position: [Neptune.mesh.position.x, Neptune.mesh.position.y, Neptune.mesh.position.z], velocity: Neptune.velocity },
+                { mass: Pluto.mass, position: [Pluto.mesh.position.x, Pluto.mesh.position.y, Pluto.mesh.position.z], velocity: Pluto.velocity }
             ],
             time_step: 1
         })
@@ -213,5 +223,6 @@ export function updatePositions() {
         Uranus.updatePosition(data.bodies[7].position, data.bodies[7].velocity);
         uranusRings.position.copy(Uranus.mesh.position);
         Neptune.updatePosition(data.bodies[8].position, data.bodies[8].velocity);
+        Pluto.updatePosition(data.bodies[9].position, data.bodies[9].velocity);
     });
 }
