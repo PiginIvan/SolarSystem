@@ -174,6 +174,7 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 export function onMouseClick(event) {
+    
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ( ( event.clientX - rect.left ) / ( rect.right - rect.left ) ) * 2 - 1;
     mouse.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
@@ -181,7 +182,7 @@ export function onMouseClick(event) {
     raycaster.setFromCamera(mouse, camera);
 
     const intersects = raycaster.intersectObjects([Sun.mesh, Mercury.mesh, Venus.mesh, Earth.mesh, Mars.mesh, Jupiter.mesh, Saturn.mesh, Uranus.mesh, Neptune.mesh, Pluto.mesh]);
-
+    
     if (intersects.length > 0) {
         const selectedObject = intersects[0].object;
         showButton();

@@ -1,8 +1,8 @@
 .navbar{
     position: absolute;
     top: 50%;
-    left: 52px;
-    transform: translate(-50%, -50%);
+    left: 20px;
+    transform: translate(0, -50%);
     display: flex;
 }
   
