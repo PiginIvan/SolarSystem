@@ -45,73 +45,103 @@ const planets = {
     "Pluto": Pluto.mesh
 };
 
-// Показать/скрыть меню поиска
-// searchIcon.addEventListener("click", () => {
-//     console.log("1");
-//     searchMenu.classList.toggle("hidden");
-//     searchInput.value = "";
-//     searchResults.innerHTML = "";
-// });
 
-// Поиск по названию планеты
-// searchInput.addEventListener("input", () => {
-//     const query = searchInput.value.toLowerCase();
-//     searchResults.innerHTML = "";
-    
-//     if (query === "") return;
+// Функция для создания карточки планеты
+function createPlanetCard(planetName) {
+    const li = document.createElement("li");
+    li.classList.add("planet-card");
 
-//     Object.keys(planets).forEach(planetName => {
-//         if (planetName.toLowerCase().includes(query)) {
-//             const li = document.createElement("li");
-//             li.textContent = planetName;
-//             li.addEventListener("click", () => moveCameraToPlanet(planetName));
-//             searchResults.appendChild(li);
-//         }
-//     });
-// });
+    li.setAttribute("data-name-rus", getPlanetNameRus(planetName));
+    li.setAttribute("data-name-eng", planetName);
 
-// Функция перемещения камеры к планете
-// function moveCameraToPlanet(planetName) {
-//     const planetMesh = planets[planetName];
-//     if (!planetMesh) return;
+    const img = document.createElement("img");
+    img.src = `/static/img/discoverButton-icons/${planetName.toLowerCase()}.png`;
+    img.classList.add("planet-card-img");
 
-//     const planetPosition = new THREE.Vector3();
-//     planetMesh.getWorldPosition(planetPosition);
+    const textDiv = document.createElement("div");
+    textDiv.classList.add("planet-card-text");
+    textDiv.textContent = getPlanetNameRus(planetName);
 
-//     const targetPosition = planetPosition.clone().add(new THREE.Vector3(0, 10, 30)); // Смещаем камеру вверх и назад
+    li.appendChild(img);
+    li.appendChild(textDiv);
 
-//     // Плавное движение камеры
-//     new TWEEN.Tween(camera.position)
-//         .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
-//         .easing(TWEEN.Easing.Quadratic.Out)
-//         .start();
+    li.addEventListener("click", () => moveCameraToPlanet(planetName));
 
-//     // Направить камеру на планету
-//     new TWEEN.Tween(controls.target)
-//         .to({ x: planetPosition.x, y: planetPosition.y, z: planetPosition.z }, 2000)
-//         .easing(TWEEN.Easing.Quadratic.Out)
-//         .start();
+    return li;
+}
 
-//     searchMenu.classList.add("hidden"); // Скрываем меню поиска после выбора
-// }
+// Функция для отображения всех карточек
+function showAllPlanets() {
+    searchResults.innerHTML = "";
 
-document.getElementById('search-input').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase();
-    const planetCards = document.querySelectorAll('.planet-card');
+    Object.keys(planets).forEach(planetName => {
+        const card = createPlanetCard(planetName);
+        searchResults.appendChild(card);
+    });
+}
 
-    planetCards.forEach(card => {
-        const nameRus = card.getAttribute('data-name-rus').toLowerCase();
-        const nameEng = card.getAttribute('data-name-eng').toLowerCase();
+// Функция для поиска планет
+function searchPlanets(query) {
+    searchResults.innerHTML = "";
 
-        if (nameRus.includes(searchQuery) || nameEng.includes(searchQuery)) {
-        card.style.display = 'flex';
-        } else {
-        card.style.display = 'none';
+    Object.keys(planets).forEach(planetName => {
+        const planetNameLower = planetName.toLowerCase();
+        const planetNameRus = getPlanetNameRus(planetName).toLowerCase();
+
+        if (query === "" || planetNameLower.includes(query) || planetNameRus.includes(query)) {
+            const card = createPlanetCard(planetName);
+            searchResults.appendChild(card);
         }
     });
+}
+
+// Обработчик ввода в поле поиска
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    searchPlanets(query);
 });
 
+showAllPlanets();
 
+// Функция для получения русского названия планеты
+function getPlanetNameRus(planetNameEng) {
+    const planetNames = {
+        "Mercury": "Меркурий",
+        "Venus": "Венера",
+        "Earth": "Земля",
+        "Mars": "Марс",
+        "Jupiter": "Юпитер",
+        "Saturn": "Сатурн",
+        "Uranus": "Уран",
+        "Neptune": "Нептун",
+        "Pluto": "Плутон"
+    };
+
+    return planetNames[planetNameEng] || planetNameEng;
+}
+
+function moveCameraToPlanet(planetName) {
+    console.log(planetName);
+    const planetMesh = planets[planetName];
+    if (!planetMesh) return;
+
+    const planetPosition = new THREE.Vector3();
+    planetMesh.getWorldPosition(planetPosition);
+
+    const targetPosition = planetPosition.clone().add(new THREE.Vector3(0, 10, 30));
+
+    new TWEEN.Tween(camera.position)
+        .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start();
+
+    new TWEEN.Tween(controls.target)
+        .to({ x: planetPosition.x, y: planetPosition.y, z: planetPosition.z }, 2000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start();
+
+    searchMenu.classList.add("hidden");
+}
 
 function animate() {
     requestAnimationFrame(animate);

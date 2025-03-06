@@ -46,6 +46,8 @@
     justify-content: space-between;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeIn 0.5s ease-in-out;
+    cursor: pointer;
+    user-select: none;
 }
 
 .planet-card:hover {
@@ -54,6 +56,7 @@
 
 .planet-card-img {
     height: 62px;
+    pointer-events: none;
 }
 
 .planet-card-text {
