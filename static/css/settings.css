@@ -1,15 +1,8 @@
-.settings-title {
-    
-}
-
 .settings {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.settings-block {
+.settings__block {
     display: grid;
     width: 100%;
     grid-template-columns: 60px 1fr;
@@ -17,7 +10,7 @@
     animation: fadeIn 0.5s ease-in-out;
 }
 
-.settings-block-text {
+.settings__text {
     display: flex;
     align-items: center;
     width: 100%;

@@ -11,6 +11,10 @@ import { Uranus } from './js/planets/uranus.js';
 import { Neptune } from './js/planets/neptune.js';
 import { Pluto } from './js/planets/pluto.js';
 
+const searchInput = document.getElementById("search__input");
+const searchResults = document.getElementById("search__results");
+const editorSearchInput = document.getElementById("editor__input");
+const editorSearchResult = document.getElementById("editor__results");
 
 const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -18,6 +22,9 @@ export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 export const controls = new OrbitControls(camera, renderer.domElement);
+
+let followingPlanet = null; // Хранит текущую отслеживаемую планету
+let offset = new THREE.Vector3(0, 10, 30); // Смещение камеры от планеты
 
 camera.position.y = 50;
 camera.position.z = 150;
@@ -27,12 +34,7 @@ addPlanets(scene);
 window.addEventListener('click', onMouseClick, false);
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 scene.add(lightAmbient);
-const searchIcon = document.getElementById("search-icon");
-const searchMenu = document.getElementById("search-menu");
-const searchInput = document.getElementById("search-input");
-const searchResults = document.getElementById("search-results");
 
-// Список планет
 const planets = {
     "Mercury": Mercury.mesh,
     "Venus": Venus.mesh,
@@ -46,20 +48,20 @@ const planets = {
 };
 
 
-// Функция для создания карточки планеты
+// поиск---------------------------------------------------------------
 function createPlanetCard(planetName) {
     const li = document.createElement("li");
     li.classList.add("planet-card");
 
-    li.setAttribute("data-name-rus", getPlanetNameRus(planetName));
-    li.setAttribute("data-name-eng", planetName);
+    li.setAttribute("data-name_rus", getPlanetNameRus(planetName));
+    li.setAttribute("data-name_eng", planetName);
 
     const img = document.createElement("img");
-    img.src = `/static/img/discoverButton-icons/${planetName.toLowerCase()}.png`;
-    img.classList.add("planet-card-img");
+    img.src = `/static/img/explore-button__imgs/${planetName.toLowerCase()}.png`;
+    img.classList.add("planet-card__img");
 
     const textDiv = document.createElement("div");
-    textDiv.classList.add("planet-card-text");
+    textDiv.classList.add("planet-card__text");
     textDiv.textContent = getPlanetNameRus(planetName);
 
     li.appendChild(img);
@@ -70,24 +72,18 @@ function createPlanetCard(planetName) {
     return li;
 }
 
-// Функция для отображения всех карточек
 function showAllPlanets() {
     searchResults.innerHTML = "";
+    editorSearchResult.innerHTML = "";
 
     Object.keys(planets).forEach(planetName => {
-        const card = createPlanetCard(planetName);
-        searchResults.appendChild(card);
+        const card1 = createPlanetCard(planetName);
+        const card2 = createPlanetCardEditor(planetName);
+        searchResults.appendChild(card1);
+        editorSearchResult.appendChild(card2);
     });
 }
 
-let isPaused = false;
-
-document.getElementById("pause-btn").addEventListener("click", () => {
-    isPaused = !isPaused; 
-    document.getElementById("pause-btn").innerText = isPaused ? "Resume" : "Pause";
-});
-
-// Функция для поиска планет
 function searchPlanets(query) {
     searchResults.innerHTML = "";
 
@@ -102,15 +98,11 @@ function searchPlanets(query) {
     });
 }
 
-// Обработчик ввода в поле поиска
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();
     searchPlanets(query);
 });
 
-showAllPlanets();
-
-// Функция для получения русского названия планеты
 function getPlanetNameRus(planetNameEng) {
     const planetNames = {
         "Mercury": "Меркурий",
@@ -127,9 +119,7 @@ function getPlanetNameRus(planetNameEng) {
     return planetNames[planetNameEng] || planetNameEng;
 }
 
-let followingPlanet = null; // Хранит текущую отслеживаемую планету
-let offset = new THREE.Vector3(0, 10, 30); // Смещение камеры от планеты
-
+//камера---------------------------------------------------------------
 export function moveCameraToPlanet(planetName) {
 
     const planetMesh = planets[planetName];
@@ -160,17 +150,13 @@ export function moveCameraToPlanet(planetName) {
         .to({ x: planetPosition.x, y: planetPosition.y, z: planetPosition.z }, 2000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .start();
-
-    searchMenu.classList.add("hidden");
 }
 
-// Функция для отключения слежения
 export function stopFollowingPlanet() {
     followingPlanet = null;
     controls.enabled = true; // Возвращаем управление пользователю
 }
 
-// Обновляем положение камеры, если включено слежение
 export function updateCameraFollow() {
     if (followingPlanet) {
         search.classList.add("hidden");
@@ -181,40 +167,50 @@ export function updateCameraFollow() {
     }
 }
 
-document.getElementById("toggle-editor").addEventListener("click", () => {
-    isPaused = !isPaused; 
-    const editorMenu = document.getElementById("editor-menu");
-    editorMenu.classList.toggle("hidden");
+//редактор---------------------------------------------------------------
+function createPlanetCardEditor(planetName) {
+    const li = document.createElement("li");
+    li.classList.add("planet-card");
 
-    // Сбрасываем выбор планеты и очищаем поля ввода
-    document.getElementById("planet-select").value = "";
-    document.getElementById("mass-input").value = "";
-    document.getElementById("velocity-input").value = "";
-    document.getElementById("radius-input").value = "";
+    li.setAttribute("data-name_rus", getPlanetNameRus(planetName));
+    li.setAttribute("data-name_eng", planetName);
+
+    const img = document.createElement("img");
+    img.src = `/static/img/explore-button__imgs/${planetName.toLowerCase()}.png`;
+    img.classList.add("planet-card__img");
+
+    const textDiv = document.createElement("div");
+    textDiv.classList.add("planet-card__text");
+    textDiv.textContent = getPlanetNameRus(planetName);
+
+    li.appendChild(img);
+    li.appendChild(textDiv);
+
+    li.addEventListener("click", () => toggleVisibilityEditorWindow());
+
+    return li;
+}
+
+editorSearchInput.addEventListener("input", () => {
+    const query = editorSearchInput.value.toLowerCase();
+    searchPlanetsEditor(query);
 });
 
-document.getElementById("apply-changes").addEventListener("click", () => {
-    const planetName = document.getElementById("planet-select").value;
-    const mass = parseFloat(document.getElementById("mass-input").value);
-    const velocity = parseFloat(document.getElementById("velocity-input").value);
-    const radius = parseFloat(document.getElementById("radius-input").value);
-  
-    if (planets[planetName]) {
-        Mercury.mass = mass;
-        Mercury.velocity[0] = velocity; 
-        Mercury.mesh.scale.set(radius, radius, radius);
-    }
-});
+function searchPlanetsEditor(query) {
+    editorSearchResult.innerHTML = "";
 
-document.getElementById("planet-select").addEventListener("change", (event) => {
-    const planetName = event.target.value;
-    if (planets[planetName]) {
-        document.getElementById("mass-input").value = Mercury.mass;
-        document.getElementById("velocity-input").value = Mercury.velocity[0];
-        document.getElementById("radius-input").value = Mercury.mesh.scale.x;
-    }
-});
+    Object.keys(planets).forEach(planetName => {
+        const planetNameLower = planetName.toLowerCase();
+        const planetNameRus = getPlanetNameRus(planetName).toLowerCase();
 
+        if (query === "" || planetNameLower.includes(query) || planetNameRus.includes(query)) {
+            const card = createPlanetCardEditor(planetName);
+            editorSearchResult.appendChild(card);
+        }
+    });
+}
+
+//чтобы работало---------------------------------------------------------------
 function animate() {
     console.log(Earth.mass);
     // console.log(Mercury.velocity[0]);
@@ -222,12 +218,71 @@ function animate() {
     requestAnimationFrame(animate);
     TWEEN.update();
     controls.update();
-    if (!isPaused) {
-        updatePositions();
-        updatePlanetTraces(); 
-        updateCameraFollow();
-    } 
+    updatePositions(); //закомментить, когда буду делать редактор
+    // if (!isPaused) {
+    //     updatePositions();
+    //     updatePlanetTraces(); 
+    //     updateCameraFollow();
+    // } 
+
     renderer.render(scene, camera);
 }
 
+showAllPlanets();
 animate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementById("toggle-editor").addEventListener("click", () => {
+//     isPaused = !isPaused; 
+//     const editorMenu = document.getElementById("editor-menu");
+//     editorMenu.classList.toggle("hidden");
+
+//     // Сбрасываем выбор планеты и очищаем поля ввода
+//     document.getElementById("planet-select").value = "";
+//     document.getElementById("mass-input").value = "";
+//     document.getElementById("velocity-input").value = "";
+//     document.getElementById("radius-input").value = "";
+// });
+
+// document.getElementById("editor__button").addEventListener("click", () => {
+//     const planetName = document.getElementById("planet-select").value;
+//     const mass = parseFloat(document.getElementById("mass-input").value);
+//     const velocity = parseFloat(document.getElementById("velocity-input").value);
+//     const radius = parseFloat(document.getElementById("radius-input").value);
+  
+//     if (planets[planetName]) {
+//         Mercury.mass = mass;
+//         Mercury.velocity[0] = velocity; 
+//         Mercury.mesh.scale.set(radius, radius, radius);
+//     }
+// });
+
+// document.getElementById("planet-select").addEventListener("change", (event) => {
+//     const planetName = event.target.value;
+//     if (planets[planetName]) {
+//         document.getElementById("mass-input").value = Mercury.mass;
+//         document.getElementById("velocity-input").value = Mercury.velocity[0];
+//         document.getElementById("radius-input").value = Mercury.mesh.scale.x;
+//     }
+// });
+
+// let isPaused = false;
+
+// document.getElementById("pause-btn").addEventListener("click", () => {
+//     isPaused = !isPaused; 
+//     document.getElementById("pause-btn").innerText = isPaused ? "Resume" : "Pause";
+// });

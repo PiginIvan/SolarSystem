@@ -7,11 +7,11 @@
     width: 600px;
 }
 
-.search-form {
+.search__form {
     margin-right: 20px;
 }
 
-.search-input {
+.search__input {
     width: 100%;
     border: none;
     font-size: 36px;
@@ -25,12 +25,12 @@
     transition: border-color 0.3s ease;
 }
 
-.search-input::placeholder {
+.search__input::placeholder {
     color: var(--stroke-color);
     opacity: 0.7;
 }
 
-.search-input:focus {
+.search__input:focus {
     border-bottom-color: var(--stroke-color-active);
 }
 
@@ -54,12 +54,12 @@
     border: var(--stroke-color-active) 5px solid;
 }
 
-.planet-card-img {
+.planet-card__img {
     height: 62px;
     pointer-events: none;
 }
 
-.planet-card-text {
+.planet-card__text {
     font-family: var(--font-family-secondary);
     font-size: 48px;
 }
