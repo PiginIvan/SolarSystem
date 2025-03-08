@@ -119,7 +119,6 @@ function getPlanetNameRus(planetNameEng) {
     return planetNames[planetNameEng] || planetNameEng;
 }
 
-
 //камера---------------------------------------------------------------
 export function moveCameraToPlanet(planetName) {
 
@@ -213,6 +212,9 @@ function searchPlanetsEditor(query) {
 
 //чтобы работало---------------------------------------------------------------
 function animate() {
+    console.log(Earth.mass);
+    // console.log(Mercury.velocity[0]);
+    // console.log(Mercury.radius);
     requestAnimationFrame(animate);
     TWEEN.update();
     controls.update();
@@ -222,6 +224,7 @@ function animate() {
     //     updatePlanetTraces(); 
     //     updateCameraFollow();
     // } 
+
     renderer.render(scene, camera);
 }
 
