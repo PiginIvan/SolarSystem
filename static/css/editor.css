@@ -1,0 +1,18 @@
+.editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editor__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editor__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

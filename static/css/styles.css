@@ -4,17 +4,27 @@
 @import url(navbar.css);
 @import url(description.css);
 @import url(typography.css);
-@import url(discoverButton.css);
+@import url(explore-button.css);
 @import url(settings.css);
 @import url(toggle.css);
 @import url(search.css);
 @import url(animations.css);
 @import url(scrollbar.css);
+@import url(editor.css);
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 body {
@@ -40,4 +50,17 @@ body {
 
 .hidden {
   display: none;
+}
+
+#pause-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }

@@ -3,8 +3,7 @@ async function loadHtml(planetName) {
     const discoverDiv = document.getElementById('planet');
     try {
         descriptionDiv.innerHTML = await loadContent('/static/descriptions/' + planetName + '.html');
-
-        discoverDiv.innerHTML = await loadContent('/static/discovers/' + planetName + 'Discover.html');
+        discoverDiv.innerHTML = await loadContent('/static/explore-button__content/' + planetName + '.html');
     } catch (error) {
         console.error('Error loading content:', error);
         descriptionDiv.innerHTML = '<p>Failed to load the content.</p>';
