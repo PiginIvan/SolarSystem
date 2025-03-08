@@ -1,7 +1,6 @@
 async function loadHtml(planetName) {
     const descriptionDiv = document.getElementById('description');
     const discoverDiv = document.getElementById('planet');
-
     try {
         descriptionDiv.innerHTML = await loadContent('/static/descriptions/' + planetName + '.html');
 

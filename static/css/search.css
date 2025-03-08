@@ -1,0 +1,65 @@
+.search {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    width: 600px;
+}
+
+.search-form {
+    margin-right: 20px;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    font-size: 36px;
+    font-family: var(--font-family-primary);
+    border-bottom: solid var(--stroke-color) 2px;
+    text-align: center;
+    padding-bottom: 10px;
+    background-color: var(--dark-10);
+    color: var(--stroke-color-active);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: var(--stroke-color);
+    opacity: 0.7;
+}
+
+.search-input:focus {
+    border-bottom-color: var(--stroke-color-active);
+}
+
+.planet-card {
+    margin-right: 20px;
+    background-color: rgba(8, 30, 51, 0.6);
+    padding: 16px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: var(--stroke-color) 5px solid;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+    cursor: pointer;
+    user-select: none;
+}
+
+.planet-card:hover {
+    border: var(--stroke-color-active) 5px solid;
+}
+
+.planet-card-img {
+    height: 62px;
+    pointer-events: none;
+}
+
+.planet-card-text {
+    font-family: var(--font-family-secondary);
+    font-size: 48px;
+}
