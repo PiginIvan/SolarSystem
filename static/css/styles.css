@@ -21,8 +21,6 @@ body {
   color: var(--primary-color);
 }
 
-
-
 .wrapper {
   background-image: url("/static/img/interface/wrapperbackground.png");
   background-size: cover;

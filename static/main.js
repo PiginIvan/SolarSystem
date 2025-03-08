@@ -131,6 +131,7 @@ let followingPlanet = null; // Хранит текущую отслеживае�
 let offset = new THREE.Vector3(0, 10, 30); // Смещение камеры от планеты
 
 export function moveCameraToPlanet(planetName) {
+
     const planetMesh = planets[planetName];
     if (!planetMesh) return;
 
@@ -140,10 +141,12 @@ export function moveCameraToPlanet(planetName) {
     const planetPosition = new THREE.Vector3();
     planetMesh.getWorldPosition(planetPosition);
 
+
     // Вычисляем целевую позицию камеры
     const targetPosition = planetPosition.clone().add(offset);
 
     // Плавно перемещаем камеру в начальную точку слежения
+
     new TWEEN.Tween(camera.position)
         .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
         .easing(TWEEN.Easing.Quadratic.Out)
