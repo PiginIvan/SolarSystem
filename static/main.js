@@ -80,6 +80,13 @@ function showAllPlanets() {
     });
 }
 
+let isPaused = false;
+
+document.getElementById("pause-btn").addEventListener("click", () => {
+    isPaused = !isPaused; 
+    document.getElementById("pause-btn").innerText = isPaused ? "Resume" : "Pause";
+});
+
 // Функция для поиска планет
 function searchPlanets(query) {
     searchResults.innerHTML = "";
@@ -120,19 +127,33 @@ function getPlanetNameRus(planetNameEng) {
     return planetNames[planetNameEng] || planetNameEng;
 }
 
-function moveCameraToPlanet(planetName) {
-    console.log(planetName);
+let followingPlanet = null; // Хранит текущую отслеживаемую планету
+let offset = new THREE.Vector3(0, 10, 30); // Смещение камеры от планеты
+
+export function moveCameraToPlanet(planetName) {
+
     const planetMesh = planets[planetName];
     if (!planetMesh) return;
 
+    followingPlanet = planetMesh; // Устанавливаем текущую цель для слежения
+
+    // Получаем текущую позицию планеты
     const planetPosition = new THREE.Vector3();
     planetMesh.getWorldPosition(planetPosition);
 
-    const targetPosition = planetPosition.clone().add(new THREE.Vector3(0, 10, 30));
+
+    // Вычисляем целевую позицию камеры
+    const targetPosition = planetPosition.clone().add(offset);
+
+    // Плавно перемещаем камеру в начальную точку слежения
 
     new TWEEN.Tween(camera.position)
         .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 2000)
         .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete(() => {
+            // Когда движение завершено, активируем слежение
+            controls.enabled = false; // Отключаем ручное управление, чтобы камера следовала за планетой
+        })
         .start();
 
     new TWEEN.Tween(controls.target)
@@ -143,12 +164,69 @@ function moveCameraToPlanet(planetName) {
     searchMenu.classList.add("hidden");
 }
 
+// Функция для отключения слежения
+export function stopFollowingPlanet() {
+    followingPlanet = null;
+    controls.enabled = true; // Возвращаем управление пользователю
+}
+
+// Обновляем положение камеры, если включено слежение
+export function updateCameraFollow() {
+    if (followingPlanet) {
+        search.classList.add("hidden");
+        const planetPosition = new THREE.Vector3();
+        followingPlanet.getWorldPosition(planetPosition);
+        camera.position.copy(planetPosition.clone().add(offset));
+        controls.target.copy(planetPosition);
+    }
+}
+
+document.getElementById("toggle-editor").addEventListener("click", () => {
+    isPaused = !isPaused; 
+    const editorMenu = document.getElementById("editor-menu");
+    editorMenu.classList.toggle("hidden");
+
+    // Сбрасываем выбор планеты и очищаем поля ввода
+    document.getElementById("planet-select").value = "";
+    document.getElementById("mass-input").value = "";
+    document.getElementById("velocity-input").value = "";
+    document.getElementById("radius-input").value = "";
+});
+
+document.getElementById("apply-changes").addEventListener("click", () => {
+    const planetName = document.getElementById("planet-select").value;
+    const mass = parseFloat(document.getElementById("mass-input").value);
+    const velocity = parseFloat(document.getElementById("velocity-input").value);
+    const radius = parseFloat(document.getElementById("radius-input").value);
+  
+    if (planets[planetName]) {
+        Mercury.mass = mass;
+        Mercury.velocity[0] = velocity; 
+        Mercury.mesh.scale.set(radius, radius, radius);
+    }
+});
+
+document.getElementById("planet-select").addEventListener("change", (event) => {
+    const planetName = event.target.value;
+    if (planets[planetName]) {
+        document.getElementById("mass-input").value = Mercury.mass;
+        document.getElementById("velocity-input").value = Mercury.velocity[0];
+        document.getElementById("radius-input").value = Mercury.mesh.scale.x;
+    }
+});
+
 function animate() {
+    console.log(Earth.mass);
+    // console.log(Mercury.velocity[0]);
+    // console.log(Mercury.radius);
     requestAnimationFrame(animate);
     TWEEN.update();
-    controls.update(); 
-    updatePositions();
-    updatePlanetTraces(); 
+    controls.update();
+    if (!isPaused) {
+        updatePositions();
+        updatePlanetTraces(); 
+        updateCameraFollow();
+    } 
     renderer.render(scene, camera);
 }
 

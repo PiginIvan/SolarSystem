@@ -9,7 +9,7 @@ import { Saturn } from './planets/saturn.js';
 import { Uranus } from './planets/uranus.js';
 import { Neptune } from './planets/neptune.js';
 import { Pluto } from './planets/pluto.js';
-import { camera, renderer, controls } from '../main.js';
+import { camera, renderer, controls, stopFollowingPlanet } from '../main.js';
 
 export function configureControls(scene) {
     controls.enableDamping = true; 
@@ -188,6 +188,11 @@ export function onMouseClick(event) {
         showButton();
         loadHtml(selectedObject.name);
         playClickSound();
+    }
+    else {
+        if (!search.contains(event.target)) {
+            stopFollowingPlanet();
+        }
     }
 }
 
