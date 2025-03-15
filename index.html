@@ -10,28 +10,38 @@
 
 <body>
   <nav class="navbar" id="navbar">
-    <ul class="navbar-ul">
-        <li class="navbar-element search-icon" id="search-icon"  onclick="toggleVisibilitySearch()"><img src="/static/img/interface/search.png" alt="Search"></li>
-        <li class="navbar-element settings-icon" id="settings-icon" onclick="toggleVisibilitySettings()"><img src="/static/img/interface/settings.png"></li>
-        <li class="navbar-element edit-icon" id="edit-icon"><img src="/static/img/interface/edit.png" alt="Edit"></li>
+    <ul class="navbar__ul">
+        <li class="navbar__li" id="search-icon"  tabindex="0"><img src="/static/img/interface/search.png" alt="Search"></li>
+        <li class="navbar__li" id="settings-icon" tabindex="0"><img src="/static/img/interface/settings.png" alt="Settings"></li>
+        <li class="navbar__li" id="editor-icon" tabindex="0"><img src="/static/img/interface/edit.png" alt="Edit"></li>
     </ul>
   </nav>
+
+  <button class="explore-button hidden" id="explore-button" aria-label="Explore">
+    <div class="explore-button__content">
+      <div id="planet">
+        <!-- рендер из explore-button__content -->
+      </div>
+      <p class="explore-button__text">Исследовать</p>
+    </div>
+  </button>
   
   <div class="wrapper hidden" id="description-wrapper"> 
     <div class="description" id = "description">
+      <!-- рендер из descriptions -->
     </div>
   </div>
 
   <div class="wrapper hidden" id="settings-wrapper"> 
     <div class="settings" id = "settings">
-      <h1 class="h1 settings-title">Настройки</h1>
-      <div class="settings-blocks">
-        <div class="settings-block settings-block-sound">
+      <h1 class="h1">Настройки</h1>
+      <div class="settings__blocks">
+        <div class="settings__block">
           <label class="switch">
             <input type="checkbox" id="checkbox-sound" checked>
             <span class="slider"></span>
           </label>
-          <div class="settings-block-text">Звук отклика</div>
+          <div class="settings__text">Звук отклика</div>
         </div>
         </div>
       </div>
@@ -39,26 +49,47 @@
   </div>
 
   <div class="wrapper hidden" id="search-wrapper"> 
-    <div class="search" id="search">
-      <form class="search-form" id="search-form">
-        <input id="search-input" name="search-input" type="text" class="search-input" placeholder="Enter planet name...">
+    <div class="search" id="search-scroll">
+      <form class="search__form">
+        <input id="search__input" name="search__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
       </form>
-      <ul id="search-results">
+      <ul id="search__results">
         <!-- рендер из main.js -->
       </ul>
     </div>
   </div>
 
-  <button class="discoverButton hidden" id="showDescriptionButton" onclick="toggleVisibility()">
-    <div class="button-content">
-      <div class="planet" id="planet">
-        <!-- рендер из loader.js -->
-      </div>
-      <p class="discoverButton-discover">Исследовать</p>
+  <div class="wrapper hidden" id="editor-wrapper">
+    <div class="search" id="editor-scroll" autocomplete="off">
+      <form class="search__form">
+        <input id="editor__input" name="editor__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
+      </form>
+      <ul id="editor__results">
+        <!-- рендер из main.js -->
+      </ul>
     </div>
-  </button>
+  </div>
 
-  <button id="pause-btn">Pause</button>
+  <div class="wrapper editor hidden" id="editor__menu-wrapper">
+    <h1 class="h1">Земля</h1>
+    <div class="editor__menu" id="editor__menu">
+      <div class="editor__block">
+        <label class="editor__label" for="mass-input">Масса:</label>
+        <input class="editor__input" type="range" id="mass-input" step="0.01" autocomplete="on">
+      </div>
+      <div class="editor__block"></div>
+        <label class="editor__label" for="velocity-input">Скорость:</label>
+        <input class="editor__input" type="range" id="velocity-input" step="0.01" autocomplete="on">
+      </div>
+
+      <div class="editor__block"></div>
+        <label class="editor__label" for="radius-input">Радиус:</label>
+        <input class="editor__input" type="range" id="radius-input" step="0.1" autocomplete="on">
+      </div>
+      
+      <!-- <button class="editor__button" id="editor__button">Применить</button> -->
+    </div>
+  </div>
 
   <div id="editor-menu" class="editor-menu hidden">
     <h3>Редактор планеты</h3>
@@ -87,8 +118,6 @@
 
     <button id="apply-changes">Применить</button>
   </div>
-
-  <button id="toggle-editor">Редактор</button>
 
   <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
 

@@ -6,7 +6,7 @@
     display: flex;
 }
   
-.navbar-ul {
+.navbar__ul {
     height: 276px;
   
     display: flex;
@@ -15,7 +15,7 @@
     gap: 10px;
 }
   
-.navbar-element {
+.navbar__li {
     list-style-type: none;
     cursor: pointer;
 }

@@ -1,48 +1,63 @@
-const descriptionWrapper = document.getElementById("description-wrapper");
-const navbar = document.getElementById("navbar");
-const discover = document.getElementById("showDescriptionButton");
-const settings = document.getElementById("settings-wrapper");
-const settingsIcon = document.getElementById("settings-icon");
-const search = document.getElementById("search-wrapper");
-const searchButton = document.getElementById("search-icon");
+const elements = {
+    navbar: document.getElementById("navbar"),
+    settingsIcon: document.getElementById("settings-icon"),
+    searchButton: document.getElementById("search-icon"),
+    editorButton: document.getElementById("editor-icon"),
+    discover: document.getElementById("explore-button"),
+    descriptionWrapper: document.getElementById("description-wrapper"),
+    settings: document.getElementById("settings-wrapper"),
+    search: document.getElementById("search-wrapper"),
+    editor: document.getElementById("editor-wrapper"),
+    editorWindow: document.getElementById("editor__menu-wrapper"),
+    searchCardsArea: document.getElementById("search-scroll"),
+    editorCardsArea: document.getElementById("editor-scroll"),
+    descriptionArea: document.getElementById("description"),
+    searchInput: document.getElementById("search__input")
+};
 
-document.addEventListener('click', function(event) {
-    if (!descriptionWrapper.contains(event.target) && !discover.contains(event.target)) {
-        descriptionWrapper.classList.add("hidden");
-        discover.classList.add("hidden");  
-    }
-    
-    // Закрытие настроек при клике вне области настроек и иконки
-    if (!settings.contains(event.target) && !settingsIcon.contains(event.target)) {
-        settings.classList.add("hidden");
-    }
-    
-    if (!search.contains(event.target) && !searchButton.contains(event.target)) {
-        search.classList.add("hidden");
-    }
+function toggleVisibility(...keys) {
+    keys.map(key => elements[key]).forEach(element => {
+        element.classList.toggle("hidden");
+        if (!element.classList.contains("hidden")) {
+            elements.searchCardsArea.scrollTop = 0; 
+            elements.editorCardsArea.scrollTop = 0;
+            elements.descriptionArea.scrollTop = 0; 
+        }
+    });
+}
 
-    // Скрытие navbar, если descriptionWrapper открыт
-    navbar.classList.toggle("hidden", (!descriptionWrapper.classList.contains("hidden") || !settings.classList.contains("hidden") || !search.classList.contains("hidden")));
+document.addEventListener('click', (event) => {
+    const elementsToHide = [
+        { wrapper: elements.descriptionWrapper, trigger: elements.discover },
+        { wrapper: elements.settings, trigger: elements.settingsIcon },
+        { wrapper: elements.search, trigger: elements.searchButton },
+        { wrapper: elements.editor, trigger: elements.editorButton },
+        { wrapper: elements.editorWindow, trigger: elements.editor },
+        { wrapper: elements.discover, trigger: elements.discover }
+    ];
+    
+    elementsToHide.forEach(({ wrapper, trigger }) => {
+        if (!wrapper.contains(event.target) && !trigger.contains(event.target)) {
+            wrapper.classList.add("hidden");
+        }
+    });
+
+    const isAnyVisible = elementsToHide.some(({ wrapper }) => !wrapper.classList.contains("hidden"));
+    elements.navbar.classList.toggle("hidden", isAnyVisible);
 });
 
-
-// Функция для переключения видимости элементов
-function toggleVisibility() {
-    descriptionWrapper.classList.toggle("hidden");
-    navbar.classList.toggle("hidden");
-    discover.classList.toggle("hidden");
-}
-
 function showButton() {
-    discover.classList.toggle("hidden");
+    elements.discover.classList.toggle("hidden");
 }
 
-function toggleVisibilitySettings() {
-    settings.classList.toggle("hidden");
-    navbar.classList.toggle("hidden");
-}
-
-function toggleVisibilitySearch() {
-    search.classList.toggle("hidden");
-    navbar.classList.toggle("hidden");
-}
+document.getElementById("search-icon").addEventListener("click", () => toggleVisibility("search", "navbar"));
+document.getElementById("settings-icon").addEventListener("click", () => toggleVisibility("settings", "navbar"));
+document.getElementById("editor-icon").addEventListener("click", () => toggleVisibility("editor", "navbar"));
+document.getElementById("explore-button").addEventListener("click", () => toggleVisibility("descriptionWrapper", "navbar", "discover"));
+document.addEventListener("click", (event) => {
+    const planetCard = event.target.closest(".editor-card");
+    if (planetCard) {
+        elements.editor.classList.add("hidden");
+        elements.editorWindow.classList.remove("hidden");
+    }
+});
