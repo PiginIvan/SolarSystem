@@ -49,7 +49,7 @@
   </div>
 
   <div class="wrapper hidden" id="search-wrapper"> 
-    <div class="search">
+    <div class="search" id="search-scroll">
       <form class="search__form">
         <input id="search__input" name="search__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
       </form>
@@ -60,7 +60,7 @@
   </div>
 
   <div class="wrapper hidden" id="editor-wrapper">
-    <div class="search" autocomplete="off">
+    <div class="search" id="editor-scroll" autocomplete="off">
       <form class="search__form">
         <input id="editor__input" name="editor__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
       </form>
@@ -91,11 +91,6 @@
     </div>
   </div>
 
-<!--<button id="pause-btn">Pause</button>
-  <button id="toggle-editor">Редактор</button> -->
-
-  <button id="pause-btn">Pause</button>
-
   <div id="editor-menu" class="editor-menu hidden">
     <h3>Редактор планеты</h3>
     <label for="planet-select">Выберите планету:</label>
@@ -123,8 +118,6 @@
 
     <button id="apply-changes">Применить</button>
   </div>
-
-  <button id="toggle-editor">Редактор</button>
 
   <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
 
