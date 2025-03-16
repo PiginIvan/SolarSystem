@@ -74,36 +74,3 @@ function setPlanetData(planetName) {
     });
     
 }
-// document.getElementById("toggle-editor").addEventListener("click", () => {
-//     isPaused = !isPaused; 
-//     const editorMenu = document.getElementById("editor-menu");
-//     editorMenu.classList.toggle("hidden");
-
-//     // Сбрасываем выбор планеты и очищаем поля ввода
-//     document.getElementById("planet-select").value = "";
-//     document.getElementById("mass-input").value = "";
-//     document.getElementById("velocity-input").value = "";
-//     document.getElementById("radius-input").value = "";
-// });
-
-// document.getElementById("editor__button").addEventListener("click", () => {
-//     const planetName = document.getElementById("planet-select").value;
-//     const mass = parseFloat(document.getElementById("mass-input").value);
-//     const velocity = parseFloat(document.getElementById("velocity-input").value);
-//     const radius = parseFloat(document.getElementById("radius-input").value);
-  
-//     if (planets[planetName]) {
-//         Mercury.mass = mass;
-//         Mercury.velocity[0] = velocity; 
-//         Mercury.mesh.scale.set(radius, radius, radius);
-//     }
-// });
-
-// document.getElementById("planet-select").addEventListener("change", (event) => {
-//     const planetName = event.target.value;
-//     if (planets[planetName]) {
-//         document.getElementById("mass-input").value = Mercury.mass;
-//         document.getElementById("velocity-input").value = Mercury.velocity[0];
-//         document.getElementById("radius-input").value = Mercury.mesh.scale.x;
-//     }
-// });
