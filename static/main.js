@@ -35,9 +35,6 @@ window.addEventListener('click', onMouseClick, false);
 scene.add(lightAmbient);
 
 function animate() {
-    console.log(Earth.mass);
-    // console.log(Mercury.velocity[0]);
-    // console.log(Mercury.radius);
     requestAnimationFrame(animate);
     TWEEN.update();
     controls.update();
