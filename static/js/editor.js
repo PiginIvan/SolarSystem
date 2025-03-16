@@ -28,6 +28,7 @@ function createPlanetCard(planetName) {
     li.appendChild(textDiv);
     li.addEventListener("click", () => {
         loadEditor(planetName);
+        setPlanetData(planetName);
     });
     return li;
 }
@@ -50,6 +51,29 @@ function searchPlanetsEditor(query) {
     });
 }
 
+function setPlanetData(planetName) {
+    const massInput = document.getElementById(planetName + "mass");
+    const velocityInput = document.getElementById(planetName + "velocity");
+    const radiusInput = document.getElementById(planetName + "radius");
+
+    massInput.value = planets[planetName][1].mass;
+    velocityInput.value = planets[planetName][1].velocity[0];
+    radiusInput.value = planets[planetName][1].radius;
+
+    massInput.addEventListener("input", () => {
+        planets[planetName][1].mass = parseFloat(massInput.value);
+    });
+
+    velocityInput.addEventListener("input", () => {
+        planets[planetName][1].velocity[0] = parseFloat(velocityInput.value); 
+    });
+
+    radiusInput.addEventListener("input", () => {
+        planets[planetName][1].radius = parseFloat(radiusInput.value);
+        planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
+    });
+    
+}
 // document.getElementById("toggle-editor").addEventListener("click", () => {
 //     isPaused = !isPaused; 
 //     const editorMenu = document.getElementById("editor-menu");
