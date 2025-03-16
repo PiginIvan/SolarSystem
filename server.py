@@ -21,11 +21,16 @@ def calculate_accelerations(bodies):
                 distance_vector = position_j - position_i
                 distance_magnitude = np.linalg.norm(distance_vector)
 
-                if distance_magnitude > 0:
+                # Учитываем радиусы планет
+                radius_i = float(bodies[i].get('radius'))  
+                radius_j = float(bodies[j].get('radius'))  
+                effective_distance = max(distance_magnitude - (radius_i + radius_j) + 3, 1e-6)
+
+                if effective_distance  > 0:
                     force = compute_gravitational_force(
                         float(bodies[i]['mass']), 
                         float(bodies[j]['mass']), 
-                        distance_magnitude
+                        effective_distance 
                     )
                     acceleration = force / float(bodies[i]['mass']) * (distance_vector / distance_magnitude)
                     accelerations[i] += acceleration

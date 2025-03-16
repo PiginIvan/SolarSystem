@@ -7,16 +7,16 @@ import { Sun } from './js/planets/sun.js';
 import { showAllPlanetsSearch, updateCameraFollow } from './js/search.js'; import { showAllPlanetsEditor } from './js/editor.js';
 
 export const planets = {
-    "Sun": Sun.mesh,
-    "Mercury": Mercury.mesh,
-    "Venus": Venus.mesh,
-    "Earth": Earth.mesh,
-    "Mars": Mars.mesh,
-    "Jupiter": Jupiter.mesh,
-    "Saturn": Saturn.mesh,
-    "Uranus": Uranus.mesh,
-    "Neptune": Neptune.mesh,
-    "Pluto": Pluto.mesh
+    "Sun": [Sun.mesh, Sun],
+    "Mercury": [Mercury.mesh, Mercury],
+    "Venus": [Venus.mesh, Venus],
+    "Earth": [Earth.mesh, Earth],
+    "Mars": [Mars.mesh, Mars],
+    "Jupiter": [Jupiter.mesh, Jupiter],
+    "Saturn": [Saturn.mesh, Saturn],
+    "Uranus": [Uranus.mesh, Uranus],
+    "Neptune": [Neptune.mesh, Neptune],
+    "Pluto": [Pluto.mesh, Pluto]
 };
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = true;
+let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
