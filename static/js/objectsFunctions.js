@@ -1,15 +1,30 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
 import { Sun } from './planets/sun.js';
-import { Mercury } from './planets/mercury.js';
-import { Venus } from './planets/venus.js';
-import { Earth } from './planets/earth.js';
-import { Mars } from './planets/mars.js';
-import { Jupiter } from './planets/jupiter.js';
-import { Saturn } from './planets/saturn.js';
-import { Uranus } from './planets/uranus.js';
-import { Neptune } from './planets/neptune.js';
-import { Pluto } from './planets/pluto.js';
-import { camera, renderer, controls, stopFollowingPlanet } from '../main.js';
+import { Mercury } from './planets/mercury.js'; import { Venus } from './planets/venus.js'; import { Earth } from './planets/earth.js'; import { Mars } from './planets/mars.js';
+import { Jupiter } from './planets/jupiter.js'; import { Saturn } from './planets/saturn.js'; import { Uranus } from './planets/uranus.js'; import { Neptune } from './planets/neptune.js'; import { Pluto } from './planets/pluto.js';
+import { camera, renderer, controls } from '../main.js';
+import { stopFollowingPlanet } from './search.js';
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const search = document.getElementById("search-wrapper");
+const saturnRings = Saturn.createRings();
+const uranusRings = Uranus.createRings(); 
+const traces = {};  
+const Moon = {
+    radius: 0.5, 
+    distanceFromEarth: 4, 
+    orbitSpeed: 0.03, 
+    mesh: new THREE.Mesh(
+        new THREE.SphereGeometry(1, 32, 32),
+        new THREE.MeshStandardMaterial({ color: 0x888888 }) 
+    ),
+    updatePosition: function (earthPosition, angle) {
+        this.mesh.position.x = earthPosition.x + Math.cos(angle) * this.distanceFromEarth;
+        this.mesh.position.y = earthPosition.y + Math.sin(angle) * this.distanceFromEarth;
+        this.mesh.position.z = earthPosition.z;
+    }
+};
 
 export function configureControls(scene) {
     controls.enableDamping = true; 
@@ -50,56 +65,6 @@ export function addStars(scene) {
     scene.add(starsMesh);
 }
 
-const saturnRings = Saturn.createRings();
-const uranusRings = Uranus.createRings(); 
-
-// Луна - создадим её как сферу с меньшим радиусом
-export const Moon = {
-    radius: 0.5, 
-    distanceFromEarth: 4, 
-    orbitSpeed: 0.03, 
-    mesh: new THREE.Mesh(
-        new THREE.SphereGeometry(1, 32, 32),
-        new THREE.MeshStandardMaterial({ color: 0x888888 }) 
-    ),
-    updatePosition: function (earthPosition, angle) {
-        this.mesh.position.x = earthPosition.x + Math.cos(angle) * this.distanceFromEarth;
-        this.mesh.position.y = earthPosition.y + Math.sin(angle) * this.distanceFromEarth;
-        this.mesh.position.z = earthPosition.z;
-    }
-};
-
-const traces = {};  // Словарь для хранения следов
-
-function createTrace(material) {
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(0);  // Начинаем с пустого массива
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const line = new THREE.Line(geometry, material);
-    return line;
-}
-
-function updateTrace(planetName, position) {
-    const trace = traces[planetName];
-    const geometry = trace.geometry;
-    const positions = geometry.attributes.position.array;
-
-    const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900, 'Pluto': 1400};
-
-    const newPositions = new Float32Array(positions.length + 3);
-    newPositions.set(positions);  
-    newPositions.set([position.x, position.y, position.z], positions.length);
-
-    if (newPositions.length / 3 > maxPoints[planetName]) {
-        const newArray = new Float32Array(maxPoints[planetName] * 3);
-        newArray.set(newPositions.slice(3), 0);
-        geometry.setAttribute('position', new THREE.BufferAttribute(newArray, 3));
-    } else {
-        geometry.setAttribute('position', new THREE.BufferAttribute(newPositions, 3));
-    }
-    geometry.attributes.position.needsUpdate = true;  
-}
-
 export function addPlanets(scene) {
     scene.add(Sun.mesh);
     scene.add(Mercury.mesh);  
@@ -117,11 +82,11 @@ export function addPlanets(scene) {
     scene.add(Moon.mesh);
     scene.add(Pluto.mesh);
 
-
     const whiteMaterial = new THREE.LineBasicMaterial({ 
         color: 0xffffff,
         transparent: true,  
-        opacity: 0.3   
+        opacity: 0.3,
+        
     });
     traces.Mercury = createTrace(whiteMaterial);
     scene.add(traces.Mercury);
@@ -152,7 +117,6 @@ export function addPlanets(scene) {
 
 }
 
-// Обновляем следы планет на каждом кадре
 export function updatePlanetTraces() {
     updateTrace('Mercury', Mercury.mesh.position);
     updateTrace('Venus', Venus.mesh.position);
@@ -163,15 +127,10 @@ export function updatePlanetTraces() {
     updateTrace('Uranus', Uranus.mesh.position);
     updateTrace('Neptune', Neptune.mesh.position);
     updateTrace('Pluto', Pluto.mesh.position);
-
-
     const earthPosition = Earth.mesh.position;
-    const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001;  // Создаем угол для вращения Луны
+    const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001; 
     Moon.updatePosition(earthPosition, moonAngle);
 }
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 
 export function onMouseClick(event) {
     
@@ -183,7 +142,7 @@ export function onMouseClick(event) {
 
     const intersects = raycaster.intersectObjects([Sun.mesh, Mercury.mesh, Venus.mesh, Earth.mesh, Mars.mesh, Jupiter.mesh, Saturn.mesh, Uranus.mesh, Neptune.mesh, Pluto.mesh]);
     
-    if (intersects.length > 0) {
+    if (intersects.length > 0 && !event.target.closest(".wrapper")) {
         const selectedObject = intersects[0].object;
         showButton();
         loadHtml(selectedObject.name);
@@ -195,7 +154,6 @@ export function onMouseClick(event) {
         }
     }
 }
-
 
 export function updatePositions() {
     fetch('/update', {
@@ -231,4 +189,35 @@ export function updatePositions() {
         Neptune.updatePosition(data.bodies[8].position, data.bodies[8].velocity);
         Pluto.updatePosition(data.bodies[9].position, data.bodies[9].velocity);
     });
+}
+
+function createTrace(material) {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(0);  
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const line = new THREE.Line(geometry, material);
+    line.geometry.computeBoundingSphere();
+    line.frustumCulled = false;
+    return line;
+}
+
+function updateTrace(planetName, position) {
+    const trace = traces[planetName];
+    const geometry = trace.geometry;
+    const positions = geometry.attributes.position.array;
+
+    const maxPoints = {'Mercury': 30, 'Venus': 80, 'Earth': 150, 'Mars': 270, 'Jupiter': 500, 'Saturn': 600, 'Uranus': 750, 'Neptune': 900, 'Pluto': 1400};
+
+    const newPositions = new Float32Array(positions.length + 3);
+    newPositions.set(positions);  
+    newPositions.set([position.x, position.y, position.z], positions.length);
+
+    if (newPositions.length / 3 > maxPoints[planetName]) {
+        const newArray = new Float32Array(maxPoints[planetName] * 3);
+        newArray.set(newPositions.slice(3), 0);
+        geometry.setAttribute('position', new THREE.BufferAttribute(newArray, 3));
+    } else {
+        geometry.setAttribute('position', new THREE.BufferAttribute(newPositions, 3));
+    }
+    geometry.attributes.position.needsUpdate = true;  
 }

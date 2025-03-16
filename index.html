@@ -49,7 +49,7 @@
   </div>
 
   <div class="wrapper hidden" id="search-wrapper"> 
-    <div class="search">
+    <div class="search" id="search-scroll">
       <form class="search__form">
         <input id="search__input" name="search__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
       </form>
@@ -60,7 +60,7 @@
   </div>
 
   <div class="wrapper hidden" id="editor-wrapper">
-    <div class="search" autocomplete="off">
+    <div class="search" id="editor-scroll" autocomplete="off">
       <form class="search__form">
         <input id="editor__input" name="editor__input" type="text" class="search__input" placeholder="Enter planet name..." autocomplete="off">
       </form>
@@ -91,8 +91,33 @@
     </div>
   </div>
 
-<!--<button id="pause-btn">Pause</button>
-  <button id="toggle-editor">Редактор</button> -->
+  <div id="editor-menu" class="editor-menu hidden">
+    <h3>Редактор планеты</h3>
+    <label for="planet-select">Выберите планету:</label>
+    <select id="planet-select">
+      <option value="" disabled selected>Выберите планету</option>
+        <option value="Mercury">Mercury</option>
+        <option value="Venus">Venus</option>
+        <option value="Earth">Earth</option>
+        <option value="Mars">Mars</option>
+        <option value="Jupiter">Jupiter</option>
+        <option value="Saturn">Saturn</option>
+        <option value="Uranus">Uranus</option>
+        <option value="Neptune">Neptune</option>
+        <option value="Pluto">Pluto</option>
+    </select>
+
+    <label for="mass-input">Масса:</label>
+    <input type="number" id="mass-input" step="0.01" autocomplete="on">
+
+    <label for="velocity-input">Скорость:</label>
+    <input type="number" id="velocity-input" step="0.01" autocomplete="on">
+
+    <label for="radius-input">Радиус:</label>
+    <input type="number" id="radius-input" step="0.1" autocomplete="on">
+
+    <button id="apply-changes">Применить</button>
+  </div>
 
   <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
 
