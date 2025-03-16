@@ -3,9 +3,11 @@ import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.124/examples
 import { onMouseClick, updatePositions, addPlanets, addStars, configureControls, updatePlanetTraces } from './js/objectsFunctions.js';
 import { Mercury } from './js/planets/mercury.js'; import { Venus } from './js/planets/venus.js'; import { Earth } from './js/planets/earth.js'; import { Mars } from './js/planets/mars.js';
 import { Jupiter } from './js/planets/jupiter.js'; import { Saturn } from './js/planets/saturn.js'; import { Uranus } from './js/planets/uranus.js'; import { Neptune } from './js/planets/neptune.js'; import { Pluto } from './js/planets/pluto.js';
+import { Sun } from './js/planets/sun.js';
 import { showAllPlanetsSearch, updateCameraFollow } from './js/search.js'; import { showAllPlanetsEditor } from './js/editor.js';
 
 export const planets = {
+    "Sun": Sun.mesh,
     "Mercury": Mercury.mesh,
     "Venus": Venus.mesh,
     "Earth": Earth.mesh,

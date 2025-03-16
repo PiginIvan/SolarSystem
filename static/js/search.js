@@ -18,6 +18,7 @@ export function showAllPlanetsSearch() {
 
 export function getPlanetNameRus(planetNameEng) {
     const planetNames = {
+        "Sun": "Солнце",
         "Mercury": "Меркурий",
         "Venus": "Венера",
         "Earth": "Земля",
