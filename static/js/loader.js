@@ -37,7 +37,8 @@ function getPlanetNameRus(planetNameEng) {
 }
 
 function loadEditor(planetName) {
-    const editorWrapper = document.getElementById("editor__menu-wrapper")
+    const editorWrapper = document.getElementById("editor__menu-wrapper");
+    editorWrapper.innerHTML = "";
     
     const h1 = document.createElement("h1");
     h1.classList.add("h1");
@@ -65,16 +66,15 @@ function loadEditor(planetName) {
         input.id = inputId;
         input.min = 0;
         input.max = 10;
-        input.value = 5;
+        input.step = 0.01;
    
         block.appendChild(label);
         block.appendChild(input);
-    
+        
         return block;
     }
     
     editor__menu.appendChild(createEditorBlock("Масса:", planetName + "mass"));
     editor__menu.appendChild(createEditorBlock("Скорость:", planetName + "velocity"));
     editor__menu.appendChild(createEditorBlock("Радиус:", planetName + "radius"));
-
 }

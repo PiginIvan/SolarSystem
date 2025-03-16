@@ -161,16 +161,66 @@ export function updatePositions() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             bodies: [
-                { mass: Sun.mass, position: [Sun.mesh.position.x, Sun.mesh.position.y, Sun.mesh.position.z], velocity: Sun.velocity },
-                { mass: Mercury.mass, position: [Mercury.mesh.position.x, Mercury.mesh.position.y, Mercury.mesh.position.z], velocity: Mercury.velocity },
-                { mass: Venus.mass, position: [Venus.mesh.position.x, Venus.mesh.position.y, Venus.mesh.position.z], velocity: Venus.velocity }, 
-                { mass: Earth.mass, position: [Earth.mesh.position.x, Earth.mesh.position.y, Earth.mesh.position.z], velocity: Earth.velocity },
-                { mass: Mars.mass, position: [Mars.mesh.position.x, Mars.mesh.position.y, Mars.mesh.position.z], velocity: Mars.velocity },
-                { mass: Jupiter.mass, position: [Jupiter.mesh.position.x, Jupiter.mesh.position.y, Jupiter.mesh.position.z], velocity: Jupiter.velocity },
-                { mass: Saturn.mass, position: [Saturn.mesh.position.x, Saturn.mesh.position.y, Saturn.mesh.position.z], velocity: Saturn.velocity },
-                { mass: Uranus.mass, position: [Uranus.mesh.position.x, Uranus.mesh.position.y, Uranus.mesh.position.z], velocity: Uranus.velocity },
-                { mass: Neptune.mass, position: [Neptune.mesh.position.x, Neptune.mesh.position.y, Neptune.mesh.position.z], velocity: Neptune.velocity },
-                { mass: Pluto.mass, position: [Pluto.mesh.position.x, Pluto.mesh.position.y, Pluto.mesh.position.z], velocity: Pluto.velocity }
+                { 
+                    mass: Sun.mass, 
+                    position: [Sun.mesh.position.x, Sun.mesh.position.y, Sun.mesh.position.z], 
+                    velocity: Sun.velocity, 
+                    radius: Sun.radius 
+                },
+                { 
+                    mass: Mercury.mass, 
+                    position: [Mercury.mesh.position.x, Mercury.mesh.position.y, Mercury.mesh.position.z], 
+                    velocity: Mercury.velocity, 
+                    radius: Mercury.radius 
+                },
+                { 
+                    mass: Venus.mass, 
+                    position: [Venus.mesh.position.x, Venus.mesh.position.y, Venus.mesh.position.z], 
+                    velocity: Venus.velocity, 
+                    radius: Venus.radius 
+                }, 
+                { 
+                    mass: Earth.mass, 
+                    position: [Earth.mesh.position.x, Earth.mesh.position.y, Earth.mesh.position.z], 
+                    velocity: Earth.velocity, 
+                    radius: Earth.radius 
+                },
+                { 
+                    mass: Mars.mass, 
+                    position: [Mars.mesh.position.x, Mars.mesh.position.y, Mars.mesh.position.z], 
+                    velocity: Mars.velocity, 
+                    radius: Mars.radius 
+                },
+                { 
+                    mass: Jupiter.mass, 
+                    position: [Jupiter.mesh.position.x, Jupiter.mesh.position.y, Jupiter.mesh.position.z], 
+                    velocity: Jupiter.velocity, 
+                    radius: Jupiter.radius 
+                },
+                { 
+                    mass: Saturn.mass, 
+                    position: [Saturn.mesh.position.x, Saturn.mesh.position.y, Saturn.mesh.position.z], 
+                    velocity: Saturn.velocity, 
+                    radius: Saturn.radius 
+                },
+                { 
+                    mass: Uranus.mass, 
+                    position: [Uranus.mesh.position.x, Uranus.mesh.position.y, Uranus.mesh.position.z], 
+                    velocity: Uranus.velocity, 
+                    radius: Uranus.radius 
+                },
+                { 
+                    mass: Neptune.mass, 
+                    position: [Neptune.mesh.position.x, Neptune.mesh.position.y, Neptune.mesh.position.z], 
+                    velocity: Neptune.velocity, 
+                    radius: Neptune.radius 
+                },
+                { 
+                    mass: Pluto.mass, 
+                    position: [Pluto.mesh.position.x, Pluto.mesh.position.y, Pluto.mesh.position.z], 
+                    velocity: Pluto.velocity, 
+                    radius: Pluto.radius 
+                }
             ],
             time_step: 1
         })
