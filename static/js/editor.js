@@ -26,7 +26,9 @@ function createPlanetCard(planetName) {
     textDiv.textContent = getPlanetNameRus(planetName);
     li.appendChild(img);
     li.appendChild(textDiv);
-    // li.addEventListener("click", () => toggleVisibilityEditorWindow());
+    li.addEventListener("click", () => {
+        loadEditor(planetName);
+    });
     return li;
 }
 
