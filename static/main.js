@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = false;
+let isPaused = true;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -52,3 +52,44 @@ addPlanets(scene);
 showAllPlanetsSearch();
 showAllPlanetsEditor();
 animate();
+
+let currentLanguage = 'ru'; // По умолчанию русский язык
+
+// Функция для загрузки переводов
+async function updateLocalizedText(lang) {
+    // Загружаем переводы
+    const translations = await loadTranslations(lang);
+
+    // Обновляем текст всех элементов с атрибутом data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[key]) {
+            element.textContent = translations[key];
+        }
+    });
+}
+
+// Загружаем переводы
+async function loadTranslations(lang) {
+    try {
+        const response = await fetch(`/${lang}.json`);
+        if (!response.ok) {
+            throw new Error('Failed to load translations');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error loading translations:', error);
+        return {};
+    }
+}
+
+// Пример использования при переключении языка
+document.getElementById('checkbox-language').addEventListener('change', async (event) => {
+    const newLang = event.target.checked ? 'en' : 'ru';
+    await updateLocalizedText(newLang);
+});
+
+// Обновляем текст при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    updateLocalizedText(currentLanguage);
+});
