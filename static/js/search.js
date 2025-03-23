@@ -79,7 +79,7 @@ function createPlanetCard(planetName) {
     img.classList.add("planet-card__img");
     const textDiv = document.createElement("div");
     textDiv.classList.add("planet-card__text");
-    textDiv.textContent = getPlanetNameRus(planetName);
+    textDiv.textContent = planetName;
     li.appendChild(img);
     li.appendChild(textDiv);
     li.addEventListener("click", () => moveCameraToPlanet(planetName));

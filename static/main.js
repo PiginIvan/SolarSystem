@@ -71,15 +71,48 @@ async function loadTranslations(lang) {
 
 // Функция обновления перевода
 async function updateLocalizedText(lang) {
+    // Загружаем переводы
     const translations = await loadTranslations(lang);
+    console.log('Loaded translations:', translations);
 
+    // Обновляем текст для элементов с атрибутом data-i18n
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[key]) {
             element.textContent = translations[key];
         }
     });
+
+    // Обновляем placeholder для поля поиска
+    const searchInput = document.getElementById('search__input');
+    if (searchInput) {
+        // Используем общий ключ 'search_placeholder', который есть в обоих файлах
+        if (translations['search_placeholder']) {
+            searchInput.setAttribute('placeholder', translations['search_placeholder']);
+        }
+    }
+
+    // Обновляем placeholder для поля editor__input
+    const editorInput = document.getElementById('editor__input');
+    if (editorInput) {
+        // Используем общий ключ 'search_placeholder', который есть в обоих файлах
+        if (translations['search_placeholder']) {
+            editorInput.setAttribute('placeholder', translations['search_placeholder']);
+        }
+    }
+
+    // Обновляем карточки планет с их названиями
+    document.querySelectorAll('.planet-card').forEach(card => {
+        const planetNameEng = card.getAttribute('data-name_eng');
+        const planetNameKey = planetNameEng.toLowerCase(); // Используем название планеты для ключа перевода
+        const planetName = translations[planetNameKey] || planetNameEng; // Если перевод есть, то используем его, иначе оставляем английское название
+        const textDiv = card.querySelector('.planet-card__text');
+        if (textDiv) {
+            textDiv.textContent = planetName; // Обновляем название планеты в карточке
+        }
+    });
 }
+
 
 // Обработчик переключения языка
 document.getElementById('checkbox-language').addEventListener('change', async (event) => {
@@ -122,3 +155,4 @@ async function loadContent(path) {
     }
     return await response.text();
 }
+

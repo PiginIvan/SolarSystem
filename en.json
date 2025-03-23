@@ -3,6 +3,7 @@
   "sound": "Sound",
   "language": "Language",
   "explore": "Explore",
+
   "mercury": "Mercury",
   "venus": "Venus",
   "earth": "Earth",
@@ -12,5 +13,7 @@
   "uranus": "Uranus",
   "neptune": "Neptune",
   "pluto": "Pluto",
-  "sun": "Sun"
+  "sun": "Sun",
+
+  "search_placeholder": "Enter planet name..."
 }
