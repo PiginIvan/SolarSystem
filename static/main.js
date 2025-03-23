@@ -55,20 +55,6 @@ animate();
 
 let currentLanguage = 'ru'; // По умолчанию русский язык
 
-// Функция для загрузки переводов
-async function updateLocalizedText(lang) {
-    // Загружаем переводы
-    const translations = await loadTranslations(lang);
-
-    // Обновляем текст всех элементов с атрибутом data-i18n
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[key]) {
-            element.textContent = translations[key];
-        }
-    });
-}
-
 // Загружаем переводы
 async function loadTranslations(lang) {
     try {
@@ -83,13 +69,47 @@ async function loadTranslations(lang) {
     }
 }
 
-// Пример использования при переключении языка
+// Функция обновления перевода
+async function updateLocalizedText(lang) {
+    const translations = await loadTranslations(lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[key]) {
+            element.textContent = translations[key];
+        }
+    });
+}
+
+// Обработчик переключения языка
 document.getElementById('checkbox-language').addEventListener('change', async (event) => {
-    const newLang = event.target.checked ? 'en' : 'ru';
-    await updateLocalizedText(newLang);
+    currentLanguage = event.target.checked ? 'en' : 'ru';
+    await updateLocalizedText(currentLanguage);
 });
 
 // Обновляем текст при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     updateLocalizedText(currentLanguage);
 });
+
+// Функция загрузки HTML-контента для планеты
+export async function loadHtml(planetName) {
+    try {
+        document.getElementById('description').innerHTML = await loadContent(`/static/descriptions/${planetName}.html`);
+        document.getElementById('planet').innerHTML = await loadContent(`/static/explore-button__content/${planetName}.html`);
+
+        // Обновляем перевод после загрузки контента
+        await updateLocalizedText(currentLanguage);
+    } catch (error) {
+        console.error('Error loading content:', error);
+    }
+}
+
+// Функция загрузки контента
+async function loadContent(path) {
+    const response = await fetch(path);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ${path}`);
+    }
+    return await response.text();
+}

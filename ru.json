@@ -1,5 +1,15 @@
 {
   "settings": "Настройки",
   "sound": "Звук отклика",
-  "language": "Язык"
+  "language": "Язык",
+  "explore": "Исследовать",
+  "mercury": "Меркурий",
+  "venus": "Венера",
+  "earth": "Земля",
+  "mars": "Марс",
+  "jupiter": "Юпитер",
+  "saturn": "Сатурн",
+  "uranus": "Уран",
+  "neptune": "Нептун",
+  "pluto": "Плутон"
 }
