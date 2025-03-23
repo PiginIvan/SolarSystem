@@ -94,14 +94,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Функция загрузки HTML-контента для планеты
 export async function loadHtml(planetName) {
-    try {
-        document.getElementById('description').innerHTML = await loadContent(`/static/descriptions/${planetName}.html`);
-        document.getElementById('planet').innerHTML = await loadContent(`/static/explore-button__content/${planetName}.html`);
+    const descriptionDiv = document.getElementById('description');
+    const discoverDiv = document.getElementById('planet');
 
-        // Обновляем перевод после загрузки контента
+    // Загружаем описание планеты в зависимости от языка
+    const lang = currentLanguage === 'ru' ? 'ru' : 'en'; // Определяем текущий язык
+    const descriptionFile = `/static/descriptions/${lang}/${planetName}.html`; // Формируем путь к нужному файлу
+
+    try {
+        descriptionDiv.innerHTML = await loadContent(descriptionFile);
+        discoverDiv.innerHTML = await loadContent(`/static/explore-button__content/${planetName}.html`); // Для кнопки остаётся один файл
+
+        // Обновляем текст при загрузке контента
         await updateLocalizedText(currentLanguage);
     } catch (error) {
         console.error('Error loading content:', error);
+        descriptionDiv.innerHTML = '<p>Failed to load the content.</p>';
+        discoverDiv.innerHTML = '<p>Failed to load the content.</p>';
     }
 }
 
