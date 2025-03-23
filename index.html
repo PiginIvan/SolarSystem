@@ -19,10 +19,10 @@
 
   <button class="explore-button hidden" id="explore-button" aria-label="Explore">
     <div class="explore-button__content">
-      <div id="planet">
-        <!-- рендер из explore-button__content -->
-      </div>
-      <p class="explore-button__text">Исследовать</p>
+        <div id="planet">
+            <!-- рендер из explore-button__content -->
+        </div>
+        <p class="explore-button__text" data-i18n="explore">Исследовать</p>
     </div>
   </button>
   
@@ -32,17 +32,23 @@
     </div>
   </div>
 
-  <div class="wrapper hidden" id="settings-wrapper"> 
-    <div class="settings" id = "settings">
-      <h1 class="h1">Настройки</h1>
+  <div class="wrapper hidden" id="settings-wrapper">
+    <div class="settings" id="settings">
+      <h1 class="h1" data-i18n="settings">Настройки</h1>
       <div class="settings__blocks">
         <div class="settings__block">
           <label class="switch">
             <input type="checkbox" id="checkbox-sound" checked>
             <span class="slider"></span>
           </label>
-          <div class="settings__text">Звук отклика</div>
+          <div class="settings__text" data-i18n="sound">Звук отклика</div>
         </div>
+        <div class="settings__block">
+          <label class="switch">
+            <input type="checkbox" id="checkbox-language">
+            <span class="slider"></span>
+          </label>
+          <div class="settings__text" data-i18n="language">Язык</div>
         </div>
       </div>
     </div>
@@ -71,52 +77,7 @@
   </div>
 
   <div class="wrapper editor hidden" id="editor__menu-wrapper">
-    <!-- <h1 class="h1">Земля</h1>
-    <div class="editor__menu" id="editor__menu">
-      <div class="editor__block">
-        <label class="editor__label" for="mass-input">Масса:</label>
-        <input class="editor__input" type="range" id="mass-input" step="0.01" autocomplete="on">
-      </div>
-      <div class="editor__block"></div>
-        <label class="editor__label" for="velocity-input">Скорость:</label>
-        <input class="editor__input" type="range" id="velocity-input" step="0.01" autocomplete="on">
-      </div>
-
-      <div class="editor__block"></div>
-        <label class="editor__label" for="radius-input">Радиус:</label>
-        <input class="editor__input" type="range" id="radius-input" step="0.1" autocomplete="on">
-      </div> -->
-      
-      <!-- <button class="editor__button" id="editor__button">Применить</button> -->
-    </div>
-  </div>
-
-  <div id="editor-menu" class="editor-menu hidden">
-    <h3>Редактор планеты</h3>
-    <label for="planet-select">Выберите планету:</label>
-    <select id="planet-select">
-      <option value="" disabled selected>Выберите планету</option>
-        <option value="Mercury">Mercury</option>
-        <option value="Venus">Venus</option>
-        <option value="Earth">Earth</option>
-        <option value="Mars">Mars</option>
-        <option value="Jupiter">Jupiter</option>
-        <option value="Saturn">Saturn</option>
-        <option value="Uranus">Uranus</option>
-        <option value="Neptune">Neptune</option>
-        <option value="Pluto">Pluto</option>
-    </select>
-
-    <label for="mass-input">Масса:</label>
-    <input type="number" id="mass-input" step="0.01" autocomplete="on">
-
-    <label for="velocity-input">Скорость:</label>
-    <input type="number" id="velocity-input" step="0.01" autocomplete="on">
-
-    <label for="radius-input">Радиус:</label>
-    <input type="number" id="radius-input" step="0.1" autocomplete="on">
-
-    <button id="apply-changes">Применить</button>
+    <!-- рендер из loader.js -->
   </div>
 
   <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>

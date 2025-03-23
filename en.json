@@ -1,0 +1,19 @@
+{
+  "settings": "Settings",
+  "sound": "Sound",
+  "language": "Language",
+  "explore": "Explore",
+
+  "mercury": "Mercury",
+  "venus": "Venus",
+  "earth": "Earth",
+  "mars": "Mars",
+  "jupiter": "Jupiter",
+  "saturn": "Saturn",
+  "uranus": "Uranus",
+  "neptune": "Neptune",
+  "pluto": "Pluto",
+  "sun": "Sun",
+
+  "search_placeholder": "Enter planet name..."
+}

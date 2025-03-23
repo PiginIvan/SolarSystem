@@ -2,7 +2,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.mod
 import { Sun } from './planets/sun.js';
 import { Mercury } from './planets/mercury.js'; import { Venus } from './planets/venus.js'; import { Earth } from './planets/earth.js'; import { Mars } from './planets/mars.js';
 import { Jupiter } from './planets/jupiter.js'; import { Saturn } from './planets/saturn.js'; import { Uranus } from './planets/uranus.js'; import { Neptune } from './planets/neptune.js'; import { Pluto } from './planets/pluto.js';
-import { camera, renderer, controls } from '../main.js';
+import { camera, renderer, controls, loadHtml } from '../main.js';
 import { stopFollowingPlanet } from './search.js';
 
 const raycaster = new THREE.Raycaster();
