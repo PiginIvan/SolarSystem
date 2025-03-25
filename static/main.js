@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = true;
+let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -58,7 +58,7 @@ let currentLanguage = 'ru'; // По умолчанию русский язык
 // Загружаем переводы
 async function loadTranslations(lang) {
     try {
-        const response = await fetch(`/${lang}.json`);
+        const response = await fetch(`../${lang}.json`);
         if (!response.ok) {
             throw new Error('Failed to load translations');
         }
@@ -155,4 +155,3 @@ async function loadContent(path) {
     }
     return await response.text();
 }
-

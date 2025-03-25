@@ -28,6 +28,8 @@ function createPlanetCard(planetName) {
     li.addEventListener("click", () => {
         loadEditor(planetName);
         setPlanetData(planetName);
+        document.getElementById("editor-wrapper").classList.toggle("hidden");
+        document.getElementById("editor__menu-wrapper").classList.toggle("hidden");
     });
     return li;
 }
