@@ -1,4 +1,5 @@
 import { planets } from '../main.js';
+import { loadEditor } from '../main.js';
 import { getPlanetNameRus } from './search.js';
 
 const editorSearchInput = document.getElementById("editor__input");
@@ -27,9 +28,10 @@ function createPlanetCard(planetName) {
     li.appendChild(textDiv);
     li.addEventListener("click", () => {
         loadEditor(planetName);
-        setPlanetData(planetName);
+        console.log(document.getElementById(planetName + "mass"));
         document.getElementById("editor-wrapper").classList.toggle("hidden");
         document.getElementById("editor__menu-wrapper").classList.toggle("hidden");
+        setPlanetData(planetName);
     });
     return li;
 }
@@ -57,9 +59,12 @@ function setPlanetData(planetName) {
     const velocityInput = document.getElementById(planetName + "velocity");
     const radiusInput = document.getElementById(planetName + "radius");
 
-    massInput.value = planets[planetName][1].mass;
-    velocityInput.value = planets[planetName][1].velocity[0];
-    radiusInput.value = planets[planetName][1].radius;
+    console.log(planetName + "mass");
+
+    if (massInput && velocityInput && radiusInput) {
+        massInput.value = planets[planetName][1].mass || 0; // Set the value only if the element exists
+        velocityInput.value = planets[planetName][1].velocity || 0;
+        radiusInput.value = planets[planetName][1].radius || 0;
 
     massInput.addEventListener("input", () => {
         planets[planetName][1].mass = parseFloat(massInput.value);
@@ -73,5 +78,7 @@ function setPlanetData(planetName) {
         planets[planetName][1].radius = parseFloat(radiusInput.value);
         planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
     });
-    
+    } else {
+        console.error('Error: One or more input elements not found.');
+    }
 }
