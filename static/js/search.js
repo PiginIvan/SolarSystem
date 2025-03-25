@@ -34,7 +34,7 @@ export function getPlanetNameRus(planetNameEng) {
 }
 
 export function moveCameraToPlanet(planetName) {
-    const planetMesh = planets[planetName];
+    const planetMesh = planets[planetName][0];
     if (!planetMesh) return;
     followingPlanet = planetMesh; 
     const planetPosition = new THREE.Vector3();
@@ -79,7 +79,7 @@ function createPlanetCard(planetName) {
     img.classList.add("planet-card__img");
     const textDiv = document.createElement("div");
     textDiv.classList.add("planet-card__text");
-    textDiv.textContent = planetName;
+    textDiv.textContent = getPlanetNameRus(planetName);
     li.appendChild(img);
     li.appendChild(textDiv);
     li.addEventListener("click", () => moveCameraToPlanet(planetName));

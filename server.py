@@ -32,6 +32,10 @@ def calculate_accelerations(bodies):
 
     return accelerations.tolist()
 
+@app.route('/<lang>.json')
+def serve_translation(lang):
+    return send_from_directory('.', f"{lang}.json")
+
 @app.route('/update', methods=['POST'])
 def update_positions():
     data = request.get_json()
