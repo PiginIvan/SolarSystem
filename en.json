@@ -15,5 +15,9 @@
   "pluto": "Pluto",
   "sun": "Sun",
 
-  "search_placeholder": "Enter planet name..."
+  "search_placeholder": "Enter planet name...",
+
+  "mass": "Mass",
+  "velocity": "Velocity",
+  "radius": "Radius"
 }
