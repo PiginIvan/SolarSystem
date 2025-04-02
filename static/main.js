@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = false;
+let isPaused = true;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -53,7 +53,7 @@ addPlanets(scene);
 showAllPlanetsSearch();
 showAllPlanetsEditor();
 animate();
-let currentLanguage = 'ru'; // Default language is Russian
+export let currentLanguage = 'ru'; // Default language is Russian
 let translations = {}; // Cache for translations
 
 // Load translations only once and store them in a variable
@@ -76,7 +76,7 @@ async function loadTranslations(lang) {
 }
 
 // Update localized text for all elements
-async function updateLocalizedText(lang) {
+export async function updateLocalizedText(lang) {
     // Load translations and cache them
     const currentTranslations = await loadTranslations(lang);
     console.log('Loaded translations:', currentTranslations);
