@@ -25,7 +25,50 @@ const Moon = {
         this.mesh.position.z = earthPosition.z;
     }
 };
+const MarsMoons = [
+    { name: 'Phobos', distance: 2.5, speed: 0.05, color: 0xaaaaaa },
+    { name: 'Deimos', distance: 6.5, speed: 0.02, color: 0xbbbbbb }
+].map(moon => ({
+    ...moon,
+    mesh: new THREE.Mesh(
+        new THREE.SphereGeometry(0.3, 16, 16),
+        new THREE.MeshStandardMaterial({ color: moon.color })
+    ),
+    updatePosition: function (planetPosition, angle) {
+        this.mesh.position.x = planetPosition.x + Math.cos(angle) * this.distance;
+        this.mesh.position.y = planetPosition.y + Math.sin(angle) * this.distance;
+        this.mesh.position.z = planetPosition.z;
+    }
+}));
 
+const JupiterMoons = [
+    { name: 'Io', distance: 8, speed: 0.03, color: 0xffa500 },
+    { name: 'Europa', distance: 12, speed: 0.025, color: 0xffffff },
+    { name: 'Ganymede', distance: 16, speed: 0.02, color: 0xcccccc },
+    { name: 'Callisto', distance: 20, speed: 0.015, color: 0x999999 }
+].map(moon => ({
+    ...moon,
+    mesh: new THREE.Mesh(
+        new THREE.SphereGeometry(0.5, 16, 16),
+        new THREE.MeshStandardMaterial({ color: moon.color })
+    ),
+    updatePosition: function (planetPosition, angle) {
+        this.mesh.position.x = planetPosition.x + Math.cos(angle) * this.distance;
+        this.mesh.position.y = planetPosition.y + Math.sin(angle) * this.distance;
+        this.mesh.position.z = planetPosition.z;
+    }
+}));
+const rotationSpeeds = {
+    Mercury: 6.138e-2,
+    Venus: -2.99e-2,
+    Earth: 4.2921159e-2,
+    Mars: 7.088e-2,
+    Jupiter: 1.76e-2,
+    Saturn: 1.64e-2,
+    Uranus: -1.012e-2,
+    Neptune: 1.083e-2,
+    Pluto: -1.138e-2
+};
 export function configureControls(scene) {
     controls.enableDamping = true; 
     controls.dampingFactor = 0.05; 
@@ -82,6 +125,9 @@ export function addPlanets(scene) {
     scene.add(Moon.mesh);
     scene.add(Pluto.mesh);
 
+    MarsMoons.forEach(moon => scene.add(moon.mesh));
+    JupiterMoons.forEach(moon => scene.add(moon.mesh));
+
     const whiteMaterial = new THREE.LineBasicMaterial({ 
         color: 0xffffff,
         transparent: true,  
@@ -128,8 +174,17 @@ export function updatePlanetTraces() {
     updateTrace('Neptune', Neptune.mesh.position);
     updateTrace('Pluto', Pluto.mesh.position);
     const earthPosition = Earth.mesh.position;
-    const moonAngle = Date.now() * Moon.orbitSpeed * 0.0001; 
+    const moonAngle = Date.now() * Moon.orbitSpeed * 0.05; 
     Moon.updatePosition(earthPosition, moonAngle);
+    MarsMoons.forEach((moon, i) => {
+        const angle = Date.now() * moon.speed * 0.05;
+        moon.updatePosition(Mars.mesh.position, angle);
+    });
+
+    JupiterMoons.forEach((moon, i) => {
+        const angle = Date.now() * moon.speed * 0.05;
+        moon.updatePosition(Jupiter.mesh.position, angle);
+    });
 }
 
 export function onMouseClick(event) {
@@ -238,6 +293,16 @@ export function updatePositions() {
         uranusRings.position.copy(Uranus.mesh.position);
         Neptune.updatePosition(data.bodies[8].position, data.bodies[8].velocity);
         Pluto.updatePosition(data.bodies[9].position, data.bodies[9].velocity);
+
+        Mercury.mesh.rotation.y += rotationSpeeds.Mercury;
+        Venus.mesh.rotation.y += rotationSpeeds.Venus;
+        Earth.mesh.rotation.y += rotationSpeeds.Earth;
+        Mars.mesh.rotation.y += rotationSpeeds.Mars;
+        Jupiter.mesh.rotation.y += rotationSpeeds.Jupiter;
+        Saturn.mesh.rotation.y += rotationSpeeds.Saturn;
+        Uranus.mesh.rotation.y += rotationSpeeds.Uranus;
+        Neptune.mesh.rotation.y += rotationSpeeds.Neptune;
+        Pluto.mesh.rotation.y += rotationSpeeds.Pluto;
     });
 }
 
