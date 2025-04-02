@@ -1,0 +1,23 @@
+{
+  "settings": "الإعدادات",
+  "sound": "الصوت",
+  "language": "اختر اللغة",
+  "explore": "استكشف",
+
+  "mercury": "عطارد",
+  "venus": "الزهرة",
+  "earth": "الأرض",
+  "mars": "المريخ",
+  "jupiter": "المشتري",
+  "saturn": "زحل",
+  "uranus": "أورانوس",
+  "neptune": "نبتون",
+  "pluto": "بلوتو",
+  "sun": "الشمس",
+
+  "search_placeholder": "أدخل اسم الكوكب...",
+
+  "mass": "الكتلة",
+  "velocity": "السرعة",
+  "radius": "نصف القطر"
+}
