@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = false;
+let isPaused = true;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -53,21 +53,22 @@ addPlanets(scene);
 showAllPlanetsSearch();
 showAllPlanetsEditor();
 animate();
-let currentLanguage = 'ru'; // Default language is Russian
+
+export let currentLanguage = 'ru'; // Default language is Russian
 let translations = {}; // Cache for translations
 
 // Load translations only once and store them in a variable
 async function loadTranslations(lang) {
     if (translations[lang]) {
-        return translations[lang]; // Return cached translations if already loaded
+        return translations[lang]; // Возвращаем кешированные переводы
     }
 
     try {
-        const response = await fetch(`../${lang}.json`);
+        const response = await fetch(`../locales/${lang}.json`);
         if (!response.ok) {
             throw new Error('Failed to load translations');
         }
-        translations[lang] = await response.json(); // Store translations in cache
+        translations[lang] = await response.json(); // Кешируем переводы
         return translations[lang];
     } catch (error) {
         console.error('Error loading translations:', error);
@@ -76,12 +77,10 @@ async function loadTranslations(lang) {
 }
 
 // Update localized text for all elements
-async function updateLocalizedText(lang) {
-    // Load translations and cache them
+export async function updateLocalizedText(lang) {
     const currentTranslations = await loadTranslations(lang);
     console.log('Loaded translations:', currentTranslations);
 
-    // Update text for elements with data-i18n attribute
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (currentTranslations[key]) {
@@ -89,11 +88,9 @@ async function updateLocalizedText(lang) {
         }
     });
 
-    // Update placeholders for specific inputs
     updatePlaceholder('search__input', currentTranslations);
     updatePlaceholder('editor__input', currentTranslations);
 
-    // Update planet cards with names
     document.querySelectorAll('.planet-card').forEach(card => {
         const planetNameEng = card.getAttribute('data-name_eng');
         const planetNameKey = planetNameEng.toLowerCase();
@@ -114,13 +111,20 @@ function updatePlaceholder(inputId, translations) {
 }
 
 // Event listener for language change
-document.getElementById('checkbox-language').addEventListener('change', async (event) => {
-    currentLanguage = event.target.checked ? 'en' : 'ru';
+document.getElementById('language-select').addEventListener('change', async (event) => {
+    currentLanguage = event.target.value;
+    localStorage.setItem('selectedLanguage', currentLanguage); // Сохраняем выбор
     await updateLocalizedText(currentLanguage);
 });
 
 // Initialize the page with the default language
 document.addEventListener('DOMContentLoaded', () => {
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'ru';
+    currentLanguage = savedLanguage;
+    
+    // Устанавливаем выбранный язык в `select`
+    document.getElementById('language-select').value = savedLanguage;
+    
     updateLocalizedText(currentLanguage);
 });
 
@@ -128,8 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 export async function loadHtml(planetName) {
     const descriptionDiv = document.getElementById('description');
     const discoverDiv = document.getElementById('planet');
-    const lang = currentLanguage === 'ru' ? 'ru' : 'en';
-    const descriptionFile = `/static/descriptions/${lang}/${planetName}.html`;
+    const descriptionFile = `/static/descriptions/${currentLanguage}/${planetName}.html`;
 
     try {
         descriptionDiv.innerHTML = await loadContent(descriptionFile);

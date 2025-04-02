@@ -1,6 +1,8 @@
 import { planets } from '../main.js';
 import { loadEditor } from '../main.js';
 import { getPlanetNameRus } from './search.js';
+import { updateLocalizedText, currentLanguage } from '../main.js';
+
 
 const editorSearchInput = document.getElementById("editor__input");
 const editorSearchResult = document.getElementById("editor__results");
@@ -51,6 +53,8 @@ function searchPlanetsEditor(query) {
             editorSearchResult.appendChild(card);
         }
     });
+
+    updateLocalizedText(currentLanguage);
 }
 
 function setPlanetData(planetName) {

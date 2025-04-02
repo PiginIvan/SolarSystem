@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
-import { controls, camera, planets } from '../main.js';
+import { controls, camera, planets, updateLocalizedText, currentLanguage } from '../main.js';
 
 const search = document.getElementById("search-wrapper");
 const searchInput = document.getElementById("search__input");
@@ -97,7 +97,10 @@ function searchPlanets(query) {
             searchResults.appendChild(card);
         }
     });
+
+    updateLocalizedText(currentLanguage);
 }
+
 
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();

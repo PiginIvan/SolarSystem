@@ -1,0 +1,24 @@
+{
+    "settings": "设置",
+    "sound": "声音",
+    "language": "选择语言",
+    "explore": "探索",
+  
+    "mercury": "水星",
+    "venus": "金星",
+    "earth": "地球",
+    "mars": "火星",
+    "jupiter": "木星",
+    "saturn": "土星",
+    "uranus": "天王星",
+    "neptune": "海王星",
+    "pluto": "冥王星",
+    "sun": "太阳",
+  
+    "search_placeholder": "输入行星名称...",
+  
+    "mass": "质量",
+    "velocity": "速度",
+    "radius": "半径"
+  }
+  

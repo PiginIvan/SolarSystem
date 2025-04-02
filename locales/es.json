@@ -1,0 +1,23 @@
+{
+  "settings": "Ajustes",
+  "sound": "Sonido",
+  "language": "Elegir idioma",
+  "explore": "Explorar",
+
+  "mercury": "Mercurio",
+  "venus": "Venus",
+  "earth": "Tierra",
+  "mars": "Marte",
+  "jupiter": "Júpiter",
+  "saturn": "Saturno",
+  "uranus": "Urano",
+  "neptune": "Neptuno",
+  "pluto": "Plutón",
+  "sun": "Sol",
+
+  "search_placeholder": "Ingresa el nombre del planeta...",
+
+  "mass": "Masa",
+  "velocity": "Velocidad",
+  "radius": "Radio"
+}
