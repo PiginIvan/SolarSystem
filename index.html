@@ -44,11 +44,15 @@
           <div class="settings__text" data-i18n="sound">Звук отклика</div>
         </div>
         <div class="settings__block">
-          <label class="switch">
-            <input type="checkbox" id="checkbox-language">
-            <span class="slider"></span>
-          </label>
-          <div class="settings__text" data-i18n="language">Язык</div>
+          <label for="language-select" data-i18n="language">Выберите язык:</label>
+            <select id="language-select">
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="ar">العربية</option>
+            </select>
         </div>
       </div>
     </div>
