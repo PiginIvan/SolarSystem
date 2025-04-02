@@ -116,11 +116,18 @@ function updatePlaceholder(inputId, translations) {
 // Event listener for language change
 document.getElementById('checkbox-language').addEventListener('change', async (event) => {
     currentLanguage = event.target.checked ? 'en' : 'ru';
+    localStorage.setItem('selectedLanguage', currentLanguage); // Сохраняем в localStorage
     await updateLocalizedText(currentLanguage);
 });
 
 // Initialize the page with the default language
 document.addEventListener('DOMContentLoaded', () => {
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'ru'; // По умолчанию русский
+    currentLanguage = savedLanguage;
+    
+    // Устанавливаем состояние чекбокса в соответствии с сохранённым языком
+    document.getElementById('checkbox-language').checked = (currentLanguage === 'en');
+    
     updateLocalizedText(currentLanguage);
 });
 
