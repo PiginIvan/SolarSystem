@@ -25,7 +25,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = true;
+let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -45,7 +45,8 @@ function animate() {
     } 
     renderer.render(scene, camera);
 }
-
+console.log(Mars.mass);
+console.log(Mercury.mass);
 configureControls(scene);
 addStars(scene);
 addPlanets(scene);
@@ -176,6 +177,7 @@ export function loadEditor(planetName) {
     editor__menu.appendChild(createEditorBlock(currentTranslations["mass"] || "Масса:", planetName + "mass"));
     editor__menu.appendChild(createEditorBlock(currentTranslations["velocity"] || "Скорость:", planetName + "velocity"));
     editor__menu.appendChild(createEditorBlock(currentTranslations["radius"] || "Радиус:", planetName + "radius"));
+    editor__menu.appendChild(createTextureUploadBlock(currentTranslations["texture"] || "Текстура:", planetName));
 }
 
 // Helper function to create editor blocks
@@ -193,11 +195,51 @@ function createEditorBlock(labelText, inputId) {
     input.type = "range";
     input.id = inputId;
     input.min = 0;
-    input.max = 10;
-    input.step = 0.01;
+    input.max = 1;
+    input.step = 0.0001;
 
     block.appendChild(label);
     block.appendChild(input);
 
     return block;
+}
+
+// Функция для создания блока загрузки текстуры
+function createTextureUploadBlock(label, planetName) {
+    const div = document.createElement("div");
+    div.classList.add("editor-block");
+
+    const labelElement = document.createElement("label");
+    labelElement.textContent = label;
+    labelElement.setAttribute("for", planetName + "-texture");
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.id = planetName + "-texture";
+    input.accept = "image/*"; // Только изображения
+
+    input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const textureURL = e.target.result;
+                updatePlanetTexture(planetName, textureURL);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    div.appendChild(labelElement);
+    div.appendChild(input);
+    return div;
+}
+
+// Функция для обновления текстуры планеты
+function updatePlanetTexture(planetName, textureURL) {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(textureURL, (texture) => {
+        planets[planetName][0].material.map = texture;
+        planets[planetName][0].material.needsUpdate = true;
+    });
 }

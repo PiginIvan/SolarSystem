@@ -28,7 +28,6 @@ function createPlanetCard(planetName) {
     li.appendChild(textDiv);
     li.addEventListener("click", () => {
         loadEditor(planetName);
-        console.log(document.getElementById(planetName + "mass"));
         document.getElementById("editor-wrapper").classList.toggle("hidden");
         document.getElementById("editor__menu-wrapper").classList.toggle("hidden");
         setPlanetData(planetName);
@@ -58,11 +57,10 @@ function setPlanetData(planetName) {
     const massInput = document.getElementById(planetName + "mass");
     const velocityInput = document.getElementById(planetName + "velocity");
     const radiusInput = document.getElementById(planetName + "radius");
-
-    console.log(planetName + "mass");
+    const textureInput = document.getElementById(planetName + "texture");
 
     if (massInput && velocityInput && radiusInput) {
-        massInput.value = planets[planetName][1].mass || 0; // Set the value only if the element exists
+        massInput.value = planets[planetName][1].mass || 0; 
         velocityInput.value = planets[planetName][1].velocity || 0;
         radiusInput.value = planets[planetName][1].radius || 0;
 
@@ -78,6 +76,20 @@ function setPlanetData(planetName) {
         planets[planetName][1].radius = parseFloat(radiusInput.value);
         planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
     });
+    
+    textureInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const textureUrl = e.target.result;
+                planets[planetName][0].material.map.image.src = textureUrl;
+                planets[planetName][0].material.map.needsUpdate = true;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
     } else {
         console.error('Error: One or more input elements not found.');
     }
