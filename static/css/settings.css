@@ -11,21 +11,52 @@
     flex-direction: column;
     gap: 20px;
     text-align: center;
+    padding: 20px;
 }
 
 .settings__block {
-    display: grid;
+    display: flex;
     width: 100%;
-    grid-template-columns: 60px 1fr;
-    gap: 20px;
+    justify-content: space-between;
     animation: fadeIn 0.5s ease-in-out;
 }
 
 .settings__text {
     display: flex;
     align-items: center;
-    width: 100%;
     font-family: var(--font-family-secondary);
     font-weight: var(--font-weight-primary);
     font-size: 28px;
+}
+
+.settings__select {
+    background-color: #0660c7;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 12px 4px;
+    border-radius: 0px;
+    transition: 0.4s;
+    appearance: base-select;
+    width: 100px;
+    font-family: var(--font-family-secondary);
+}
+
+.settings__select:hover,
+.settings__select:focus {
+    background: #0177ff;
+}
+
+.settings__select::picker-icon {
+    transition: 0.4s rotate;
+}
+
+.settings__select:open::picker-icon {
+    rotate: 180deg;
+}
+
+.settings__option {
+    background-color: white;
+    color: #0974f1;
+    border: none;
 }

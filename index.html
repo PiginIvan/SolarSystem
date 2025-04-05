@@ -37,21 +37,21 @@
       <h1 class="h1" data-i18n="settings">Настройки</h1>
       <div class="settings__blocks">
         <div class="settings__block">
+          <div class="settings__text" data-i18n="sound">Звук отклика</div>
           <label class="switch">
             <input type="checkbox" id="checkbox-sound" checked>
             <span class="slider"></span>
           </label>
-          <div class="settings__text" data-i18n="sound">Звук отклика</div>
         </div>
         <div class="settings__block">
-          <label for="language-select" data-i18n="language">Выберите язык:</label>
-            <select id="language-select">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-                <option value="zh">中文</option>
-                <option value="fr">Français</option>
-                <option value="es">Español</option>
-                <option value="ar">العربية</option>
+          <label for="language-select" data-i18n="language" class="settings__text">Выберите язык:</label>
+            <select id="language-select" class="settings__select">
+                <option class="settings__option" value="ru">Русский</option>
+                <option class="settings__option" value="en">English</option>
+                <option class="settings__option" value="zh">中文</option>
+                <option class="settings__option" value="fr">Français</option>
+                <option class="settings__option" value="es">Español</option>
+                <option class="settings__option" value="ar">العربية</option>
             </select>
         </div>
       </div>
