@@ -16,3 +16,11 @@ p {
     font-weight: var(--font-weight-primary);
     font-size: 20px;
 }
+
+.arabic-right {
+    text-align: right;
+}
+
+.arabic-table td {
+    text-align: right;
+}
