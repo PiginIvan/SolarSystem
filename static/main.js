@@ -132,11 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
 export async function loadHtml(planetName) {
     const descriptionDiv = document.getElementById('description');
     const discoverDiv = document.getElementById('planet');
-    const descriptionFile = `/static/descriptions/${currentLanguage}/${planetName}.html`;
+    const descriptionFile = `/static/descriptions/${currentLanguage}/${planetName.toLowerCase()}.html`;
 
     try {
         descriptionDiv.innerHTML = await loadContent(descriptionFile);
-        discoverDiv.innerHTML = await loadContent(`/static/explore-button__content/${planetName}.html`);
+        discoverDiv.innerHTML = await loadContent(`/static/explore-button__content/${planetName.toLowerCase()}.html`);
         await updateLocalizedText(currentLanguage);
     } catch (error) {
         console.error('Error loading content:', error);
@@ -219,8 +219,13 @@ function createTextureUploadBlock(label, planetName) {
     const input = document.createElement("input");
     input.type = "file";
     input.id = planetName + "-texture";
-    input.accept = "image/*"; // Только изображения
+    input.accept = "image/*";
 
+    const resetButton = document.createElement("button");
+    resetButton.textContent = "Сбросить текстуру";
+    resetButton.classList.add("reset-texture-button");
+
+    // При загрузке пользовательской текстуры
     input.addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -233,8 +238,17 @@ function createTextureUploadBlock(label, planetName) {
         }
     });
 
+    // При нажатии на кнопку сброса
+    resetButton.addEventListener("click", () => {
+        const defaultTexturePath = `/static/img/planetMaps/${planetName.toLowerCase()}-map.jpg`; // или .png
+        updatePlanetTexture(planetName, defaultTexturePath);
+        // очистить поле input
+        input.value = "";
+    });
+
     div.appendChild(labelElement);
     div.appendChild(input);
+    div.appendChild(resetButton);
     return div;
 }
 
