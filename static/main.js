@@ -246,3 +246,7 @@ function updatePlanetTexture(planetName, textureURL) {
         planets[planetName][0].material.needsUpdate = true;
     });
 }
+document.getElementById('solar-button').addEventListener('click', () => {
+    playClickSound();
+    window.location.href = 'solar';
+});
