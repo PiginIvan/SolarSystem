@@ -56,6 +56,10 @@ def update_positions():
 def index():
     return send_from_directory('', 'index.html')
 
+@app.route('/solar')
+def solar():
+    return send_from_directory('', 'solar.html')
+
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static', filename)

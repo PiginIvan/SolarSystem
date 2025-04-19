@@ -11,9 +11,13 @@
 <body>
   <nav class="navbar" id="navbar">
     <ul class="navbar__ul">
-        <li class="navbar__li" id="search-icon"  tabindex="0"><img src="/static/img/interface/search.png" alt="Search"></li>
+        <li class="navbar__li" id="search-icon" tabindex="0"><img src="/static/img/interface/search.png" alt="Search"></li>
         <li class="navbar__li" id="settings-icon" tabindex="0"><img src="/static/img/interface/settings.png" alt="Settings"></li>
         <li class="navbar__li" id="editor-icon" tabindex="0"><img src="/static/img/interface/edit.png" alt="Edit"></li>
+        <!-- Новая текстовая кнопка вместо иконки -->
+        <li class="navbar__li" id="solar-button" tabindex="0">
+            <span data-i18n="2d_view">2D View</span>
+        </li>
     </ul>
   </nav>
 
@@ -27,7 +31,7 @@
   </button>
   
   <div class="wrapper hidden" id="description-wrapper"> 
-    <div class="description" id = "description">
+    <div class="description" id="description">
       <!-- рендер из descriptions -->
     </div>
   </div>
@@ -84,7 +88,7 @@
     <!-- рендер из loader.js -->
   </div>
 
-  <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume = 0.1></audio>
+  <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume="0.1"></audio>
 
   <script src="/static/js/loader.js" defer></script>
   <script src="/static/js/sound.js" defer></script>
