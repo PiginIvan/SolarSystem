@@ -106,3 +106,83 @@ canvas {
 .view_2d {
   display: none;
 }
+
+
+/* Custom File Input Container */
+.editor__block {
+  margin: 15px 0;
+  width: 100%;
+}
+
+/* Hide default file input */
+.editor__file-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+/* Custom file input label */
+.editor__file-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #4a90e2;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.editor__file-label:hover {
+  background: rgba(74, 144, 226, 0.2);
+  border-color: #5fa2ff;
+}
+
+.editor__file-label i {
+  margin-right: 10px;
+  color: #4a90e2;
+}
+
+.editor__file-name {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+}
+
+/* Reset button */
+.reset-texture-button {
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(226, 74, 74, 0.2);
+  border: 1px solid #e24a4a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-texture-button:hover {
+  background: rgba(226, 74, 74, 0.3);
+  border-color: #ff5f5f;
+}
+
+/* Icon styling (using Unicode symbols) */
+.editor__file-label::before {
+  content: "📁";
+  margin-right: 10px;
+}
+
+.reset-texture-button::before {
+  content: "🗑️";
+  margin-right: 10px;
+}

@@ -207,47 +207,67 @@ function createEditorBlock(labelText, inputId) {
 
 // Функция для создания блока загрузки текстуры
 function createTextureUploadBlock(label, planetName) {
-    const div = document.createElement("div");
-    div.classList.add("editor-block");
+    const block = document.createElement("div");
+    block.classList.add("editor__block");
 
-    const labelElement = document.createElement("label");
-    labelElement.textContent = label;
-    labelElement.setAttribute("for", planetName + "-texture");
-
+    // Create container for the file input
+    const fileContainer = document.createElement("div");
+    
+    // Create the actual file input (hidden)
     const input = document.createElement("input");
     input.type = "file";
     input.id = planetName + "-texture";
     input.accept = "image/*";
-
+    input.classList.add("editor__file-input");
+    
+    // Create custom label for the file input
+    const inputLabel = document.createElement("label");
+    inputLabel.htmlFor = planetName + "-texture";
+    inputLabel.classList.add("editor__file-label");
+    
+    // Create elements for the label
+    const fileNameSpan = document.createElement("span");
+    fileNameSpan.classList.add("editor__file-name");
+    fileNameSpan.textContent = label;
+    
+    inputLabel.appendChild(fileNameSpan);
+    
+    // Create reset button with translation attribute
     const resetButton = document.createElement("button");
-    resetButton.textContent = "Сбросить текстуру";
+    resetButton.setAttribute("data-i18n", "reset_texture");
+    resetButton.textContent = translations[currentLanguage]?.["reset_texture"] || "Сбросить текстуру";
     resetButton.classList.add("reset-texture-button");
-
-    // При загрузке пользовательской текстуры
-    input.addEventListener("change", (event) => {
-        const file = event.target.files[0];
+    
+    // Update file name when file is selected
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
         if (file) {
+            fileNameSpan.textContent = file.name;
+            
+            // Handle the file upload
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 const textureURL = e.target.result;
                 updatePlanetTexture(planetName, textureURL);
             };
             reader.readAsDataURL(file);
         }
     });
-
-    // При нажатии на кнопку сброса
-    resetButton.addEventListener("click", () => {
-        const defaultTexturePath = `/static/img/planetMaps/${planetName.toLowerCase()}-map.jpg`; // или .png
+    
+    // Reset functionality
+    resetButton.addEventListener('click', () => {
+        const defaultTexturePath = `/static/img/planetMaps/${planetName.toLowerCase()}-map.jpg`;
         updatePlanetTexture(planetName, defaultTexturePath);
-        // очистить поле input
         input.value = "";
+        fileNameSpan.textContent = label;
     });
-
-    div.appendChild(labelElement);
-    div.appendChild(input);
-    div.appendChild(resetButton);
-    return div;
+    
+    // Assemble the block
+    block.appendChild(input);
+    block.appendChild(inputLabel);
+    block.appendChild(resetButton);
+    
+    return block;
 }
 
 // Функция для обновления текстуры планеты
