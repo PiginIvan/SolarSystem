@@ -5,6 +5,7 @@ import { Mercury } from './js/planets/mercury.js'; import { Venus } from './js/p
 import { Jupiter } from './js/planets/jupiter.js'; import { Saturn } from './js/planets/saturn.js'; import { Uranus } from './js/planets/uranus.js'; import { Neptune } from './js/planets/neptune.js'; import { Pluto } from './js/planets/pluto.js';
 import { Sun } from './js/planets/sun.js';
 import { showAllPlanetsSearch, updateCameraFollow } from './js/search.js'; import { showAllPlanetsEditor } from './js/editor.js';
+import { startAnimation, stopAnimation } from './js/2d.js';
 
 export const planets = {
     "Sun": [Sun.mesh, Sun],
@@ -25,10 +26,10 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = false;
+export let isPaused = true;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+document.getElementById("view_3d").appendChild(renderer.domElement);
 camera.position.y = 50;
 camera.position.z = 150;
 window.addEventListener('click', onMouseClick, false);
@@ -45,8 +46,6 @@ function animate() {
     } 
     renderer.render(scene, camera);
 }
-console.log(Mars.mass);
-console.log(Mercury.mass);
 configureControls(scene);
 addStars(scene);
 addPlanets(scene);
@@ -79,7 +78,6 @@ async function loadTranslations(lang) {
 // Update localized text for all elements
 export async function updateLocalizedText(lang) {
     const currentTranslations = await loadTranslations(lang);
-    console.log('Loaded translations:', currentTranslations);
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
@@ -260,7 +258,38 @@ function updatePlanetTexture(planetName, textureURL) {
         planets[planetName][0].material.needsUpdate = true;
     });
 }
-document.getElementById('solar-button').addEventListener('click', () => {
-    playClickSound();
-    window.location.href = 'solar';
+// document.getElementById('solar-button').addEventListener('click', () => {
+//     playClickSound();
+//     // window.location.href = 'solar';
+//     document.getElementById("view_3d").style.display = "none";
+//     document.getElementById("view_2d").style.display = "block";
+//     startAnimation();
+//     isPaused = true;
+// });
+
+document.getElementById('view-toggle').addEventListener('change', function() {
+    if (this.checked) {
+        // Switch to 3D view
+        document.getElementById("view_3d").style.display = "block";
+        document.getElementById("view_2d").style.display = "none";
+        stopAnimation();
+        isPaused = false; // Resume 3D animation
+    } else {
+        // Switch to 2D view
+        document.getElementById("view_3d").style.display = "none";
+        document.getElementById("view_2d").style.display = "block";
+        startAnimation();
+        isPaused = true; // Pause 3D animation
+    }
+});
+
+// Initialize the toggle state based on current view
+document.addEventListener('DOMContentLoaded', function() {
+    const viewToggle = document.getElementById('view-toggle');
+    viewToggle.checked = true; // Default to 3D view
+    
+    // Update the toggle if coming from 2D view
+    if (document.getElementById("view_2d").style.display === "block") {
+        viewToggle.checked = false;
+    }
 });

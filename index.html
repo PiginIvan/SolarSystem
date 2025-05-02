@@ -9,15 +9,16 @@
 </head>
 
 <body>
+  <div class="view_3d" id="view_3d"></div>
+  <div class="view_2d" id="view_2d">
+    <div id="back-button">Back to 3D View</div>
+    <canvas id="canvas"></canvas>
+  </div>
   <nav class="navbar" id="navbar">
     <ul class="navbar__ul">
         <li class="navbar__li" id="search-icon" tabindex="0"><img src="/static/img/interface/search.png" alt="Search"></li>
         <li class="navbar__li" id="settings-icon" tabindex="0"><img src="/static/img/interface/settings.png" alt="Settings"></li>
         <li class="navbar__li" id="editor-icon" tabindex="0"><img src="/static/img/interface/edit.png" alt="Edit"></li>
-        <!-- Новая текстовая кнопка вместо иконки -->
-        <li class="navbar__li" id="solar-button" tabindex="0">
-            <span data-i18n="2d_view">2D View</span>
-        </li>
     </ul>
   </nav>
 
@@ -58,6 +59,13 @@
                 <option class="settings__option" value="ar">العربية</option>
             </select>
         </div>
+        <div class="settings__block">
+          <div class="settings__text" data-i18n="view_mode">Режим отображения</div>
+          <label class="switch">
+            <input type="checkbox" id="view-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -93,6 +101,7 @@
   <script src="/static/js/loader.js" defer></script>
   <script src="/static/js/sound.js" defer></script>
   <script src="/static/js/script.js" defer></script>
+  <script type="module" src="/static/js/2d.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
 </body>
 </html>
