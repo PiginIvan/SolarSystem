@@ -209,6 +209,7 @@ function createEditorBlock(labelText, inputId) {
 function createTextureUploadBlock(label, planetName) {
     const block = document.createElement("div");
     block.classList.add("editor__block");
+    block.classList.add("editor__block-buttons");
 
     // Create container for the file input
     const fileContainer = document.createElement("div");
@@ -235,7 +236,7 @@ function createTextureUploadBlock(label, planetName) {
     // Create reset button with translation attribute
     const resetButton = document.createElement("button");
     resetButton.setAttribute("data-i18n", "reset_texture");
-    resetButton.textContent = translations[currentLanguage]?.["reset_texture"] || "Сбросить текстуру";
+    resetButton.textContent = "X";
     resetButton.classList.add("reset-texture-button");
     
     // Update file name when file is selected
@@ -278,14 +279,6 @@ function updatePlanetTexture(planetName, textureURL) {
         planets[planetName][0].material.needsUpdate = true;
     });
 }
-// document.getElementById('solar-button').addEventListener('click', () => {
-//     playClickSound();
-//     // window.location.href = 'solar';
-//     document.getElementById("view_3d").style.display = "none";
-//     document.getElementById("view_2d").style.display = "block";
-//     startAnimation();
-//     isPaused = true;
-// });
 
 document.getElementById('view-toggle').addEventListener('change', function() {
     if (this.checked) {
