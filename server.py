@@ -11,24 +11,56 @@ def compute_gravitational_force(m1, m2, r):
 
 def calculate_accelerations(bodies):
     num_bodies = len(bodies)
-    accelerations = np.zeros((num_bodies, 3), dtype=np.float64)  
+    accelerations = np.zeros((num_bodies, 3), dtype=np.float64)
+    collisions = set()
 
+    # Первый проход: проверка столкновений
     for i in range(num_bodies):
-        for j in range(num_bodies):
-            if i != j:
-                position_i = np.array(bodies[i]['position'], dtype=np.float64)
-                position_j = np.array(bodies[j]['position'], dtype=np.float64)
-                distance_vector = position_j - position_i
-                distance_magnitude = np.linalg.norm(distance_vector)
+        if bodies[i] is None:
+            continue
+        for j in range(i + 1, num_bodies):
+            if bodies[j] is None:
+                continue
+                
+            position_i = np.array(bodies[i]['position'], dtype=np.float64)
+            position_j = np.array(bodies[j]['position'], dtype=np.float64)
+            distance_vector = position_j - position_i
+            distance_magnitude = np.linalg.norm(distance_vector)
+            
+            # Проверка на столкновение
+            if distance_magnitude < (bodies[i]['radius'] + bodies[j]['radius']):
+                collisions.add((i, j))
 
-                if distance_magnitude > 0:
-                    force = compute_gravitational_force(
-                        float(bodies[i]['mass']), 
-                        float(bodies[j]['mass']), 
-                        distance_magnitude
-                    )
-                    acceleration = force / float(bodies[i]['mass']) * (distance_vector / distance_magnitude)
-                    accelerations[i] += acceleration
+    # Второй проход: обработка столкновений
+    for i, j in collisions:
+        # Проверяем, что обе планеты ещё существуют
+        if bodies[i] is not None and bodies[j] is not None:
+            if bodies[i]['mass'] >= bodies[j]['mass']:
+                bodies[j] = None
+            else:
+                bodies[i] = None
+
+    # Третий проход: расчет гравитации
+    for i in range(num_bodies):
+        if bodies[i] is None:
+            continue
+        for j in range(num_bodies):
+            if i == j or bodies[j] is None:
+                continue
+                
+            position_i = np.array(bodies[i]['position'], dtype=np.float64)
+            position_j = np.array(bodies[j]['position'], dtype=np.float64)
+            distance_vector = position_j - position_i
+            distance_magnitude = np.linalg.norm(distance_vector)
+            
+            if distance_magnitude > 0:
+                force = compute_gravitational_force(
+                    float(bodies[i]['mass']), 
+                    float(bodies[j]['mass']), 
+                    distance_magnitude
+                )
+                acceleration = force / float(bodies[i]['mass']) * (distance_vector / distance_magnitude)
+                accelerations[i] += acceleration
 
     return accelerations.tolist()
 
@@ -40,10 +72,16 @@ def serve_translation(lang):
 def update_positions():
     data = request.get_json()
     bodies = data['bodies']
-    time_step = data.get('time_step', 1)  
+    time_step = data.get('time_step', 1)
+    
+    # Фильтруем удаленные тела перед расчетами
+    active_bodies = [body for body in bodies if body is not None]
     accelerations = calculate_accelerations(bodies)
 
     for i, body in enumerate(bodies):
+        if body is None:  # Пропускаем удаленные тела
+            continue
+            
         velocity = np.array(body['velocity']) + np.array(accelerations[i]) * time_step
         position = np.array(body['position']) + velocity * time_step
 
@@ -56,9 +94,13 @@ def update_positions():
 def index():
     return send_from_directory('', 'index.html')
 
+@app.route('/solar')
+def solar():
+    return send_from_directory('', 'solar.html')
+
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static', filename)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

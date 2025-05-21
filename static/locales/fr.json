@@ -19,5 +19,8 @@
 
   "mass": "Masse",
   "velocity": "Vitesse",
-  "radius": "Rayon"
+  "radius": "Rayon",
+  "texture": "Texture",
+  "reset_texture": "Réinitialiser la texture",
+  "view_mode": "Mode d'affichage"
 }

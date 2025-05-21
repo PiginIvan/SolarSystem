@@ -19,5 +19,8 @@
 
   "mass": "Masa",
   "velocity": "Velocidad",
-  "radius": "Radio"
+  "radius": "Radio",
+  "texture": "Textura",
+  "reset_texture": "Restablecer textura",
+  "view_mode": "Modo de vista"
 }

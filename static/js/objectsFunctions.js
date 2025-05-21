@@ -2,7 +2,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.mod
 import { Sun } from './planets/sun.js';
 import { Mercury } from './planets/mercury.js'; import { Venus } from './planets/venus.js'; import { Earth } from './planets/earth.js'; import { Mars } from './planets/mars.js';
 import { Jupiter } from './planets/jupiter.js'; import { Saturn } from './planets/saturn.js'; import { Uranus } from './planets/uranus.js'; import { Neptune } from './planets/neptune.js'; import { Pluto } from './planets/pluto.js';
-import { camera, renderer, controls, loadHtml } from '../main.js';
+import { camera, renderer, controls, loadHtml, removedPlanets, scene } from '../main.js';
 import { stopFollowingPlanet } from './search.js';
 
 const raycaster = new THREE.Raycaster();
@@ -173,18 +173,27 @@ export function updatePlanetTraces() {
     updateTrace('Uranus', Uranus.mesh.position);
     updateTrace('Neptune', Neptune.mesh.position);
     updateTrace('Pluto', Pluto.mesh.position);
-    const earthPosition = Earth.mesh.position;
-    const moonAngle = Date.now() * Moon.orbitSpeed * 0.05; 
-    Moon.updatePosition(earthPosition, moonAngle);
-    MarsMoons.forEach((moon, i) => {
-        const angle = Date.now() * moon.speed * 0.05;
-        moon.updatePosition(Mars.mesh.position, angle);
-    });
+    
+    if (!removedPlanets.has("Earth")) {
+        const earthPosition = Earth.mesh.position;
+        const moonAngle = Date.now() * Moon.orbitSpeed * 0.05; 
+        Moon.updatePosition(earthPosition, moonAngle);
+    }
 
-    JupiterMoons.forEach((moon, i) => {
-        const angle = Date.now() * moon.speed * 0.05;
-        moon.updatePosition(Jupiter.mesh.position, angle);
-    });
+    if (!removedPlanets.has("Mars")) {
+        MarsMoons.forEach((moon, i) => {
+            const angle = Date.now() * moon.speed * 0.05;
+            moon.updatePosition(Mars.mesh.position, angle);
+        });
+    }
+    
+    if (!removedPlanets.has("Jupiter")) {
+        JupiterMoons.forEach((moon, i) => {
+            const angle = Date.now() * moon.speed * 0.05;
+            moon.updatePosition(Jupiter.mesh.position, angle);
+        });
+    }
+   
 }
 
 export function onMouseClick(event) {
@@ -282,27 +291,85 @@ export function updatePositions() {
     })
     .then(response => response.json())
     .then(data => {
-        Mercury.updatePosition(data.bodies[1].position, data.bodies[1].velocity);
-        Venus.updatePosition(data.bodies[2].position, data.bodies[2].velocity);
-        Earth.updatePosition(data.bodies[3].position, data.bodies[3].velocity);
-        Mars.updatePosition(data.bodies[4].position, data.bodies[4].velocity);
-        Jupiter.updatePosition(data.bodies[5].position, data.bodies[5].velocity);
-        Saturn.updatePosition(data.bodies[6].position, data.bodies[6].velocity);
-        saturnRings.position.copy(Saturn.mesh.position);
-        Uranus.updatePosition(data.bodies[7].position, data.bodies[7].velocity);
-        uranusRings.position.copy(Uranus.mesh.position);
-        Neptune.updatePosition(data.bodies[8].position, data.bodies[8].velocity);
-        Pluto.updatePosition(data.bodies[9].position, data.bodies[9].velocity);
-
-        Mercury.mesh.rotation.y += rotationSpeeds.Mercury;
-        Venus.mesh.rotation.y += rotationSpeeds.Venus;
-        Earth.mesh.rotation.y += rotationSpeeds.Earth;
-        Mars.mesh.rotation.y += rotationSpeeds.Mars;
-        Jupiter.mesh.rotation.y += rotationSpeeds.Jupiter;
-        Saturn.mesh.rotation.y += rotationSpeeds.Saturn;
-        Uranus.mesh.rotation.y += rotationSpeeds.Uranus;
-        Neptune.mesh.rotation.y += rotationSpeeds.Neptune;
-        Pluto.mesh.rotation.y += rotationSpeeds.Pluto;
+        if (data.bodies[1]) {
+            Mercury.updatePosition(data.bodies[1].position, data.bodies[1].velocity);
+            Mercury.mesh.rotation.y += rotationSpeeds.Mercury;
+        } else if (Mercury.mesh.parent) {
+            scene.remove(Mercury.mesh);
+            scene.remove(traces.Mercury);
+            removedPlanets.add("Mercury");
+        }
+        if (data.bodies[2]) {
+            Venus.updatePosition(data.bodies[2].position, data.bodies[2].velocity);
+            Venus.mesh.rotation.y += rotationSpeeds.Venus;
+        } else if (Venus.mesh.parent) {
+            scene.remove(Venus.mesh);
+            scene.remove(traces.Venus);
+            removedPlanets.add("Venus");
+        }
+        if (data.bodies[3]) {
+            Earth.updatePosition(data.bodies[3].position, data.bodies[3].velocity);
+            Earth.mesh.rotation.y += rotationSpeeds.Earth;
+        } else if (Earth.mesh.parent) {
+            scene.remove(Earth.mesh);
+            scene.remove(traces.Earth);
+            scene.remove(Moon.mesh);
+            removedPlanets.add("Earth");
+        }
+        if (data.bodies[4]) {
+            Mars.updatePosition(data.bodies[4].position, data.bodies[4].velocity);
+            Mars.mesh.rotation.y += rotationSpeeds.Mars;
+        } else if (Mars.mesh.parent) {
+            scene.remove(Mars.mesh);
+            scene.remove(traces.Mars);
+            MarsMoons.forEach(moon => scene.remove(moon.mesh));
+            removedPlanets.add("Mars");
+        }
+        if (data.bodies[5]) {
+            Jupiter.updatePosition(data.bodies[5].position, data.bodies[5].velocity);
+            Jupiter.mesh.rotation.y += rotationSpeeds.Jupiter;
+        } else if (Jupiter.mesh.parent) {
+            scene.remove(Jupiter.mesh);
+            scene.remove(traces.Jupiter);
+            JupiterMoons.forEach(moon => scene.remove(moon.mesh));
+            removedPlanets.add("Jupiter");
+        }
+        if (data.bodies[6]) {
+            Saturn.updatePosition(data.bodies[6].position, data.bodies[6].velocity);
+            Saturn.mesh.rotation.y += rotationSpeeds.Saturn;
+            saturnRings.position.copy(Saturn.mesh.position);
+        } else {
+            scene.remove(Saturn.mesh);
+            scene.remove(traces.Saturn);
+            scene.remove(saturnRings);
+            removedPlanets.add("Saturn");
+        }
+        if (data.bodies[7]) {
+            Uranus.updatePosition(data.bodies[7].position, data.bodies[7].velocity);
+            Uranus.mesh.rotation.y += rotationSpeeds.Uranus;
+            uranusRings.position.copy(Uranus.mesh.position);
+        } else if (Uranus.mesh.parent) {
+            scene.remove(Uranus.mesh);
+            scene.remove(traces.Uranus);
+            scene.remove(uranusRings);
+            removedPlanets.add("Uranus");
+        }
+        if (data.bodies[8]) {
+            Neptune.updatePosition(data.bodies[8].position, data.bodies[8].velocity);
+            Neptune.mesh.rotation.y += rotationSpeeds.Neptune;
+        } else if (Neptune.mesh.parent) {
+            scene.remove(Neptune.mesh);
+            scene.remove(traces.Neptune);
+            removedPlanets.add("Neptune");
+        }
+        if (data.bodies[9]) {
+            Pluto.updatePosition(data.bodies[9].position, data.bodies[9].velocity);
+            Pluto.mesh.rotation.y += rotationSpeeds.Pluto;
+        } else if (Pluto.mesh.parent) {
+            scene.remove(Pluto.mesh);
+            scene.remove(traces.Pluto);
+            removedPlanets.add("Pluto");
+        }
     });
 }
 
