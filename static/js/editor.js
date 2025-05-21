@@ -61,38 +61,25 @@ function setPlanetData(planetName) {
     const massInput = document.getElementById(planetName + "mass");
     const velocityInput = document.getElementById(planetName + "velocity");
     const radiusInput = document.getElementById(planetName + "radius");
-    const textureInput = document.getElementById(planetName + "texture");
 
     if (massInput && velocityInput && radiusInput) {
         massInput.value = planets[planetName][1].mass || 0; 
         velocityInput.value = planets[planetName][1].velocity || 0;
         radiusInput.value = planets[planetName][1].radius || 0;
 
-    massInput.addEventListener("input", () => {
-        planets[planetName][1].mass = parseFloat(massInput.value);
-    });
+        massInput.addEventListener("input", () => {
+            planets[planetName][1].mass = parseFloat(massInput.value);
+        });
 
-    velocityInput.addEventListener("input", () => {
-        planets[planetName][1].velocity[0] = parseFloat(velocityInput.value); 
-    });
+        velocityInput.addEventListener("input", () => {
+            planets[planetName][1].velocity[0] = parseFloat(velocityInput.value); 
+        });
 
-    radiusInput.addEventListener("input", () => {
-        planets[planetName][1].radius = parseFloat(radiusInput.value);
-        planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
-    });
-    
-    textureInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const textureUrl = e.target.result;
-                planets[planetName][0].material.map.image.src = textureUrl;
-                planets[planetName][0].material.map.needsUpdate = true;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+        radiusInput.addEventListener("input", () => {
+            planets[planetName][1].radius = parseFloat(radiusInput.value);
+            planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
+        });
+
 
     } else {
         console.error('Error: One or more input elements not found.');

@@ -4,19 +4,20 @@
 
 ### 📚 Стек технологий
 
-<p align="center"> 
-    <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5"> 
-    <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3"> 
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JS"> 
-    <img src="https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white" alt="Three.js"> 
-    <img src="https://img.shields.io/badge/JSON-000000?logo=json&logoColor=white" alt="JSON"> 
-    <img src="https://img.shields.io/badge/docker-257bd6?style=for-the-badge&logo=docker&logoColor=white" alt="docker" height=20> 
-    <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white" alt="flask" height=20> 
-    <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="python" height=20>
-    <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="figma" height=20> 
- 
-</p>
+<div align="center">
+  
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white)
+![JSON](https://img.shields.io/badge/JSON-000000?logo=json&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-257bd6?logo=docker&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?logo=Flask&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=ffdd54)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)
 
+</div>
+ 
 ---
 ## ✨ Особенности  
 
@@ -72,3 +73,4 @@ docker run -p 5000:5000 flask-solar-system
 ![](/Assets/sun.png)
 ![](/Assets/options.png)
 ![](/Assets/search.png)
+![](/Assets/editor.png)
