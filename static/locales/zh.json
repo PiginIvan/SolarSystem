@@ -19,6 +19,9 @@
   
     "mass": "质量",
     "velocity": "速度",
-    "radius": "半径"
+    "radius": "半径",
+    "texture": "纹理",
+    "reset_texture": "重置纹理",
+    "view_mode": "查看模式"
   }
   
