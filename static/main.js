@@ -5,7 +5,9 @@ import { Mercury } from './js/planets/mercury.js'; import { Venus } from './js/p
 import { Jupiter } from './js/planets/jupiter.js'; import { Saturn } from './js/planets/saturn.js'; import { Uranus } from './js/planets/uranus.js'; import { Neptune } from './js/planets/neptune.js'; import { Pluto } from './js/planets/pluto.js';
 import { Sun } from './js/planets/sun.js';
 import { showAllPlanetsSearch, updateCameraFollow } from './js/search.js'; import { showAllPlanetsEditor } from './js/editor.js';
+import { startAnimation, stopAnimation } from './js/2d.js';
 
+export const removedPlanets = new Set();
 export const planets = {
     "Sun": [Sun.mesh, Sun],
     "Mercury": [Mercury.mesh, Mercury],
@@ -22,13 +24,13 @@ export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
 export const controls = new OrbitControls(camera, renderer.domElement);
 
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-let isPaused = false;
+export let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+document.getElementById("view_3d").appendChild(renderer.domElement);
 camera.position.y = 50;
 camera.position.z = 150;
 window.addEventListener('click', onMouseClick, false);
@@ -45,8 +47,6 @@ function animate() {
     } 
     renderer.render(scene, camera);
 }
-console.log(Mars.mass);
-console.log(Mercury.mass);
 configureControls(scene);
 addStars(scene);
 addPlanets(scene);
@@ -79,7 +79,6 @@ async function loadTranslations(lang) {
 // Update localized text for all elements
 export async function updateLocalizedText(lang) {
     const currentTranslations = await loadTranslations(lang);
-    console.log('Loaded translations:', currentTranslations);
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
@@ -209,47 +208,68 @@ function createEditorBlock(labelText, inputId) {
 
 // Функция для создания блока загрузки текстуры
 function createTextureUploadBlock(label, planetName) {
-    const div = document.createElement("div");
-    div.classList.add("editor-block");
+    const block = document.createElement("div");
+    block.classList.add("editor__block");
+    block.classList.add("editor__block-buttons");
 
-    const labelElement = document.createElement("label");
-    labelElement.textContent = label;
-    labelElement.setAttribute("for", planetName + "-texture");
-
+    // Create container for the file input
+    const fileContainer = document.createElement("div");
+    
+    // Create the actual file input (hidden)
     const input = document.createElement("input");
     input.type = "file";
     input.id = planetName + "-texture";
     input.accept = "image/*";
-
+    input.classList.add("editor__file-input");
+    
+    // Create custom label for the file input
+    const inputLabel = document.createElement("label");
+    inputLabel.htmlFor = planetName + "-texture";
+    inputLabel.classList.add("editor__file-label");
+    
+    // Create elements for the label
+    const fileNameSpan = document.createElement("span");
+    fileNameSpan.classList.add("editor__file-name");
+    fileNameSpan.textContent = label;
+    
+    inputLabel.appendChild(fileNameSpan);
+    
+    // Create reset button with translation attribute
     const resetButton = document.createElement("button");
-    resetButton.textContent = "Сбросить текстуру";
+    resetButton.setAttribute("data-i18n", "reset_texture");
+    resetButton.textContent = "X";
     resetButton.classList.add("reset-texture-button");
-
-    // При загрузке пользовательской текстуры
-    input.addEventListener("change", (event) => {
-        const file = event.target.files[0];
+    
+    // Update file name when file is selected
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
         if (file) {
+            fileNameSpan.textContent = file.name;
+            
+            // Handle the file upload
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 const textureURL = e.target.result;
                 updatePlanetTexture(planetName, textureURL);
             };
             reader.readAsDataURL(file);
         }
     });
-
-    // При нажатии на кнопку сброса
-    resetButton.addEventListener("click", () => {
-        const defaultTexturePath = `/static/img/planetMaps/${planetName.toLowerCase()}-map.jpg`; // или .png
+    
+    // Reset functionality
+    resetButton.addEventListener('click', () => {
+        const defaultTexturePath = `/static/img/planetMaps/${planetName.toLowerCase()}-map.jpg`;
         updatePlanetTexture(planetName, defaultTexturePath);
-        // очистить поле input
         input.value = "";
+        fileNameSpan.textContent = label;
     });
-
-    div.appendChild(labelElement);
-    div.appendChild(input);
-    div.appendChild(resetButton);
-    return div;
+    
+    // Assemble the block
+    block.appendChild(input);
+    block.appendChild(inputLabel);
+    block.appendChild(resetButton);
+    
+    return block;
 }
 
 // Функция для обновления текстуры планеты
@@ -260,7 +280,30 @@ function updatePlanetTexture(planetName, textureURL) {
         planets[planetName][0].material.needsUpdate = true;
     });
 }
-document.getElementById('solar-button').addEventListener('click', () => {
-    playClickSound();
-    window.location.href = 'solar';
+
+document.getElementById('view-toggle').addEventListener('change', function() {
+    if (this.checked) {
+        // Switch to 3D view
+        document.getElementById("view_3d").style.display = "block";
+        document.getElementById("view_2d").style.display = "none";
+        stopAnimation();
+        isPaused = false; // Resume 3D animation
+    } else {
+        // Switch to 2D view
+        document.getElementById("view_3d").style.display = "none";
+        document.getElementById("view_2d").style.display = "block";
+        startAnimation();
+        isPaused = true; // Pause 3D animation
+    }
+});
+
+// Initialize the toggle state based on current view
+document.addEventListener('DOMContentLoaded', function() {
+    const viewToggle = document.getElementById('view-toggle');
+    viewToggle.checked = true; // Default to 3D view
+    
+    // Update the toggle if coming from 2D view
+    if (document.getElementById("view_2d").style.display === "block") {
+        viewToggle.checked = false;
+    }
 });

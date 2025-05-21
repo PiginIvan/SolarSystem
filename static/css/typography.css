@@ -5,14 +5,22 @@ h1 {
     text-align: center;
 }
 
-h5 {
+h5, .editor__label {
     font-family: var(--font-family-secondary);
     font-weight: var(--font-weight-primary);
     font-size: 28px;
 }
 
-p {
+p, button {
     font-family: var(--font-family-primary);
     font-weight: var(--font-weight-primary);
     font-size: 20px;
+}
+
+.arabic-right {
+    text-align: right;
+}
+
+.arabic-table td {
+    text-align: right;
 }

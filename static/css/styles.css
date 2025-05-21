@@ -64,3 +64,45 @@ body {
   border: none;
   border-radius: 5px;
 }
+
+
+
+
+
+/* Ванька */
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #000;
+}
+canvas {
+  display: block;
+}
+#info {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  user-select: none;
+}
+#back-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  z-index: 100;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+#back-button:hover {
+  background: rgba(100,100,100,0.5);
+}
+
+.view_2d {
+  display: none;
+}
