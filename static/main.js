@@ -7,6 +7,7 @@ import { Sun } from './js/planets/sun.js';
 import { showAllPlanetsSearch, updateCameraFollow } from './js/search.js'; import { showAllPlanetsEditor } from './js/editor.js';
 import { startAnimation, stopAnimation } from './js/2d.js';
 
+export const removedPlanets = new Set();
 export const planets = {
     "Sun": [Sun.mesh, Sun],
     "Mercury": [Mercury.mesh, Mercury],
@@ -23,10 +24,10 @@ export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
 export const controls = new OrbitControls(camera, renderer.domElement);
 
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-export let isPaused = true;
+export let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("view_3d").appendChild(renderer.domElement);
