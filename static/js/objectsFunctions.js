@@ -219,6 +219,76 @@ export function onMouseClick(event) {
     }
 }
 
+function createExplosion(position) {
+    const group = new THREE.Group();
+    group.position.copy(position);
+    scene.add(group);
+
+    const particleCount = 50;
+    const particles = [];
+    const geometry = new THREE.SphereGeometry(0.1, 4, 4);
+    const material = new THREE.MeshBasicMaterial({ color: 0xff5500 });
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = new THREE.Mesh(geometry, material.clone());
+        particle.position.set(0, 0, 0);
+        const direction = new THREE.Vector3(
+            Math.random() * 2 - 1,
+            Math.random() * 2 - 1,
+            Math.random() * 2 - 1
+        ).normalize().multiplyScalar(0.5 + Math.random());
+
+        particle.userData = { direction };
+        group.add(particle);
+        particles.push(particle);
+    }
+
+    const light = new THREE.PointLight(0xffaa33, 2, 10);
+    group.add(light);
+
+    const smokeMaterial = new THREE.MeshBasicMaterial({ color: 0x888888, transparent: true, opacity: 0.5 });
+    const smoke = new THREE.Mesh(new THREE.SphereGeometry(1, 8, 8), smokeMaterial);
+    group.add(smoke);
+
+    const listener = new THREE.AudioListener();
+    camera.add(listener); 
+
+    const sound = new THREE.Audio(listener);
+    const audioLoader = new THREE.AudioLoader();
+    audioLoader.load('/static/sounds/explosion.mp3', function (buffer) {
+        sound.setBuffer(buffer);
+        sound.setVolume(0.1);
+        sound.play();
+    });
+
+    const duration = 1000;
+    const startTime = performance.now();
+
+    function animateExplosion(time) {
+        const elapsed = time - startTime;
+        const t = elapsed / duration;
+
+        if (t < 1) {
+            const scale = 1 + t * 3;
+            smoke.scale.set(scale, scale, scale);
+            smokeMaterial.opacity = 0.5 * (1 - t);
+
+            particles.forEach(p => {
+                p.position.add(p.userData.direction);
+                p.material.opacity = 1 - t;
+            });
+
+            light.intensity = 2 * (1 - t);
+
+            requestAnimationFrame(animateExplosion);
+        } else {
+            scene.remove(group);
+        }
+    }
+
+    requestAnimationFrame(animateExplosion);
+}
+
 export function updatePositions() {
     fetch('/update', {
         method: 'POST',
@@ -297,6 +367,7 @@ export function updatePositions() {
         } else if (Mercury.mesh.parent) {
             scene.remove(Mercury.mesh);
             scene.remove(traces.Mercury);
+            createExplosion(Mercury.mesh.position);
             removedPlanets.add("Mercury");
         }
         if (data.bodies[2]) {
@@ -305,6 +376,7 @@ export function updatePositions() {
         } else if (Venus.mesh.parent) {
             scene.remove(Venus.mesh);
             scene.remove(traces.Venus);
+            createExplosion(Venus.mesh.position);
             removedPlanets.add("Venus");
         }
         if (data.bodies[3]) {
@@ -313,6 +385,7 @@ export function updatePositions() {
         } else if (Earth.mesh.parent) {
             scene.remove(Earth.mesh);
             scene.remove(traces.Earth);
+            createExplosion(Earth.mesh.position);
             scene.remove(Moon.mesh);
             removedPlanets.add("Earth");
         }
@@ -322,6 +395,7 @@ export function updatePositions() {
         } else if (Mars.mesh.parent) {
             scene.remove(Mars.mesh);
             scene.remove(traces.Mars);
+            createExplosion(Mars.mesh.position);
             MarsMoons.forEach(moon => scene.remove(moon.mesh));
             removedPlanets.add("Mars");
         }
@@ -331,6 +405,7 @@ export function updatePositions() {
         } else if (Jupiter.mesh.parent) {
             scene.remove(Jupiter.mesh);
             scene.remove(traces.Jupiter);
+            createExplosion(Jupiter.mesh.position);
             JupiterMoons.forEach(moon => scene.remove(moon.mesh));
             removedPlanets.add("Jupiter");
         }
@@ -338,9 +413,10 @@ export function updatePositions() {
             Saturn.updatePosition(data.bodies[6].position, data.bodies[6].velocity);
             Saturn.mesh.rotation.y += rotationSpeeds.Saturn;
             saturnRings.position.copy(Saturn.mesh.position);
-        } else {
+        } else if (Saturn.mesh.parent) {
             scene.remove(Saturn.mesh);
             scene.remove(traces.Saturn);
+            createExplosion(Saturn.mesh.position);
             scene.remove(saturnRings);
             removedPlanets.add("Saturn");
         }
@@ -351,6 +427,7 @@ export function updatePositions() {
         } else if (Uranus.mesh.parent) {
             scene.remove(Uranus.mesh);
             scene.remove(traces.Uranus);
+            createExplosion(Uranus.mesh.position);
             scene.remove(uranusRings);
             removedPlanets.add("Uranus");
         }
@@ -360,6 +437,7 @@ export function updatePositions() {
         } else if (Neptune.mesh.parent) {
             scene.remove(Neptune.mesh);
             scene.remove(traces.Neptune);
+            createExplosion(Neptune.mesh.position);
             removedPlanets.add("Neptune");
         }
         if (data.bodies[9]) {
@@ -368,6 +446,7 @@ export function updatePositions() {
         } else if (Pluto.mesh.parent) {
             scene.remove(Pluto.mesh);
             scene.remove(traces.Pluto);
+            createExplosion(Pluto.mesh.position);
             removedPlanets.add("Pluto");
         }
     });

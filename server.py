@@ -14,7 +14,6 @@ def calculate_accelerations(bodies):
     accelerations = np.zeros((num_bodies, 3), dtype=np.float64)
     collisions = set()
 
-    # Первый проход: проверка столкновений
     for i in range(num_bodies):
         if bodies[i] is None:
             continue
@@ -27,20 +26,16 @@ def calculate_accelerations(bodies):
             distance_vector = position_j - position_i
             distance_magnitude = np.linalg.norm(distance_vector)
             
-            # Проверка на столкновение
             if distance_magnitude < (bodies[i]['radius'] + bodies[j]['radius']):
                 collisions.add((i, j))
 
-    # Второй проход: обработка столкновений
     for i, j in collisions:
-        # Проверяем, что обе планеты ещё существуют
         if bodies[i] is not None and bodies[j] is not None:
             if bodies[i]['mass'] >= bodies[j]['mass']:
                 bodies[j] = None
             else:
                 bodies[i] = None
 
-    # Третий проход: расчет гравитации
     for i in range(num_bodies):
         if bodies[i] is None:
             continue
@@ -74,12 +69,11 @@ def update_positions():
     bodies = data['bodies']
     time_step = data.get('time_step', 1)
     
-    # Фильтруем удаленные тела перед расчетами
     active_bodies = [body for body in bodies if body is not None]
     accelerations = calculate_accelerations(bodies)
 
     for i, body in enumerate(bodies):
-        if body is None:  # Пропускаем удаленные тела
+        if body is None: 
             continue
             
         velocity = np.array(body['velocity']) + np.array(accelerations[i]) * time_step
