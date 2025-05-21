@@ -2,20 +2,28 @@
 
 *Исследуйте космос в реальном времени!*  
 
+### 📚 Стек технологий
+
+<p align="center"> 
+    <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5"> 
+    <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3"> 
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JS"> 
+    <img src="https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white" alt="Three.js"> 
+    <img src="https://img.shields.io/badge/JSON-000000?logo=json&logoColor=white" alt="JSON"> 
+    <img src="https://img.shields.io/badge/docker-257bd6?style=for-the-badge&logo=docker&logoColor=white" alt="docker" height=20> 
+    <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white" alt="flask" height=20> 
+    <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="python" height=20>
+    <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="figma" height=20> 
+ 
+</p>
+
 ---
-
-![](/Assets/solar_sistem.png)
-![](/Assets/sun.png)
-![](/Assets/options.png)
-![](/Assets/search.png)
-
 ## ✨ Особенности  
 
 - 🪐 **Реалистичные планеты** с текстурами и орбитами  
-- 🎮 **Полноценное управление камерой** (приближение, вращение)  
-- ⏱️ **Настраиваемая скорость** вращения планет  
+- 🎮 **Полноценное управление камерой** (приближение, вращение, свободное перемещение)  
+- ⏱️ **Настраиваемые параметры** скорость, масса, радиус планет 
 - ℹ️ **Информационная панель** с данными о выбранной планете  
-- 🌓 **Динамическое освещение** и тени
 - ℹ️ **На разных языках** для большинства пользователей по всему миру
 
 ---
@@ -29,8 +37,25 @@
 ### Инструкция:  
 ```bash
 git clone https://github.com/PiginIvan/SolarSystem.git
+```
+```bash
+pip install -r requirements.txt
+```
+```bash
 python server.py
 ```
+
+### Для запуска в Docker:
+```bash
+git clone https://github.com/PiginIvan/SolarSystem.git
+```
+```bash
+docker build -t flask-solar-system .
+```
+```bash
+docker run -p 5000:5000 flask-solar-system
+```
+Приложение будет работать по адресу: **http://127.0.0.1:5000/** 
 
 ### 🎮 Инструкция:
 
@@ -41,5 +66,9 @@ python server.py
 | Приближение/отдаление | Колесо мыши |
 | Выбор планеты | Клик по объекту |
 
-### 📚 Стек технологий
-<p align="center"> <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5"> <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JS"> <img src="https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white" alt="Three.js"> <img src="https://img.shields.io/badge/JSON-000000?logo=json&logoColor=white" alt="JSON"> </p>
+### Скриншоты
+
+![](/Assets/solar_sistem.png)
+![](/Assets/sun.png)
+![](/Assets/options.png)
+![](/Assets/search.png)
