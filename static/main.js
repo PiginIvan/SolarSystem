@@ -35,7 +35,7 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 export const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
 
-export let isPaused = true;
+export let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("view_3d").appendChild(renderer.domElement);
