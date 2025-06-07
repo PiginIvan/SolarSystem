@@ -97,10 +97,21 @@
 
   <audio id="click-sound" src="/static/sounds/click.mp3" preload="auto" audio.volume="0.1"></audio>
 
-  <script src="/static/js/loader.js" defer></script>
+
   <script src="/static/js/sound.js" defer></script>
   <script src="/static/js/script.js" defer></script>
   <script type="module" src="/static/js/2d.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
+    import { addStars } from '/static/js/objectsFunctions.js';
+    import { scene, planets, camera } from '/static/main.js';
+
+    window.camera = camera;
+    window.planets = planets;
+    window.THREE = THREE;
+    window.addStars = addStars;
+    window.scene = scene;
+  </script>
 </body>
 </html>

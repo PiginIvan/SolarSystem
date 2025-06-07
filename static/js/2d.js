@@ -1,15 +1,12 @@
-// Canvas setup
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// Set canvas size
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
 resizeCanvas();
 
-// Colors
 const BLACK = '#000000';
 const WHITE = '#FFFFFF';
 const YELLOW = '#FFFF00';
@@ -29,7 +26,6 @@ const COLORS = [
     '#966464'   // Pluto
 ];
 
-// Solar system parameters
 const sunRadius = 20;
 const planetData = [
     {name: "Mercury", radius: 4, orbitRadius: 75, speed: 4.74, color: COLORS[0]},
@@ -43,17 +39,15 @@ const planetData = [
     {name: "Pluto", radius: 3, orbitRadius: 570, speed: 0.5, color: COLORS[8], eccentricity: 0.25, inclination: 0.3}
 ];
 
-// Debris belts parameters
 const debrisBelts = [
-    {innerRadius: 280, outerRadius: 320, density: 500, color: ASTEROID_COLOR}, // Asteroid belt
-    {innerRadius: 600, outerRadius: 700, density: 300, color: KUIPER_COLOR}    // Kuiper belt
+    {innerRadius: 280, outerRadius: 320, density: 500, color: ASTEROID_COLOR}, 
+    {innerRadius: 600, outerRadius: 700, density: 300, color: KUIPER_COLOR}    
 ];
 
 const moonRadius = 2;
 const moonOrbitRadius = 15;
 const moonSpeed = 20.0;
 
-// Camera
 class Camera {
     constructor() {
         this.x = 0;
@@ -78,7 +72,7 @@ class Camera {
     }
     
     handleMouseDown(event) {
-        if (event.button === 0) { // Left mouse button
+        if (event.button === 0) { 
             this.dragging = true;
             const worldPos = this.toWorld(event.clientX, event.clientY);
             this.lastPos = {x: worldPos.x, y: worldPos.y};
@@ -102,10 +96,8 @@ class Camera {
         event.preventDefault();
         const zoomFactor = 1.1;
         
-        // Get mouse position in world coordinates before zoom
         const worldPos = this.toWorld(event.clientX, event.clientY);
         
-        // Apply zoom
         if (event.deltaY < 0) {
             this.scale *= zoomFactor;
         } else {
@@ -113,16 +105,13 @@ class Camera {
             if (this.scale < 0.1) this.scale = 0.1;
         }
         
-        // Get mouse position in world coordinates after zoom
         const newWorldPos = this.toWorld(event.clientX, event.clientY);
-        
-        // Adjust camera position to zoom toward mouse
+
         this.x += (worldPos.x - newWorldPos.x);
         this.y += (worldPos.y - newWorldPos.y);
     }
 }
 
-// Star class
 class Star {
     constructor(width, height) {
         this.x = Math.random() * width * 4 - width * 2;
@@ -145,7 +134,6 @@ class Star {
     }
 }
 
-// Debris particle class
 class Debris {
     constructor(belt) {
         const angle = Math.random() * Math.PI * 2;
@@ -177,7 +165,6 @@ class Debris {
     }
 }
 
-// Tail class
 class Tail {
     constructor(maxLength = 50, color = WHITE) {
         this.points = [];
@@ -221,7 +208,6 @@ class Tail {
     }
 }
 
-// Helper function to convert hex color to rgba
 function hexToRgba(hex, alpha) {
     hex = hex.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
@@ -230,7 +216,6 @@ function hexToRgba(hex, alpha) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-// Function to calculate elliptical position
 function getEllipticalPosition(angle, orbitRadius, eccentricity, inclination) {
     const r = orbitRadius * (1 - eccentricity**2) / (1 + eccentricity * Math.cos(angle));
     const orbitX = r * Math.cos(angle);
@@ -244,53 +229,44 @@ function getEllipticalPosition(angle, orbitRadius, eccentricity, inclination) {
     };
 }
 
-// Initialize camera
 const camera = new Camera();
 
-// Create stars
 const stars = [];
 for (let i = 0; i < 500; i++) {
     stars.push(new Star(canvas.width, canvas.height));
 }
 
-// Create debris belts
 const asteroidBelt = [];
 const kuiperBelt = [];
 
 debrisBelts.forEach(belt => {
     for (let i = 0; i < belt.density; i++) {
-        if (belt.innerRadius === 280) { // Asteroid belt
+        if (belt.innerRadius === 280) { 
             asteroidBelt.push(new Debris(belt));
-        } else { // Kuiper belt
+        } else { 
             kuiperBelt.push(new Debris(belt));
         }
     }
 });
 
-// Initialize planet angles and tails
 const planetAngles = planetData.map(() => Math.random() * Math.PI * 2);
 const planetTails = planetData.map(p => new Tail(100, p.color + '96'));
 
-// Moon variables
 let moonAngle = 0;
 const moonTail = new Tail(50, MOON_COLOR + '96');
 
-// Event listeners
 canvas.addEventListener('mousedown', (e) => camera.handleMouseDown(e));
 window.addEventListener('mouseup', () => camera.handleMouseUp());
 window.addEventListener('mousemove', (e) => camera.handleMouseMove(e));
 canvas.addEventListener('wheel', (e) => camera.handleWheel(e), { passive: false });
 
-// Handle window resize
 window.addEventListener('resize', () => {
     resizeCanvas();
 });
 
-// Add these variables at the top of your code
 let animationRunning = true;
 let animationId = null;
 
-// Add these functions anywhere in your code
 export function stopAnimation() {
     if (animationRunning) {
         cancelAnimationFrame(animationId);
@@ -305,26 +281,20 @@ export function startAnimation() {
     }
 }
 
-// Modify your animate function to store the animation frame ID
 function animate() {
-    // Clear canvas
     ctx.fillStyle = BLACK;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Draw stars
     stars.forEach(star => star.draw(ctx, camera));
     
-    // World center
     const worldCenter = {x: 0, y: 0};
     
-    // Draw sun
     const sunScreenPos = camera.toScreen(worldCenter.x, worldCenter.y);
     ctx.fillStyle = YELLOW;
     ctx.beginPath();
     ctx.arc(sunScreenPos.x, sunScreenPos.y, sunRadius * camera.scale, 0, Math.PI * 2);
     ctx.fill();
     
-    // Draw sun glow
     for (let i = 10; i > 0; i--) {
         const alpha = i * 10;
         const glowRadius = sunRadius * camera.scale + i * 2;
@@ -334,24 +304,20 @@ function animate() {
         ctx.fill();
     }
     
-    // Draw asteroid belt
     asteroidBelt.forEach(debris => {
         debris.update();
         debris.draw(ctx, camera);
     });
     
-    // Draw Kuiper belt
     kuiperBelt.forEach(debris => {
         debris.update();
         debris.draw(ctx, camera);
     });
     
-    // Draw planets
     planetData.forEach((planet, i) => {
         let planetX, planetY;
         
         if (planet.name === "Pluto") {
-            // Elliptical and inclined orbit for Pluto
             const pos = getEllipticalPosition(
                 planetAngles[i], 
                 planet.orbitRadius,
@@ -361,21 +327,16 @@ function animate() {
             planetX = pos.x;
             planetY = pos.y + pos.z * 0.5;
         } else {
-            // Circular orbit for other planets
             planetX = worldCenter.x + planet.orbitRadius * Math.cos(planetAngles[i]);
             planetY = worldCenter.y + planet.orbitRadius * Math.sin(planetAngles[i]);
         }
         
-        // Update planet angle
         planetAngles[i] += 0.005 * planet.speed;
         
-        // Add point to tail
         planetTails[i].addPoint(planetX, planetY);
         
-        // Draw tail
         planetTails[i].draw(ctx, camera);
         
-        // Draw planet
         const planetScreenPos = camera.toScreen(planetX, planetY);
         const planetRadius = Math.max(1, planet.radius * camera.scale);
         ctx.fillStyle = planet.color;
@@ -383,7 +344,6 @@ function animate() {
         ctx.arc(planetScreenPos.x, planetScreenPos.y, planetRadius, 0, Math.PI * 2);
         ctx.fill();
         
-        // Draw moon for Earth
         if (planet.name === "Earth") {
             moonAngle += 0.005 * moonSpeed;
             
@@ -408,7 +368,6 @@ function animate() {
             }
         }
         
-        // Draw planet name
         if (camera.scale > 0.3) {
             ctx.fillStyle = WHITE;
             ctx.font = '12px Arial';
@@ -417,10 +376,8 @@ function animate() {
         }
     });
     
-    // Store the animation frame ID
     animationId = requestAnimationFrame(animate);
 }
 
-// Start animation
 animate();
 stopAnimation();
