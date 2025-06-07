@@ -30,7 +30,7 @@ export const planets = {
     "Pluto": [Pluto.mesh, Pluto]
 };
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-export const renderer = new THREE.WebGLRenderer({ antialias: true });
+export const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 export const controls = new OrbitControls(camera, renderer.domElement);
 
 export const scene = new THREE.Scene();
