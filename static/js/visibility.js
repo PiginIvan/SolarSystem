@@ -1,5 +1,6 @@
 import { startAnimation, stopAnimation } from "./2d.js";
-import { isPaused } from "../main.js";
+
+export let isPaused = false;
 
 const elements = {
     navbar: document.getElementById("navbar"),

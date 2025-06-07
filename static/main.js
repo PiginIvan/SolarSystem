@@ -14,6 +14,7 @@ import { Venus } from './js/planets/venus.js';
 import { showAllPlanets } from './js/loader.js';
 import { onMouseClick, updatePositions, addPlanets, addStars, configureControls, updatePlanetTraces } from './js/objectsFunctions.js';
 import { updateCameraFollow } from './js/search.js';
+import { isPaused } from './js/visibility.js';
 
 export const removedPlanets = new Set();
 export const planets = {
@@ -34,8 +35,6 @@ export const controls = new OrbitControls(camera, renderer.domElement);
 
 export const scene = new THREE.Scene();
 const lightAmbient = new THREE.AmbientLight(0x222222, 2); 
-
-export let isPaused = false;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("view_3d").appendChild(renderer.domElement);
