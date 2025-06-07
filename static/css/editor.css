@@ -8,7 +8,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     width: 50%;
 }
 
@@ -37,7 +36,6 @@
     flex-direction: row;
 }
 
-/* Reset button */
 .reset-texture-button {
     height: 100%;
     aspect-ratio: 1/1;
@@ -56,52 +54,48 @@
     border-color: #ff5f5f;
 }
 
-/* Icon styling (using Unicode symbols) */
 .editor__file-label::before {
     content: "📁";
     margin-right: 10px;
 }
 
-
-/* Hide default file input */
 .editor__file-input {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
-/* Custom file input label */
 .editor__file-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid #4a90e2;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid #4a90e2;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .editor__file-label:hover {
-  background: rgba(74, 144, 226, 0.2);
-  border-color: #5fa2ff;
+    background: rgba(74, 144, 226, 0.2);
+    border-color: #5fa2ff;
 }
 
 .editor__file-label i {
-  margin-right: 10px;
-  color: #4a90e2;
+    margin-right: 10px;
+    color: #4a90e2;
 }
 
 .editor__file-name {
-  flex-grow: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: 10px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
 }
