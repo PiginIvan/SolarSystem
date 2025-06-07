@@ -1,47 +1,17 @@
-import { planets } from '../main.js';
-import { loadEditor } from '../main.js';
+import { createPlanetCard } from './loader.js';
 import { getPlanetNameRus } from './search.js';
-import { updateLocalizedText, currentLanguage } from '../main.js';
-
+import { updateLocalizedText, currentLanguage } from './translate.js';
+import { planets } from '../main.js';
 
 const editorSearchInput = document.getElementById("editor__input");
-const editorSearchResult = document.getElementById("editor__results");
-
-export function showAllPlanetsEditor() {
-   editorSearchResult.innerHTML = "";
-    Object.keys(planets).forEach(planetName => {
-        const card = createPlanetCard(planetName);
-        editorSearchResult.appendChild(card);
-    });
-}
-
-function createPlanetCard(planetName) {
-    const li = document.createElement("li");
-    li.classList.add("planet-card");
-    li.setAttribute("data-name_rus", getPlanetNameRus(planetName));
-    li.setAttribute("data-name_eng", planetName);
-    const img = document.createElement("img");
-    img.src = `/static/img/explore-button__imgs/${planetName.toLowerCase()}.png`;
-    img.classList.add("planet-card__img");
-    const textDiv = document.createElement("div");
-    textDiv.classList.add("planet-card__text");
-    textDiv.textContent = planetName;
-    li.appendChild(img);
-    li.appendChild(textDiv);
-    li.addEventListener("click", () => {
-        loadEditor(planetName);
-        document.getElementById("editor-wrapper").classList.toggle("hidden");
-        document.getElementById("editor__menu-wrapper").classList.toggle("hidden");
-        setPlanetData(planetName);
-    });
-    return li;
-}
+export const editorSearchResult = document.getElementById("editor__results");
 
 editorSearchInput.addEventListener("input", () => {
     const query = editorSearchInput.value.toLowerCase();
     searchPlanetsEditor(query);
 });
 
+// функция поиска в эдиторе
 function searchPlanetsEditor(query) {
     editorSearchResult.innerHTML = "";
     Object.keys(planets).forEach(planetName => {
@@ -49,7 +19,7 @@ function searchPlanetsEditor(query) {
         const planetNameRus = getPlanetNameRus(planetName).toLowerCase();
 
         if (query === "" || planetNameLower.includes(query) || planetNameRus.includes(query)) {
-            const card = createPlanetCard(planetName);
+            const card = createPlanetCard(planetName, "editor");
             editorSearchResult.appendChild(card);
         }
     });
@@ -57,7 +27,8 @@ function searchPlanetsEditor(query) {
     updateLocalizedText(currentLanguage);
 }
 
-function setPlanetData(planetName) {
+// установка данных для планет
+export function setPlanetData(planetName) {
     const massInput = document.getElementById(planetName + "mass");
     const velocityInput = document.getElementById(planetName + "velocity");
     const radiusInput = document.getElementById(planetName + "radius");
@@ -84,4 +55,13 @@ function setPlanetData(planetName) {
     } else {
         console.error('Error: One or more input elements not found.');
     }
+}
+
+// обновление текстуры
+export function updatePlanetTexture(planetName, textureURL) {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(textureURL, (texture) => {
+        planets[planetName][0].material.map = texture;
+        planets[planetName][0].material.needsUpdate = true;
+    });
 }

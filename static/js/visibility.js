@@ -1,3 +1,6 @@
+import { startAnimation, stopAnimation } from "./2d.js";
+import { isPaused } from "../main.js";
+
 const elements = {
     navbar: document.getElementById("navbar"),
     settingsIcon: document.getElementById("settings-icon"),
@@ -46,7 +49,7 @@ document.addEventListener('click', (event) => {
     elements.navbar.classList.toggle("hidden", isAnyVisible);
 });
 
-function showButton() {
+export function showButton() {
     elements.discover.classList.toggle("hidden");
 }
 
@@ -59,5 +62,28 @@ document.addEventListener("click", (event) => {
     if (planetCard) {
         elements.editor.classList.add("hidden");
         elements.editorWindow.classList.remove("hidden");
+    }
+});
+
+document.getElementById('view-toggle').addEventListener('change', function() {
+    if (this.checked) {
+        document.getElementById("view_3d").style.display = "block";
+        document.getElementById("view_2d").style.display = "none";
+        stopAnimation();
+        isPaused = false; 
+    } else {
+        document.getElementById("view_3d").style.display = "none";
+        document.getElementById("view_2d").style.display = "block";
+        startAnimation();
+        isPaused = true; 
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const viewToggle = document.getElementById('view-toggle');
+    viewToggle.checked = true; 
+    
+    if (document.getElementById("view_2d").style.display === "block") {
+        viewToggle.checked = false;
     }
 });

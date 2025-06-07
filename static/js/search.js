@@ -1,20 +1,19 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
-import { controls, camera, planets, updateLocalizedText, currentLanguage } from '../main.js';
+import { createPlanetCard } from './loader.js';
+import { updateLocalizedText, currentLanguage } from './translate.js'
+import { controls, camera, planets, } from '../main.js';
 
 const search = document.getElementById("search-wrapper");
 const searchInput = document.getElementById("search__input");
-const searchResults = document.getElementById("search__results");
+export const searchResults = document.getElementById("search__results");
 
 let followingPlanet = null; 
 let offset = new THREE.Vector3(0, 10, 30);
 
-export function showAllPlanetsSearch() {
-    searchResults.innerHTML = "";
-    Object.keys(planets).forEach(planetName => {
-        const card = createPlanetCard(planetName);
-        searchResults.appendChild(card);
-    });
-}
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    searchPlanets(query);
+});
 
 export function getPlanetNameRus(planetNameEng) {
     const planetNames = {
@@ -69,23 +68,7 @@ export function updateCameraFollow() {
     }
 }
 
-function createPlanetCard(planetName) {
-    const li = document.createElement("li");
-    li.classList.add("planet-card");
-    li.setAttribute("data-name_rus", getPlanetNameRus(planetName));
-    li.setAttribute("data-name_eng", planetName);
-    const img = document.createElement("img");
-    img.src = `/static/img/explore-button__imgs/${planetName.toLowerCase()}.png`;
-    img.classList.add("planet-card__img");
-    const textDiv = document.createElement("div");
-    textDiv.classList.add("planet-card__text");
-    textDiv.textContent = planetName;
-    li.appendChild(img);
-    li.appendChild(textDiv);
-    li.addEventListener("click", () => moveCameraToPlanet(planetName));
-    return li;
-}
-
+// функция поиска в окне поиска
 function searchPlanets(query) {
     searchResults.innerHTML = "";
     Object.keys(planets).forEach(planetName => {
@@ -93,16 +76,10 @@ function searchPlanets(query) {
         const planetNameRus = getPlanetNameRus(planetName).toLowerCase();
 
         if (query === "" || planetNameLower.includes(query) || planetNameRus.includes(query)) {
-            const card = createPlanetCard(planetName);
+            const card = createPlanetCard(planetName, "search");
             searchResults.appendChild(card);
         }
     });
 
     updateLocalizedText(currentLanguage);
 }
-
-
-searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    searchPlanets(query);
-});
