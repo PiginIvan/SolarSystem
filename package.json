@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "http-server": "^14.1.1",
+    "playwright": "^1.53.1",
+    "serve": "^14.2.4"
+  },
+  "dependencies": {
+    "three": "^0.176.0"
+  }
+}

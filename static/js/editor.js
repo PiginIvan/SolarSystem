@@ -57,29 +57,48 @@ function searchPlanetsEditor(query) {
     updateLocalizedText(currentLanguage);
 }
 
+<<<<<<< Updated upstream
 function setPlanetData(planetName) {
+=======
+const originalRadii = {}; 
+
+// установка данных для планет
+export function setPlanetData(planetName) {
+>>>>>>> Stashed changes
     const massInput = document.getElementById(planetName + "mass");
     const velocityInput = document.getElementById(planetName + "velocity");
     const radiusInput = document.getElementById(planetName + "radius");
 
     if (massInput && velocityInput && radiusInput) {
-        massInput.value = planets[planetName][1].mass || 0; 
-        velocityInput.value = planets[planetName][1].velocity || 0;
-        radiusInput.value = planets[planetName][1].radius || 0;
+        const currentData = planets[planetName][1];
+        const planetMesh = planets[planetName][0];
+
+        if (!(planetName in originalRadii)) {
+            originalRadii[planetName] = currentData.radius;
+        }
+
+        massInput.value = currentData.mass || 0;
+        velocityInput.value = currentData.velocity[0] || 0;
+        radiusInput.value = currentData.radius || 0;
 
         massInput.addEventListener("input", () => {
-            planets[planetName][1].mass = parseFloat(massInput.value);
+            currentData.mass = parseFloat(massInput.value);
         });
 
         velocityInput.addEventListener("input", () => {
-            planets[planetName][1].velocity[0] = parseFloat(velocityInput.value); 
+            currentData.velocity[0] = parseFloat(velocityInput.value);
         });
 
         radiusInput.addEventListener("input", () => {
-            planets[planetName][1].radius = parseFloat(radiusInput.value);
-            planets[planetName][0].scale.set(parseFloat(radiusInput.value), parseFloat(radiusInput.value), parseFloat(radiusInput.value));
-        });
+            const newRadius = parseFloat(radiusInput.value);
+            const initialRadius = originalRadii[planetName];
 
+            if (initialRadius > 0) {
+                const scaleFactor = newRadius / initialRadius;
+                planetMesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                currentData.radius = newRadius;
+            }
+        });
 
     } else {
         console.error('Error: One or more input elements not found.');
